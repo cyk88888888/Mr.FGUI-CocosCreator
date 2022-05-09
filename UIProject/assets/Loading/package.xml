@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <packageDescription id="57rwtm9l">
   <resources>
-    <component id="tx8v0" name="Main.xml" path="/" exported="true"/>
+    <component id="tx8v0" name="Loading.xml" path="/" exported="true"/>
     <component id="ix5w1" name="ProgressBar5.xml" path="/components/"/>
     <image id="ix5w2" name="change.png" path="/images/"/>
     <image id="ix5w3" name="huawen1_png.png" path="/images/"/>

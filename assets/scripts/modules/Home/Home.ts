@@ -1,15 +1,19 @@
 import { _decorator, Component, Node } from 'cc';
 const { ccclass, property } = _decorator;
 import * as fgui from "fairygui-cc";
-import { layer } from '../../lib/Init';
+import { Layer } from '../../framework/Layer';
 @ccclass('Home')
-export class Home extends Component {
-    private _view: fgui.GComponent = null!;
-    onLoad() {
+export class Home extends Layer {
+
+    protected onEnter(){
         let self = this;
-        self._view = fgui.UIPackage.createObject("Home", "Home").asCom;
-        layer.addChild(self._view);
+        console.log('进入Home界面了！！！！！！！！！！！！');
+        
     }
 
+    private _tap_bottom(){
+        console.log('点击的底部按钮！！！！！！！！！！！！');
+        
+    }
 }
 
