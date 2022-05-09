@@ -41,7 +41,7 @@ export class Comp extends Component {
         emmiter.off(event, listener, self);
     }
 
-    protected emit(event: string, data: any) {
+    protected emit(event: string, data?: any) {
         emmiter.emit(event, data)
     }
 
