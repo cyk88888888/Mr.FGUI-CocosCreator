@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="4n4l5lox">
+  <resources>
+    <component id="l3um0" name="Home.xml" path="/" exported="true"/>
+    <image id="l3um1" name="bg_currency1.png" path="/images/"/>
+    <image id="l3um2" name="h_bg.jpg" path="/images/"/>
+    <image id="l3um3" name="ico_shandian.png" path="/images/"/>
+    <image id="l3um4" name="ico_shezhi.png" path="/images/"/>
+    <image id="l3um5" name="ico_shijie.png" path="/images/"/>
+    <image id="l3um6" name="ico_tianfu.png" path="/images/"/>
+    <image id="l3um7" name="ico_zhuangbei.png" path="/images/"/>
+    <image id="l3um8" name="img_dingkaung.png" path="/images/" scale="9grid" scale9grid="32,9,64,10"/>
+    <image id="l3um9" name="img_xiantiao.png" path="/images/"/>
+    <image id="l3uma" name="z_suotou.png" path="/images/"/>
+    <component id="o8dec" name="BottomTabLayer.xml" path="/" exported="true"/>
+  </resources>
+  <publish name="Home"/>
+</packageDescription>

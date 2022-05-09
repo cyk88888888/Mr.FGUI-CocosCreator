@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="640,960">
+  <displayList>
+    <image id="n0_l3um" name="n0" src="l3um2" fileName="images/h_bg.jpg" xy="0,-53">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </image>
+    <image id="n1_l3um" name="n1" src="l3um8" fileName="images/img_dingkaung.png" xy="0,878" size="640,82">
+      <relation target="" sidePair="bottom-bottom"/>
+    </image>
+    <component id="n2_o8de" name="n2" src="o8dec" fileName="BottomTabLayer.xml" xy="0,878">
+      <relation target="" sidePair="bottom-bottom"/>
+    </component>
+  </displayList>
+</component>

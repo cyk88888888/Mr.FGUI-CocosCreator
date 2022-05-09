@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="640,78">
+  <displayList>
+    <image id="n0_o8de" name="n0" src="l3um7" fileName="images/ico_zhuangbei.png" xy="17,0" size="155,155" scale="0.5,0.5"/>
+    <image id="n1_o8de" name="n1" src="l3um3" fileName="images/ico_shandian.png" xy="137,0" size="155,155" scale="0.5,0.5"/>
+    <image id="n2_o8de" name="n2" src="l3um5" fileName="images/ico_shijie.png" xy="282,0" size="155,155" scale="0.5,0.5"/>
+    <image id="n3_o8de" name="n3" src="l3um6" fileName="images/ico_tianfu.png" xy="422,0" size="155,155" scale="0.5,0.5"/>
+    <image id="n4_o8de" name="n4" src="l3um4" fileName="images/ico_shezhi.png" xy="544,0" size="155,155" scale="0.5,0.5"/>
+    <image id="n6_ksfi" name="n6" src="l3um9" fileName="images/img_xiantiao.png" xy="106,0" size="4,78"/>
+    <image id="n7_ksfi" name="n7" src="l3um9" fileName="images/img_xiantiao.png" xy="240,0" size="4,78"/>
+    <image id="n8_ksfi" name="n8" src="l3um9" fileName="images/img_xiantiao.png" xy="392,0" size="4,78"/>
+    <image id="n9_ksfi" name="n9" src="l3um9" fileName="images/img_xiantiao.png" xy="524,0" size="4,78"/>
+  </displayList>
+</component>
