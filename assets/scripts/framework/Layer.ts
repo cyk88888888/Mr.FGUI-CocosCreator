@@ -1,6 +1,6 @@
 import { _decorator, Component, Node } from 'cc';
 import { Comp } from './base/Comp';
-import { GameMgr } from './base/GameMgr';
+import { LayerMgr } from './base/LayerMgr';
 const { ccclass, property } = _decorator;
 
 @ccclass('Layer')
@@ -10,13 +10,13 @@ export class Layer extends Comp {
      * @returns
      */
     protected static addScript() {
-        return GameMgr.inst.layer.node.addComponent(this.name) as Comp;
+        return LayerMgr.inst.layer.node.addComponent(this.name) as Comp;
     }
     /**
      * 将view添加到layer层级容器
      */
     protected addToLayer() {
-        GameMgr.inst.layer.addChild(this.view);
+        LayerMgr.inst.layer.addChild(this.view);
     }
 }
 

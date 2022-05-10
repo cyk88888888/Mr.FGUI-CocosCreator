@@ -1,13 +1,13 @@
 import * as fgui from "fairygui-cc";
 
-export class GameMgr {
-    private static _inst: GameMgr;
+export class LayerMgr {
+    private static _inst: LayerMgr;
     public layer: fgui.GComponent;
     public dlg: fgui.GComponent;
     public msg: fgui.GComponent;
     public static get inst() {
         if (!this._inst) {
-            this._inst = new GameMgr();
+            this._inst = new LayerMgr();
         }
         return this._inst;
     }
@@ -27,6 +27,7 @@ export class GameMgr {
     addGCom2GRoot(name: string): fgui.GComponent {
         let newCom = new fgui.GComponent();
         newCom.node.name = name;
+        newCom.setSize(fgui.GRoot.inst.width, fgui.GRoot.inst.height);
         fgui.GRoot.inst.addChild(newCom);
         return newCom;
     }

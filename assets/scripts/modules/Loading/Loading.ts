@@ -1,7 +1,6 @@
 import { _decorator, Component, Node, director } from 'cc';
 const { ccclass, property } = _decorator;
 import * as fgui from "fairygui-cc";
-import { GameMgr } from '../../framework/base/GameMgr';
 import { Layer } from '../../framework/Layer';
 import { Home } from '../Home/Home';
 @ccclass('Loading')
@@ -19,7 +18,7 @@ export class Loading extends Layer {
             self._progress.value += 0.5;
             if (!self._isLoadingHome && self._progress.value >= 100) {
                 self._isLoadingHome = true;
-                Home.show("UI/Home", () => {
+                Home.show("Home", () => {
                     self.close();
                 });
             }

@@ -47,15 +47,16 @@ export class Comp extends Component {
 
     /**
      * 显示界面
-     * @param PreUIPath 预加载资源路径
+     * @param pkgName 资源包名
      * @param callBack 加载完毕回调
      * @param ctx 
      * @returns 
      */
-    public static show(PreUIPath?: string, callBack?: Function, ctx?: any): Comp {
+    public static show(pkgName: string, callBack?: Function, ctx?: any): Comp {
         let self = this;
-        self.inst.uiPath = PreUIPath;
-        if (PreUIPath && !fgui.UIPackage.getByName(self.inst.uiPath)) {//缓存未找到
+        self.inst.uiPath = 'UI/' + pkgName;
+        self.inst._className = self.name;
+        if (pkgName && !fgui.UIPackage.getByName(pkgName)) {//缓存未找到
             fgui.UIPackage.loadPackage(self.inst.uiPath, this.onUILoaded.bind(this, callBack, ctx));//加载资源包
         } else {
             this.onUILoaded.bind(this, callBack, ctx);
@@ -67,6 +68,7 @@ export class Comp extends Component {
         let self = this;
         if (callBack) callBack.call(ctx);
         self.inst.view = fgui.UIPackage.createObject(self.name, self.name).asCom;
+        self.inst.view.node.name = this.name;
         self.inst.addToLayer();
         self.inst.onEnter_b();
         self.inst['onEnter']();
@@ -94,15 +96,15 @@ export class Comp extends Component {
                 if (self["_tap_" + objName]) {
                     let tapFunc = self["_tap_" + objName];
                     self._objTapMap[objName] = tapFunc;
-                    obj.node.on(Node.EventType.TOUCH_END, tapFunc, self);
+                    obj.onClick(tapFunc, self);
                 }
             }
         }
     }
-
+    private _className:string;
     public get __className(): string {
         let self = this;
-        return self.name;
+        return self._className;
     }
 
     public close() {
@@ -120,14 +122,15 @@ export class Comp extends Component {
         }
 
         if (self._objTapMap) {
+            let children = self.view._children;
             for (let objName in self._objTapMap) {
-                let obj = self[objName];
-                if (obj instanceof Node) obj.off(Node.EventType.TOUCH_END, self._objTapMap[objName], self);
+                let obj:fgui.GObject = children[objName];
+                if (obj && obj instanceof fgui.GObject) obj.offClick(self._objTapMap[objName], self);
             }
             self._objTapMap = null;
         }
 
-        if (self.uiPath) fgui.UIPackage.removePackage(self.uiPath);//卸载资源包
+        if (self.uiPath) fgui.UIPackage.removePackage(self.__className);//卸载资源包
     }
 
     onDestroy() {
