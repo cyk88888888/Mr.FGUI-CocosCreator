@@ -4,5 +4,8 @@
   "version": "3.5.0",
   "creator": {
     "version": "3.5.0"
+  },
+  "dependencies": {
+    "fairygui-cc": "^1.1.1"
   }
 }
