@@ -1,10 +1,10 @@
 import { _decorator, Component, Node, director } from 'cc';
 const { ccclass, property } = _decorator;
 import * as fgui from "fairygui-cc";
-import { Layer } from '../../framework/Layer';
+import { UILayer } from '../../framework/ui/UILayer';
 import { Home } from '../Home/Home';
 @ccclass('Loading')
-export class Loading extends Layer {
+export class Loading extends UILayer {
     private _progress: fgui.GProgressBar;
     private _isLoadingHome: boolean;
     protected onEnter() {

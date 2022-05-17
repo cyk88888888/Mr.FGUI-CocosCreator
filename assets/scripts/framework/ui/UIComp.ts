@@ -1,10 +1,10 @@
 
 import { _decorator, Component, Node } from 'cc';
-import { emmiter } from './Emmiter';
+import { emmiter } from '../base/Emmiter';
 const { ccclass, property } = _decorator;
 import * as fgui from "fairygui-cc";
-@ccclass('Comp')
-export class Comp extends Component {
+@ccclass('UIComp')
+export class UIComp extends Component {
     private _emmitMap: { [event: string]: Function };//已注册的监听事件列表
     private _objTapMap: { [objName: string]: Function };//已添加的显示对象点击事件的记录
     protected view: fgui.GComponent;
@@ -52,7 +52,7 @@ export class Comp extends Component {
      * @param ctx 
      * @returns 
      */
-    public static show(pkgName: string, callBack?: Function, ctx?: any): Comp {
+    public static show(pkgName: string, callBack?: Function, ctx?: any): UIComp {
         let self = this;
         self.inst.uiPath = 'UI/' + pkgName;
         self.inst._className = self.name;
@@ -76,9 +76,9 @@ export class Comp extends Component {
         self.inst.addBtnCLickListener();
     }
     protected addToLayer() { }
-    protected static addScript(): Comp { return null }
-    private static _inst: Comp;
-    protected static get inst(): Comp {
+    protected static addScript(): UIComp { return null }
+    private static _inst: UIComp;
+    protected static get inst(): UIComp {
         let self = this;
         if (!this._inst) this._inst = self.addScript();
         return this._inst;
