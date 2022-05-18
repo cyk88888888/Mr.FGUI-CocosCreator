@@ -8,6 +8,7 @@ export class UIComp extends Component {
     private _emmitMap: { [event: string]: Function };//已注册的监听事件列表
     private _objTapMap: { [objName: string]: Function };//已添加的显示对象点击事件的记录
     protected view: fgui.GComponent;
+    protected pkgName: string;//包名称
     public data: any;
     constructor() {
         super();
@@ -52,7 +53,7 @@ export class UIComp extends Component {
     protected createView() {
         if (!this.view) {
             let className = this.__className;
-            this.view = fgui.UIPackage.createObject(className, className).asCom;
+            this.view = fgui.UIPackage.createObject(this.pkgName, className).asCom;
             this.view.node.name = className;
             // this.view.node.addComponent(className);
             this.addBtnCLickListener();

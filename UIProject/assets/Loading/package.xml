@@ -10,5 +10,5 @@
     <movieclip id="ix5w6" name="pet.jta" path="/images/"/>
     <image id="ix5w7" name="pic.png" path="/images/"/>
   </resources>
-  <publish name="Loading"/>
+  <publish name=""/>
 </packageDescription>

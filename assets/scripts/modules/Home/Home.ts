@@ -4,7 +4,10 @@ import * as fgui from "fairygui-cc";
 import { UILayer } from '../../framework/ui/UILayer';
 @ccclass('Home')
 export class Home extends UILayer {
-
+    private ctor() {
+        this.pkgName = 'home';
+    }
+    
     protected onEnter() {
         let self = this;
         self.onEmitter('clickBottom', () => {

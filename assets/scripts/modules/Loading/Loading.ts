@@ -7,6 +7,10 @@ import { UILayer } from '../../framework/ui/UILayer';
 export class Loading extends UILayer {
     private _progress: fgui.GProgressBar;
     private _isLoadingHome: boolean;
+    private ctor(){
+        this.pkgName = 'loading';
+    }
+    
     protected onEnter() {
         let self = this;
         self._progress = self.view.getChild('progress') as fgui.GProgressBar;

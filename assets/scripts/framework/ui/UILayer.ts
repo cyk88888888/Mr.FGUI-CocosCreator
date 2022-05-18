@@ -16,7 +16,7 @@ export class UILayer extends UIComp {
         self.setData(data);
         self.addToLayer();
         self.onEnter_b();
-        self['onEnter']();
+        if(self['onEnter']) self['onEnter']();
         self.onEnter_a();
         return self;
     }
