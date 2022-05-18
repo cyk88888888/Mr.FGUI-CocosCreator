@@ -27,9 +27,9 @@ export class SceneMgr {
         if (!this._popArr) {
             this._popArr = [];
         }
-        ResMgr.inst.loadWithItor(sceneInfo.resList, this.onProgress, function () {
+        ResMgr.inst.loadWithItor(sceneInfo.resList, this.onProgress, () => {
             this.onUILoaded(sceneName, data);
-        }, this);
+        });
     }
 
     private onProgress(resName: string, hasLoadResCount: number) {
