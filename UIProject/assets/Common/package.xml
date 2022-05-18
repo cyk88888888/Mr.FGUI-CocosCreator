@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="g2zhtj9b">
+  <resources>
+    <component id="kb400" name="LoadingDlg.xml" path="/" exported="true"/>
+    <image id="kb401" name="0.png" path="/images/"/>
+    <image id="kb402" name="icon_zzz.png" path="/images/"/>
+    <movieclip id="kb403" name="qtm011.jta" path="/images/"/>
+  </resources>
+  <publish name=""/>
+</packageDescription>

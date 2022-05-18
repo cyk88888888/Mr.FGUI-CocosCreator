@@ -1,6 +1,8 @@
+import { AssetManager } from "cc";
 import * as fgui from "fairygui-cc";
 import { UIScene } from "../ui/UIScene";
 import { moduleInfoMap } from "./ModuleMgr";
+import { ResMgr } from "./ResMgr";
 
 export class SceneMgr {
     private static _inst: SceneMgr;
@@ -25,7 +27,14 @@ export class SceneMgr {
         if (!this._popArr) {
             this._popArr = [];
         }
-        fgui.UIPackage.loadPackage(sceneInfo.resData, this.onUILoaded.bind(this, sceneName, data));//加载资源包
+        ResMgr.inst.loadWithItor(sceneInfo.resList, this.onProgress, function () {
+            this.onUILoaded(sceneName, data);
+        }, this);
+    }
+
+    private onProgress(resName: string, hasLoadResCount: number) {
+        console.log('resName: ' + resName);
+        console.log('hasLoadResCount: ' + hasLoadResCount);
     }
 
     private onUILoaded(sceneName: string, data: any) {

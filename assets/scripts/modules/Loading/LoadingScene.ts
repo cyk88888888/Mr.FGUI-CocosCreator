@@ -7,8 +7,8 @@ import { Loading } from './Loading';
 @ccclass('LoadingScene')
 export class LoadingScene extends UIScene {
     onLoad() {
-        Loading.show({str: '哈啊哈哈'});
+        Loading.show({ str: '哈啊哈哈' });
     }
 }
-registerModule('LoadingScene', 'UI/Loading', false);
+registerModule('LoadingScene', ['UI/Common','UI/Loading'], false);
 

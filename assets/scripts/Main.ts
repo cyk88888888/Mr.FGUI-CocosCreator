@@ -6,7 +6,7 @@ import { SceneMgr } from './framework/mgr/SceneMgr';
 export class Main extends Component {
     onLoad(){
         fgui.GRoot.create();
-        SceneMgr.inst.push('LoadingScene');
+        SceneMgr.inst.push('LoadingScene',{msg:'我是LaodingScene'});
     }
     
 

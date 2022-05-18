@@ -10,5 +10,5 @@ export class HomeScene extends UIScene {
         Home.show({str: '哈啊哈哈Home'});
     }
 }
-registerModule('HomeScene', 'UI/Home', true);
+registerModule('HomeScene', ['UI/Home'], true);
 

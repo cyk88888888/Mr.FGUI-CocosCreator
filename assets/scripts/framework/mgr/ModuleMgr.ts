@@ -10,7 +10,7 @@ export class ModuleMgr {
     }
 }
 export let moduleInfoMap = {};
-export function registerModule(sceneName: string, resData: string, cacheEnabled?: boolean) {
-    let obj = { sceneName: sceneName, cacheEnabled: cacheEnabled, resData: resData };
+export function registerModule(sceneName: string, resList: string[], cacheEnabled?: boolean) {
+    let obj = { sceneName: sceneName, cacheEnabled: cacheEnabled, resList: resList };
     moduleInfoMap[sceneName] = obj;
 }
