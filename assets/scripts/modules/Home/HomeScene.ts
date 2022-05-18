@@ -3,12 +3,12 @@ const { ccclass, property } = _decorator;
 import * as fgui from "fairygui-cc";
 import { registerModule } from '../../framework/mgr/ModuleMgr';
 import { UIScene } from '../../framework/ui/UIScene';
-import { Loading } from './Loading';
-@ccclass('LoadingScene')
-export class LoadingScene extends UIScene {
+import { Home } from './Home';
+@ccclass('HomeScene')
+export class HomeScene extends UIScene {
     onLoad() {
-        Loading.show({str: '哈啊哈哈'});
+        Home.show({str: '哈啊哈哈Home'});
     }
 }
-registerModule('LoadingScene', 'UI/Loading', false);
+registerModule('HomeScene', 'UI/Home', true);
 

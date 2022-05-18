@@ -1,4 +1,5 @@
 import * as fgui from "fairygui-cc";
+import { UIScene } from "../ui/UIScene";
 import { moduleInfoMap } from "./ModuleMgr";
 
 export class SceneMgr {
@@ -16,19 +17,26 @@ export class SceneMgr {
     }
 
     public push(sceneName: string, data?: any) {
+        let sceneInfo = moduleInfoMap[sceneName];
+        if (!sceneInfo) {
+            console.error('未注册模块：' + sceneName)
+            return;
+        }
         if (!this._popArr) {
             this._popArr = [];
         }
-        let moduleMap = moduleInfoMap;
-        fgui.UIPackage.loadPackage(moduleMap[], this.onUILoaded.bind(this, callBack, ctx));//加载资源包
+        fgui.UIPackage.loadPackage(sceneInfo.resData, this.onUILoaded.bind(this, sceneName, data));//加载资源包
+    }
+
+    private onUILoaded(sceneName: string, data: any) {
         if (this.curScene) {//销毁上个场景
             this.curScene.node.destroyAllChildren();
             this.curScene.node.destroy();
         }
         this.curScene = this.addGCom2GRoot(sceneName, true);
         this.initLayer();
-        let newScene = this.curScene.node.addComponent(sceneName);
-        newScene['data'] = data;
+        let newScene = this.curScene.node.addComponent(sceneName) as UIScene;//添加场景脚本
+        newScene.setData(data);
     }
 
     initLayer() {

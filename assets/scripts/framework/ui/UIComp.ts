@@ -8,7 +8,7 @@ export class UIComp extends Component {
     private _emmitMap: { [event: string]: Function };//已注册的监听事件列表
     private _objTapMap: { [objName: string]: Function };//已添加的显示对象点击事件的记录
     protected view: fgui.GComponent;
-    protected uiPath: string;
+    public data: any;
     constructor() {
         super();
         let self = this;
@@ -29,6 +29,10 @@ export class UIComp extends Component {
 
     protected onExit_a() { }
 
+    public setData(data: any) {
+        this.data = data;
+    }
+
     protected onEmitter(event: string, listener: any) {
         let self = this;
         emmiter.on(event, listener, self);
@@ -45,47 +49,20 @@ export class UIComp extends Component {
         emmiter.emit(event, data)
     }
 
-    /**
-     * 显示界面
-     * @param pkgName 资源包名
-     * @param callBack 加载完毕回调
-     * @param ctx 
-     * @returns 
-     */
-    public static show(pkgName: string, callBack?: Function, ctx?: any): UIComp {
-        let self = this;
-        self.inst.uiPath = 'UI/' + pkgName;
-        self.inst._className = self.name;
-        if (pkgName && !fgui.UIPackage.getByName(pkgName)) {//缓存未找到
-            fgui.UIPackage.loadPackage(self.inst.uiPath, this.onUILoaded.bind(this, callBack, ctx));//加载资源包
-        } else {
-            this.onUILoaded.bind(this, callBack, ctx);
+    protected createView() {
+        if (!this.view) {
+            let className = this.__className;
+            this.view = fgui.UIPackage.createObject(className, className).asCom;
+            this.view.node.name = className;
+            // this.view.node.addComponent(className);
+            this.addBtnCLickListener();
         }
-        return self.inst;
     }
 
-    private static onUILoaded(callBack?: Function, ctx?: any) {
-        let self = this;
-        if (callBack) callBack.call(ctx);
-        self.inst.view = fgui.UIPackage.createObject(self.name, self.name).asCom;
-        self.inst.view.node.name = this.name;
-        self.inst.addToLayer();
-        self.inst.onEnter_b();
-        self.inst['onEnter']();
-        self.inst.onEnter_a();
-        self.inst.addBtnCLickListener();
-    }
-    protected addToLayer() { }
-    protected static addScript(): UIComp { return null }
-    private static _inst: UIComp;
-    protected static get inst(): UIComp {
-        let self = this;
-        if (!this._inst) this._inst = self.addScript();
-        return this._inst;
-    }
+    protected static addScript() { return null }
 
     /**添加按钮点击事件监听**/
-    private addBtnCLickListener() {
+    protected addBtnCLickListener() {
         let self = this;
         let children = self.view._children;
         self._objTapMap = {};
@@ -101,10 +78,50 @@ export class UIComp extends Component {
             }
         }
     }
-    private _className:string;
+    private _className: string;
     public get __className(): string {
+        if (!this._className) {
+            this._className = this.name.match(/<(\S*)>/)[1];
+        }
+        return this._className;
+    }
+
+    private timeoutIdArr: number[];
+    protected setTimeout(cb: () => void, timeout: number) {
+        if (!this.timeoutIdArr) this.timeoutIdArr = [];
+        let timeoutId = setTimeout(() => {
+            cb.call(this);
+        }, timeout);
+        this.timeoutIdArr.push(timeoutId);
+    }
+
+    private intervalIdArr: number[];
+    protected setInterval(cb: () => void, timeout: number) {
+        if (!this.intervalIdArr) this.intervalIdArr = [];
+        let intervalId = setInterval(() => {
+            cb.call(this);
+        }, timeout);
+        this.intervalIdArr.push(intervalId);
+    }
+
+    /**
+     * 清除所有的setTimeout和setInterval定时器
+     */
+    protected clearAllTimeoutOrInterval() {
         let self = this;
-        return self._className;
+        if (self.timeoutIdArr) {
+            for (let i = 0; i < self.timeoutIdArr.length; i++) {
+                clearTimeout(self.timeoutIdArr[i]);
+            }
+            self.timeoutIdArr = null;
+        }
+
+        if (self.intervalIdArr) {
+            for (let i = 0; i < self.intervalIdArr.length; i++) {
+                clearInterval(self.intervalIdArr[i]);
+            }
+            self.intervalIdArr = null;
+        }
     }
 
     public close() {
@@ -124,13 +141,13 @@ export class UIComp extends Component {
         if (self._objTapMap) {
             let children = self.view._children;
             for (let objName in self._objTapMap) {
-                let obj:fgui.GObject = children[objName];
+                let obj: fgui.GObject = children[objName];
                 if (obj && obj instanceof fgui.GObject) obj.offClick(self._objTapMap[objName], self);
             }
             self._objTapMap = null;
         }
 
-        if (self.uiPath) fgui.UIPackage.removePackage(self.__className);//卸载资源包
+        self.clearAllTimeoutOrInterval();
     }
 
     onDestroy() {
@@ -139,7 +156,6 @@ export class UIComp extends Component {
         this.onExit_b();
         if (self["onExit"]) self["onExit"]();
         this.onExit_a();
-        this.view.dispose();
     }
 
 }
