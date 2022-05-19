@@ -63,11 +63,20 @@ export class UIComp extends Component {
     protected initView(view: fgui.GComponent) {
         if (!this.view) {
             this.view = view;
+            this.initViewProperty();
             this.addBtnCLickListener();
         }
     }
 
-    protected static addScript() { return null }
+    /** 初始化属性 */
+    private initViewProperty() {
+        let self = this;
+        let children = self.view._children;
+        for (let key in children) {
+            let obj = children[key];
+            this[obj.name] = obj;
+        }
+    }
 
     /**添加按钮点击事件监听**/
     protected addBtnCLickListener() {

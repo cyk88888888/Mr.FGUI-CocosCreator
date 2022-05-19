@@ -26,13 +26,6 @@ export class UIScene extends UIComp {
     }
 
     /**
-     * 添加脚本
-     * @returns
-     */
-    protected static addScript() {
-        return SceneMgr.inst.layer.node.addComponent(this.name) as UIComp;
-    }
-    /**
      * 将view添加到layer层级容器
      */
     protected addToLayer() {
