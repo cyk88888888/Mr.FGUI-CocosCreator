@@ -2,7 +2,7 @@
 <packageDescription id="57rwtm9l">
   <resources>
     <component id="tx8v0" name="Loading.xml" path="/" exported="true"/>
-    <component id="ix5w1" name="ProgressBar5.xml" path="/components/"/>
+    <component id="ix5w1" name="LoadingProgressBar.xml" path="/components/"/>
     <image id="ix5w2" name="change.png" path="/images/"/>
     <image id="ix5w3" name="huawen1_png.png" path="/images/"/>
     <image id="ix5w4" name="huawen2_png.png" path="/images/"/>

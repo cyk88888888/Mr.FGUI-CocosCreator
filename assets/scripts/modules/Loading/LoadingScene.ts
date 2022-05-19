@@ -3,14 +3,18 @@ const { ccclass, property } = _decorator;
 import * as fgui from "fairygui-cc";
 import { registerModule } from '../../framework/mgr/ModuleMgr';
 import { UIScene } from '../../framework/ui/UIScene';
-import { JuHuaDlg } from '../common/JuHuaDlg';
 import { Loading } from './Loading';
 @ccclass('LoadingScene')
 export class LoadingScene extends UIScene {
-    onLoad() {
-        Loading.show({ str: '哈啊哈哈' });
-        // JuHuaDlg.show();
+    private ctor() {
+        let self = this;
+        self.mainClassLayer = Loading;
+        let subLayerMgr = self.subLayerMgr;
+        let classList = [];
+        for (let i = 0; i < classList.length; i++) {
+            subLayerMgr.register(classList[i]);
+        }
     }
 }
-registerModule('LoadingScene', ['UI/Common','UI/Loading'], false);
+registerModule('LoadingScene', ['UI/Common', 'UI/Loading'], false);
 

@@ -13,10 +13,16 @@ export class UIComp extends Component {
     constructor() {
         super();
         let self = this;
+        self.init();
         self.ctor_b();
         if (self["ctor"]) self["ctor"]();
         self.ctor_a();
+        self.init_a();
     }
+
+    protected init() { }
+
+    protected init_a() { }
 
     protected ctor_b() { }
 
@@ -153,6 +159,7 @@ export class UIComp extends Component {
 
     onDestroy() {
         let self = this;
+        // if(self.view) self.view.dispose();
         this.dispose();
         this.onExit_b();
         if (self["onExit"]) self["onExit"]();
