@@ -13,13 +13,10 @@ export class UILayer extends UIComp {
 
     protected show(view: GComponent, data?: any): UILayer {
         let self = this;
+        self.setData(data);
         self.initView(view);
         BaseUT.setFitSize(self.view);
-        self.setData(data);
         self.addToLayer();
-        self.onEnter_b();
-        if (self['onEnter']) self['onEnter']();
-        self.onEnter_a();
         return self;
     }
     /**
@@ -31,6 +28,7 @@ export class UILayer extends UIComp {
         let view = ModuleMgr.inst.getGComp(this);
         let script = view.node.getComponent(this);
         script.show(view, data);
+        return script;
     }
 
     /**

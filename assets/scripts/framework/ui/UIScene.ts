@@ -23,6 +23,9 @@ export class UIScene extends UIComp {
 
     onLoad() {
         let self = this;
+        self.onEnter_b();
+        if (self['onEnter']) self['onEnter']();
+        self.onEnter_a();
     }
 
     /**

@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<component size="640,78">
+<component size="640,100">
   <displayList>
-    <image id="n0_o8de" name="n0" src="l3um7" fileName="images/ico_zhuangbei.png" xy="17,0" size="155,155" scale="0.5,0.5"/>
-    <image id="n1_o8de" name="n1" src="l3um3" fileName="images/ico_shandian.png" xy="137,0" size="155,155" scale="0.5,0.5"/>
-    <image id="n2_o8de" name="n2" src="l3um5" fileName="images/ico_shijie.png" xy="282,0" size="155,155" scale="0.5,0.5"/>
-    <image id="n3_o8de" name="n3" src="l3um6" fileName="images/ico_tianfu.png" xy="422,0" size="155,155" scale="0.5,0.5"/>
-    <image id="n4_o8de" name="n4" src="l3um4" fileName="images/ico_shezhi.png" xy="544,0" size="155,155" scale="0.5,0.5"/>
-    <image id="n6_ksfi" name="n6" src="l3um9" fileName="images/img_xiantiao.png" xy="106,0" size="4,78"/>
-    <image id="n7_ksfi" name="n7" src="l3um9" fileName="images/img_xiantiao.png" xy="240,0" size="4,78"/>
-    <image id="n8_ksfi" name="n8" src="l3um9" fileName="images/img_xiantiao.png" xy="392,0" size="4,78"/>
-    <image id="n9_ksfi" name="n9" src="l3um9" fileName="images/img_xiantiao.png" xy="524,0" size="4,78"/>
+    <image id="n11_y75w" name="n11" src="l3um8" fileName="images/img_dingkaung.png" xy="0,0" size="640,100" group="n10_y75w"/>
+    <image id="n0_o8de" name="btn_equip" src="l3um7" fileName="images/ico_zhuangbei.png" xy="11,12" size="95,82" group="n10_y75w"/>
+    <image id="n1_o8de" name="btn_shop" src="l3um3" fileName="images/ico_shandian.png" xy="138,10" size="95,82" group="n10_y75w"/>
+    <image id="n2_o8de" name="btn_home" src="l3um5" fileName="images/ico_shijie.png" xy="272,9" size="95,82" group="n10_y75w"/>
+    <image id="n3_o8de" name="btn_tanlent" src="l3um6" fileName="images/ico_tianfu.png" xy="423,10" size="95,82" group="n10_y75w"/>
+    <image id="n4_o8de" name="btn_setting" src="l3um4" fileName="images/ico_shezhi.png" xy="545,10" size="95,82" group="n10_y75w"/>
+    <image id="n6_ksfi" name="n6" src="l3um9" fileName="images/img_xiantiao.png" xy="118,12" size="8,78" group="n10_y75w"/>
+    <image id="n7_ksfi" name="n7" src="l3um9" fileName="images/img_xiantiao.png" xy="241,12" size="8,78" group="n10_y75w"/>
+    <image id="n8_ksfi" name="n8" src="l3um9" fileName="images/img_xiantiao.png" xy="394,12" size="8,78" group="n10_y75w"/>
+    <image id="n9_ksfi" name="n9" src="l3um9" fileName="images/img_xiantiao.png" xy="534,12" size="8,78" group="n10_y75w"/>
+    <group id="n10_y75w" name="grp_bottom" xy="0,0" size="640,100" advanced="true">
+      <relation target="" sidePair="bottom-bottom"/>
+    </group>
   </displayList>
 </component>

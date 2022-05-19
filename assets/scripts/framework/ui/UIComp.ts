@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, Component, Node, js } from 'cc';
 import { emmiter } from '../base/Emmiter';
 const { ccclass, property } = _decorator;
 import * as fgui from "fairygui-cc";
@@ -61,11 +61,15 @@ export class UIComp extends Component {
      * 初始化view
      */
     protected initView(view: fgui.GComponent) {
+        let self = this;
         if (!this.view) {
             this.view = view;
             this.initViewProperty();
             this.addBtnCLickListener();
         }
+        self.onEnter_b();
+        if (self['onEnter']) self['onEnter']();
+        self.onEnter_a();
     }
 
     /** 初始化属性 */
@@ -75,6 +79,15 @@ export class UIComp extends Component {
         for (let key in children) {
             let obj = children[key];
             this[obj.name] = obj;
+            if (obj instanceof fgui.GComponent) {//如果是组件，添加对应脚本
+                let scriptName = obj.packageItem.name;
+                let isHasScript = js.getClassByName(scriptName);//是否有对应脚本类
+                if (isHasScript) {
+                    let script = obj.node.addComponent(scriptName) as UIComp;
+                    script.initView(obj);
+                }
+
+            }
         }
     }
 
