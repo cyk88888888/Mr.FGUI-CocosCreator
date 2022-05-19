@@ -65,7 +65,7 @@ export class SceneMgr {
     addGCom2GRoot(name: string, isScene?: boolean): fgui.GComponent {
         let newCom = new fgui.GComponent();
         newCom.node.name = name;
-        let size = BaseUT.setSize(newCom);
+        let size = BaseUT.setFitSize(newCom);
         if(isScene){
             newCom.x = (fgui.GRoot.inst.width - size.width)/2;
             newCom.y = (fgui.GRoot.inst.height - size.height)/2;

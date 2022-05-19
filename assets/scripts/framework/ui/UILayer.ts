@@ -16,7 +16,7 @@ export class UILayer extends UIComp {
     protected show(data?: any): UILayer {
         let self = this;
         self.createView();
-        BaseUT.setSize(self.view);
+        BaseUT.setFitSize(self.view);
         self.setData(data);
         self.addToLayer();
         self.onEnter_b();
