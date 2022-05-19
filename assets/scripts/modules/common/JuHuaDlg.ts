@@ -5,7 +5,6 @@ import { UIDlg } from "../../framework/ui/UIDlg";
 
 @ccclass('JuHuaDlg')
 export class JuHuaDlg extends UIDlg {
-    private ctor(){
-        this.pkgName = 'common';
-    }
+     /** 包名称 */
+    public static pkgName: string = 'common';
 }

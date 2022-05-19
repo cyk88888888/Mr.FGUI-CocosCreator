@@ -17,7 +17,7 @@ export class UIScene extends UIComp {
         let self = this;
         if (self.mainClassLayer) {
             self.subLayerMgr.register(self.mainClassLayer);
-            self.mainClassLayer.show({ str: '哈啊哈哈' });
+            self.mainClassLayer.show({ str: '我叫'+  self.mainClassLayer.name});
         }
     }
 

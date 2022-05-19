@@ -1,4 +1,5 @@
 import * as fgui from "fairygui-cc";
+import { UIComp } from "../ui/UIComp";
 
 export class ModuleMgr {
     private static _inst: ModuleMgr;
@@ -8,6 +9,16 @@ export class ModuleMgr {
         }
         return this._inst;
     }
+
+    public getGComp(IClass: typeof UIComp) {
+        let className = IClass.name;
+        let view = fgui.UIPackage.createObject(IClass.pkgName, className).asCom;
+        view.node.name = className;
+        view.node.addComponent(className);
+        return view;
+    }
+
+
 }
 export let moduleInfoMap = {};
 /**

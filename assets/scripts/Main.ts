@@ -13,7 +13,5 @@ export class Main extends Component {
         scaleMode.designHeight_max = 1280;
         SceneMgr.inst.push('LoadingScene',{msg:'我是LaodingScene'});
     }
-    
-
 }
 

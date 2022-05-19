@@ -4,18 +4,16 @@ import * as fgui from "fairygui-cc";
 import { SceneMgr } from '../mgr/SceneMgr';
 import { scaleMode } from '../base/ScaleMode';
 import { BaseUT } from '../base/BaseUtil';
+import { ModuleMgr } from '../mgr/ModuleMgr';
+import { GComponent } from 'fairygui-cc/GComponent';
 const { ccclass, property } = _decorator;
 
 @ccclass('UILayer')
 export class UILayer extends UIComp {
-    /**
-    * 显示界面
-    * @param data 
-    * @returns 
-    */
-    protected show(data?: any): UILayer {
+
+    protected show(view: GComponent, data?: any): UILayer {
         let self = this;
-        self.createView();
+        self.initView(view);
         BaseUT.setFitSize(self.view);
         self.setData(data);
         self.addToLayer();
@@ -24,20 +22,17 @@ export class UILayer extends UIComp {
         self.onEnter_a();
         return self;
     }
-
-    public static show(data?: any) {
-        // (new this).show();
-        let script = this.addScript();
-        script.show(data);
-    }
-
     /**
-     * 添加脚本
-     * @returns
-     */
-    protected static addScript() {
-        return SceneMgr.inst.layer.node.addComponent(this.name) as UILayer;
+    * 显示界面
+    * @param data 
+    * @returns 
+   */
+    public static show(data?: any) {
+        let view = ModuleMgr.inst.getGComp(this);
+        let script = view.node.getComponent(this);
+        script.show(view, data);
     }
+
     /**
      * 将view添加到layer层级容器
      */
