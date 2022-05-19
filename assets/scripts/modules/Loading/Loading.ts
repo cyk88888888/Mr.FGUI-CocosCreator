@@ -15,7 +15,6 @@ export class Loading extends UILayer {
         let self = this;
         self._progress = self.view.getChild('progress') as fgui.GProgressBar;
         self.setInterval(self.onInterval, 10);
-        fgui.G
     }
 
     private onInterval() {
