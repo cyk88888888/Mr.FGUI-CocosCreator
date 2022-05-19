@@ -1,6 +1,9 @@
 import { _decorator, Component, Node } from 'cc';
 import { UIComp } from './UIComp';
+import * as fgui from "fairygui-cc";
 import { SceneMgr } from '../mgr/SceneMgr';
+import { scaleMode } from '../base/ScaleMode';
+import { BaseUT } from '../base/BaseUtil';
 const { ccclass, property } = _decorator;
 
 @ccclass('UILayer')
@@ -13,10 +16,11 @@ export class UILayer extends UIComp {
     protected show(data?: any): UILayer {
         let self = this;
         self.createView();
+        BaseUT.setSize(self.view);
         self.setData(data);
         self.addToLayer();
         self.onEnter_b();
-        if(self['onEnter']) self['onEnter']();
+        if (self['onEnter']) self['onEnter']();
         self.onEnter_a();
         return self;
     }

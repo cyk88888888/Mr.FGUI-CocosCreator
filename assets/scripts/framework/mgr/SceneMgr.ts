@@ -1,5 +1,7 @@
 import { AssetManager } from "cc";
 import * as fgui from "fairygui-cc";
+import { BaseUT } from "../base/BaseUtil";
+import { scaleMode } from "../base/ScaleMode";
 import { UIScene } from "../ui/UIScene";
 import { moduleInfoMap } from "./ModuleMgr";
 import { ResMgr } from "./ResMgr";
@@ -63,7 +65,11 @@ export class SceneMgr {
     addGCom2GRoot(name: string, isScene?: boolean): fgui.GComponent {
         let newCom = new fgui.GComponent();
         newCom.node.name = name;
-        newCom.setSize(fgui.GRoot.inst.width, fgui.GRoot.inst.height);
+        let size = BaseUT.setSize(newCom);
+        if(isScene){
+            newCom.x = (fgui.GRoot.inst.width - size.width)/2;
+            newCom.y = (fgui.GRoot.inst.height - size.height)/2;
+        }
         let parent = isScene ? fgui.GRoot.inst : this.curScene;
         parent.addChild(newCom);
         return newCom;
