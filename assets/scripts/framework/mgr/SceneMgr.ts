@@ -12,7 +12,7 @@ export class SceneMgr {
     public msg: fgui.GComponent;
     public topLayer: fgui.GComponent;
     public curScene: fgui.GComponent;
-    private _popArr: string[];
+    private _popArr: UIScene[];
     public static get inst() {
         if (!this._inst) {
             this._inst = new SceneMgr();

@@ -9,10 +9,6 @@ export class BottomTabLayer extends UILayer {
     private onEnter(){
         console.log('进入BottomTabLayer~~~~~');
     }
-
-    // private _tap_grp_bottom(){
-    //     console.log('grp_bottom');
-    // }
     
     private _tap_btn_equip(){
         console.log("equip");

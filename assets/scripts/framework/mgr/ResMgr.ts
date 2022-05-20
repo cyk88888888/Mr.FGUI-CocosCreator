@@ -30,21 +30,31 @@ export class ResMgr {
         if (!this._juHuaDlg && fgui.UIPackage.getByName('common')) {
             this._juHuaDlg = JuHuaDlg.show() as JuHuaDlg;
         }
+        
+        let loadSucc = (resName: string) => {
+            hasLoadResCount++;
+            console.log('resName: ' + resName + '加载完毕');
+            if (itorCb) itorCb.call(ctx, resName, hasLoadResCount);
+            if (hasLoadResCount == totLen) {
+                this.closeJuHuaDlg();
+                if (cb) cb.call(ctx);
+            }
+        }
+
         for (let i = 0; i < totLen; i++) {
             let resName = resList[i];
-            fgui.UIPackage.loadPackage(resName, (err, pkg) => {//加载资源包
-                if (!err) {
-                    hasLoadResCount++;
-                    console.log('resName: ' + resName + '加载完毕');
-                    if (itorCb) itorCb.call(ctx, resName, hasLoadResCount);
-                    if (hasLoadResCount == totLen) {
-                        this.closeJuHuaDlg();
-                        if (cb) cb.call(ctx);
+            let pkgName = resName.split('/')[1].toLowerCase();
+            if (fgui.UIPackage.getByName(pkgName)) {//缓存已有
+                loadSucc(resName);
+            } else {
+                fgui.UIPackage.loadPackage(resName, (err, pkg) => {//加载资源包
+                    if (!err) {
+                        loadSucc(resName);
+                    } else {
+                        console.log('resName: ' + resName + '加载失败');
                     }
-                } else {
-                    console.log('resName: ' + resName + '加载失败');
-                }
-            });
+                });
+            }
         }
     }
 
