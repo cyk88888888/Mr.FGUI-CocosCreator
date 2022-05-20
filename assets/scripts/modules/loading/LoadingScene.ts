@@ -1,4 +1,4 @@
-import { _decorator, Component, Node } from 'cc';
+import { _decorator } from 'cc';
 const { ccclass, property } = _decorator;
 import * as fgui from "fairygui-cc";
 import { registerModule } from '../../framework/mgr/ModuleMgr';
