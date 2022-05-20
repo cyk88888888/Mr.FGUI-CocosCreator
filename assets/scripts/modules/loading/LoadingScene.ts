@@ -16,5 +16,5 @@ export class LoadingScene extends UIScene {
         }
     }
 }
-registerModule(LoadingScene, ['UI/Common', 'UI/Loading'], false);
+registerModule(LoadingScene, ['UI/Loading']);
 

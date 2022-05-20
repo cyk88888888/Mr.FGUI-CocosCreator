@@ -86,7 +86,6 @@ export class UIComp extends Component {
                     let script = obj.node.addComponent(scriptName) as UIComp;
                     script.initView(obj);
                 }
-
             }
         }
     }

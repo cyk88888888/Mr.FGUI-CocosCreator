@@ -2,7 +2,6 @@ import { _decorator, Component, Node } from 'cc';
 import { UIComp } from './UIComp';
 import * as fgui from "fairygui-cc";
 import { SceneMgr } from '../mgr/SceneMgr';
-import { scaleMode } from '../base/ScaleMode';
 import { BaseUT } from '../base/BaseUtil';
 import { ModuleMgr } from '../mgr/ModuleMgr';
 import { GComponent } from 'fairygui-cc/GComponent';

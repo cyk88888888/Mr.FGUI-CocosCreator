@@ -1,4 +1,5 @@
 import * as fgui from "fairygui-cc";
+import { JuHuaDlg } from "../../modules/common/JuHuaDlg";
 
 export class ResMgr {
     private static _inst: ResMgr;
@@ -9,6 +10,13 @@ export class ResMgr {
         return this._inst;
     }
 
+    private _juHuaDlg: JuHuaDlg;
+    private closeJuHuaDlg() {
+        if (this._juHuaDlg) {
+            this._juHuaDlg.close();
+            this._juHuaDlg = null;
+        }
+    }
     /**
      * 加载资源
      * @param resList 资源列表
@@ -19,13 +27,22 @@ export class ResMgr {
     public loadWithItor(resList: string[], itorCb?: Function, cb?: Function, ctx?: any) {
         let totLen = resList.length;//待下载总个数
         let hasLoadResCount: number = 0;//已下载个数
+        if (!this._juHuaDlg && fgui.UIPackage.getByName('common')) {
+            this._juHuaDlg = JuHuaDlg.show() as JuHuaDlg;
+        }
         for (let i = 0; i < totLen; i++) {
             let resName = resList[i];
-            fgui.UIPackage.loadPackage(resName, function () {//加载资源包
-                hasLoadResCount++;
-                if (itorCb) itorCb.call(ctx, resName, hasLoadResCount);
-                if (hasLoadResCount == totLen) {
-                    if (cb) cb.call(ctx);
+            fgui.UIPackage.loadPackage(resName, (err, pkg) => {//加载资源包
+                if (!err) {
+                    hasLoadResCount++;
+                    console.log('resName: ' + resName + '加载完毕');
+                    if (itorCb) itorCb.call(ctx, resName, hasLoadResCount);
+                    if (hasLoadResCount == totLen) {
+                        this.closeJuHuaDlg();
+                        if (cb) cb.call(ctx);
+                    }
+                } else {
+                    console.log('resName: ' + resName + '加载失败');
                 }
             });
         }

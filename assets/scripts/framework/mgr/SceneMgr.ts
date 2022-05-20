@@ -10,6 +10,7 @@ export class SceneMgr {
     public layer: fgui.GComponent;
     public dlg: fgui.GComponent;
     public msg: fgui.GComponent;
+    public topLayer: fgui.GComponent;
     public curScene: fgui.GComponent;
     private _popArr: string[];
     public static get inst() {
@@ -35,8 +36,8 @@ export class SceneMgr {
     }
 
     private onProgress(resName: string, hasLoadResCount: number) {
-        console.log('resName: ' + resName);
-        console.log('hasLoadResCount: ' + hasLoadResCount);
+        // console.log('resName: ' + resName);
+        // console.log('hasLoadResCount: ' + hasLoadResCount);
     }
 
     private onUILoaded(sceneName: string, data: any) {
@@ -55,6 +56,7 @@ export class SceneMgr {
         self.layer = self.addGCom2GRoot('UILayer');
         self.dlg = self.addGCom2GRoot('UIDlg');
         self.msg = self.addGCom2GRoot('UIMsg');
+        self.topLayer = self.addGCom2GRoot('UITopLayer');
     }
 
     /**
