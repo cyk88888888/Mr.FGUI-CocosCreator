@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="640,100" opaque="false">
   <displayList>
-    <image id="n11_y75w" name="n11" src="l3um8" fileName="images/img_dingkaung.png" xy="0,0" size="640,100" group="n10_y75w"/>
-    <image id="n0_o8de" name="btn_equip" src="l3um7" fileName="images/ico_zhuangbei.png" xy="11,12" size="95,82" group="n10_y75w"/>
-    <image id="n1_o8de" name="btn_shop" src="l3um3" fileName="images/ico_shandian.png" xy="138,10" size="95,82" group="n10_y75w"/>
-    <image id="n2_o8de" name="btn_home" src="l3um5" fileName="images/ico_shijie.png" xy="272,9" size="95,82" group="n10_y75w"/>
-    <image id="n3_o8de" name="btn_tanlent" src="l3um6" fileName="images/ico_tianfu.png" xy="423,10" size="95,82" group="n10_y75w"/>
-    <image id="n4_o8de" name="btn_setting" src="l3um4" fileName="images/ico_shezhi.png" xy="545,10" size="95,82" group="n10_y75w"/>
-    <image id="n6_ksfi" name="n6" src="l3um9" fileName="images/img_xiantiao.png" xy="118,12" size="8,78" group="n10_y75w"/>
-    <image id="n7_ksfi" name="n7" src="l3um9" fileName="images/img_xiantiao.png" xy="241,12" size="8,78" group="n10_y75w"/>
-    <image id="n8_ksfi" name="n8" src="l3um9" fileName="images/img_xiantiao.png" xy="394,12" size="8,78" group="n10_y75w"/>
-    <image id="n9_ksfi" name="n9" src="l3um9" fileName="images/img_xiantiao.png" xy="534,12" size="8,78" group="n10_y75w"/>
-    <group id="n10_y75w" name="grp_bottom" xy="0,0" size="640,100" advanced="true">
+    <image id="n13_h1du" name="n13" src="h1dug" fileName="images/c1_png.png" xy="0,0" size="640,100">
+      <relation target="" sidePair="bottom-bottom"/>
+    </image>
+    <image id="n0_o8de" name="btn_equip" src="l3um7" fileName="images/ico_zhuangbei.png" xy="23,5" size="90,90" group="n10_y75w"/>
+    <image id="n6_ksfi" name="n6" src="l3um9" fileName="images/img_xiantiao.png" xy="127,11" size="8,78" group="n10_y75w"/>
+    <image id="n1_o8de" name="btn_shop" src="l3um3" fileName="images/ico_shandian.png" xy="149,5" size="90,90" group="n10_y75w"/>
+    <image id="n7_ksfi" name="n7" src="l3um9" fileName="images/img_xiantiao.png" xy="253,11" size="8,78" group="n10_y75w"/>
+    <image id="n2_o8de" name="btn_home" src="l3um5" fileName="images/ico_shijie.png" xy="275,5" size="90,90" group="n10_y75w"/>
+    <image id="n8_ksfi" name="n8" src="l3um9" fileName="images/img_xiantiao.png" xy="379,11" size="8,78" group="n10_y75w"/>
+    <image id="n3_o8de" name="btn_tanlent" src="l3um6" fileName="images/ico_tianfu.png" xy="401,5" size="90,90" group="n10_y75w"/>
+    <image id="n9_ksfi" name="n9" src="l3um9" fileName="images/img_xiantiao.png" xy="505,11" size="8,78" group="n10_y75w"/>
+    <image id="n4_o8de" name="btn_setting" src="l3um4" fileName="images/ico_shezhi.png" xy="527,5" size="90,90" group="n10_y75w"/>
+    <group id="n10_y75w" name="grp_bottom" xy="23,5" size="594,90" advanced="true" layout="hz" colGap="14">
       <relation target="" sidePair="bottom-bottom"/>
     </group>
   </displayList>

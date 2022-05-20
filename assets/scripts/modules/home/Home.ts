@@ -12,14 +12,10 @@ export class Home extends UILayer {
         let self = this;
         self.btn_close;
         self.img_equip;
-        self.img_equip.onClick(function () {
-            console.log('点击测试')
-        }, self);
     }
 
     private _tap_btn_close(e) {
         console.log('点击关闭按钮');
     }
-
 }
 

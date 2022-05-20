@@ -10,28 +10,28 @@ export class BottomTabLayer extends UILayer {
         console.log('进入BottomTabLayer~~~~~');
     }
 
-    private _tap_grp_bottom(){
-        console.log('grp_bottom');
-    }
+    // private _tap_grp_bottom(){
+    //     console.log('grp_bottom');
+    // }
     
-    // private _tap_btn_equip(){
-    //     console.log("equip");
-    // }
+    private _tap_btn_equip(){
+        console.log("equip");
+    } 
 
-    // private _tap_btn_shop(){
-    //     console.log("shop");
-    // }
+    private _tap_btn_shop(){
+        console.log("shop");
+    }
 
-    // private _tap_btn_home(){
-    //     console.log("home");
-    // }
+    private _tap_btn_home(){
+        console.log("home");
+    }
 
-    // private _tap_btn_tanlent(){
-    //     console.log("tanlent");
-    // }
+    private _tap_btn_tanlent(){
+        console.log("tanlent");
+    }
 
-    // private _tap_btn_setting(){
-    //     console.log("setting");
-    // }
+    private _tap_btn_setting(){
+        console.log("setting");
+    }
 }
 

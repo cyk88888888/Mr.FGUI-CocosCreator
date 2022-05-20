@@ -4,9 +4,5 @@
     <image id="n0_l3um" name="n0" src="l3um2" fileName="images/h_bg.jpg" xy="0,-53" size="640,1386">
       <relation target="" sidePair="center-center,middle-middle"/>
     </image>
-    <component id="n2_h1du" name="btn_close" src="h1du6" fileName="components/CloseButton.xml" pkg="g2zhtj9b" xy="290,603">
-      <relation target="" sidePair="center-center,middle-middle"/>
-    </component>
-    <image id="n3_h1du" name="img_equip" src="l3um3" fileName="images/ico_shandian.png" xy="242,324"/>
   </displayList>
 </component>

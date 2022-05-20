@@ -14,6 +14,8 @@
     <image id="l3uma" name="z_suotou.png" path="/images/"/>
     <component id="o8dec" name="BottomTabLayer.xml" path="/" exported="true"/>
     <component id="h1dud" name="Button1.xml" path="/"/>
+    <image id="h1duf" name="c3_png.png" path="/images/" scale="9grid" scale9grid="23,5,46,10"/>
+    <image id="h1dug" name="c1_png.png" path="/images/" scale="9grid" scale9grid="23,5,46,10"/>
   </resources>
   <publish name=""/>
 </packageDescription>
