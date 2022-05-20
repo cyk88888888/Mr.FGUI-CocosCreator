@@ -23,5 +23,5 @@ export class HomeScene extends UIScene {
         bottom;
     }
 }
-registerModule('HomeScene', ['UI/Home'], true);
+registerModule(HomeScene, ['UI/Home'], true);
 

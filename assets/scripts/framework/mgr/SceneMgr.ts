@@ -19,7 +19,8 @@ export class SceneMgr {
         return this._inst;
     }
 
-    public push(sceneName: string, data?: any) {
+    public push(scene: string | typeof UIScene, data?: any) {
+        let sceneName = typeof scene === 'string' ? scene : scene.name;
         let sceneInfo = moduleInfoMap[sceneName];
         if (!sceneInfo) {
             console.error('未注册模块：' + sceneName)
@@ -28,7 +29,7 @@ export class SceneMgr {
         if (!this._popArr) {
             this._popArr = [];
         }
-        ResMgr.inst.loadWithItor(sceneInfo.resList, this.onProgress, () => {
+        ResMgr.inst.loadWithItor(sceneInfo.preResList, this.onProgress, () => {
             this.onUILoaded(sceneName, data);
         });
     }

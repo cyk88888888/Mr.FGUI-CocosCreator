@@ -1,5 +1,7 @@
 import * as fgui from "fairygui-cc";
+import { ModuleCfgInfo } from "../base/ModuleCfgInfo";
 import { UIComp } from "../ui/UIComp";
+import { UIScene } from "../ui/UIScene";
 
 export class ModuleMgr {
     private static _inst: ModuleMgr;
@@ -20,14 +22,17 @@ export class ModuleMgr {
 
 
 }
-export let moduleInfoMap = {};
+export let moduleInfoMap: { [sceneName: string]: ModuleCfgInfo } = {};
 /**
  * 注册场景模块
  * @param sceneName 场景名称
  * @param resList 预加载资源列表
  * @param cacheEnabled 是否开启缓存模式
  */
-export function registerModule(sceneName: string, resList: string[], cacheEnabled?: boolean) {
-    let obj = { sceneName: sceneName, cacheEnabled: cacheEnabled, resList: resList };
-    moduleInfoMap[sceneName] = obj;
+export function registerModule(targetClass: typeof UIScene, preResList: string[], cacheEnabled?: boolean) {
+    let moduleCfgInfo = new ModuleCfgInfo();
+    moduleCfgInfo.targetClass = targetClass;
+    moduleCfgInfo.cacheEnabled = cacheEnabled;
+    moduleCfgInfo.preResList = preResList;
+    moduleInfoMap[targetClass.name] = moduleCfgInfo;
 }
