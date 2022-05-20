@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<component size="640,100">
+<component size="640,100" opaque="false">
   <displayList>
     <image id="n11_y75w" name="n11" src="l3um8" fileName="images/img_dingkaung.png" xy="0,0" size="640,100" group="n10_y75w"/>
     <image id="n0_o8de" name="btn_equip" src="l3um7" fileName="images/ico_zhuangbei.png" xy="11,12" size="95,82" group="n10_y75w"/>

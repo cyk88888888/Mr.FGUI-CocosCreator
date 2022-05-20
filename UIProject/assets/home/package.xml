@@ -13,6 +13,7 @@
     <image id="l3um9" name="img_xiantiao.png" path="/images/"/>
     <image id="l3uma" name="z_suotou.png" path="/images/"/>
     <component id="o8dec" name="BottomTabLayer.xml" path="/" exported="true"/>
+    <component id="h1dud" name="Button1.xml" path="/"/>
   </resources>
   <publish name=""/>
 </packageDescription>
