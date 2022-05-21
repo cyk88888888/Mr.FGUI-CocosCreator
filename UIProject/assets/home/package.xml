@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <packageDescription id="4n4l5lox">
   <resources>
-    <component id="l3um0" name="Home.xml" path="/" exported="true"/>
+    <component id="l3um0" name="HomeLayer.xml" path="/" exported="true"/>
     <image id="l3um2" name="h_bg.jpg" path="/images/"/>
     <image id="l3um3" name="ico_shandian.png" path="/images/"/>
     <image id="l3um4" name="ico_shezhi.png" path="/images/"/>

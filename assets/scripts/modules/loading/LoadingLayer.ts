@@ -4,8 +4,8 @@ import * as fgui from "fairygui-cc";
 import { ResMgr } from '../../framework/mgr/ResMgr';
 import { SceneMgr } from '../../framework/mgr/SceneMgr';
 import { UILayer } from '../../framework/ui/UILayer';
-@ccclass('Loading')
-export class Loading extends UILayer {
+@ccclass('LoadingLayer')
+export class LoadingLayer extends UILayer {
     /** 包名称 */
     public static pkgName: string = 'loading';
     private progress: fgui.GProgressBar;

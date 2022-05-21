@@ -4,12 +4,12 @@ import * as fgui from "fairygui-cc";
 import { registerModule } from '../../framework/mgr/ModuleMgr';
 import { UIScene } from '../../framework/ui/UIScene';
 import { BottomTabLayer } from './BottomTabLayer';
-import { Home } from './Home';
+import { HomeLayer } from './HomeLayer';
 @ccclass('HomeScene')
 export class HomeScene extends UIScene {
     private ctor() {
         let self = this;
-        self.mainClassLayer = Home;
+        self.mainClassLayer = HomeLayer;
         let subLayerMgr = self.subLayerMgr;
         let classList = [];
         for (let i = 0; i < classList.length; i++) {

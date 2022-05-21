@@ -3,12 +3,12 @@ const { ccclass, property } = _decorator;
 import * as fgui from "fairygui-cc";
 import { registerModule } from '../../framework/mgr/ModuleMgr';
 import { UIScene } from '../../framework/ui/UIScene';
-import { Loading } from './Loading';
+import { LoadingLayer } from './LoadingLayer';
 @ccclass('LoadingScene')
 export class LoadingScene extends UIScene {
     private ctor() {
         let self = this;
-        self.mainClassLayer = Loading;
+        self.mainClassLayer = LoadingLayer;
         let subLayerMgr = self.subLayerMgr;
         let classList = [];
         for (let i = 0; i < classList.length; i++) {

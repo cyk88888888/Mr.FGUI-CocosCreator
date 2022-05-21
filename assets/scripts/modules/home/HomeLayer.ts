@@ -2,8 +2,8 @@ import { _decorator, Component, Node } from 'cc';
 const { ccclass, property } = _decorator;
 import * as fgui from "fairygui-cc";
 import { UILayer } from '../../framework/ui/UILayer';
-@ccclass('Home')
-export class Home extends UILayer {
+@ccclass('HomeLayer')
+export class HomeLayer extends UILayer {
     /** 包名称 */
     public static pkgName: string = 'home';
     private btn_close: fgui.GButton;
