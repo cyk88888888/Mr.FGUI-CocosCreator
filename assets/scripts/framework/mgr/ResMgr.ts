@@ -51,7 +51,7 @@ export class ResMgr {
                     if (!err) {
                         loadSucc(resName);
                     } else {
-                        console.log('resName: ' + resName + '加载失败');
+                        console.error('resName: ' + resName + '加载失败');
                     }
                 });
             }

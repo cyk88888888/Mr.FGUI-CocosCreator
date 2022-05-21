@@ -32,6 +32,7 @@ export let moduleInfoMap: { [sceneName: string]: ModuleCfgInfo } = {};
 export function registerModule(targetClass: typeof UIScene, preResList: string[], cacheEnabled?: boolean) {
     let moduleCfgInfo = new ModuleCfgInfo();
     moduleCfgInfo.targetClass = targetClass;
+    moduleCfgInfo.name = targetClass.name;
     moduleCfgInfo.cacheEnabled = cacheEnabled;
     moduleCfgInfo.preResList = preResList;
     moduleInfoMap[targetClass.name] = moduleCfgInfo;

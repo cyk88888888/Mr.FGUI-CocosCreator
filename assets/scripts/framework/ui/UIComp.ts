@@ -79,7 +79,8 @@ export class UIComp extends Component {
         for (let key in children) {
             let obj = children[key];
             this[obj.name] = obj;
-            if (obj instanceof fgui.GComponent) {//如果是组件，添加对应脚本
+            obj.node.name = obj.name + ':  ' + obj.node.name;
+            if (obj instanceof fgui.GComponent && obj.packageItem) {//如果是组件，添加对应脚本
                 let scriptName = obj.packageItem.name;
                 let isHasScript = js.getClassByName(scriptName);//是否有对应脚本类
                 if (isHasScript) {

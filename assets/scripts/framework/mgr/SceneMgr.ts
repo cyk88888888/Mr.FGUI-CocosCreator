@@ -1,6 +1,7 @@
 import { AssetManager } from "cc";
 import * as fgui from "fairygui-cc";
 import { BaseUT } from "../base/BaseUtil";
+import { ModuleCfgInfo } from "../base/ModuleCfgInfo";
 import { UIScene } from "../ui/UIScene";
 import { moduleInfoMap } from "./ModuleMgr";
 import { ResMgr } from "./ResMgr";
@@ -22,16 +23,16 @@ export class SceneMgr {
 
     public push(scene: string | typeof UIScene, data?: any) {
         let sceneName = typeof scene === 'string' ? scene : scene.name;
-        let sceneInfo = moduleInfoMap[sceneName];
-        if (!sceneInfo) {
+        let moduleInfo = moduleInfoMap[sceneName];
+        if (!moduleInfo) {
             console.error('未注册模块：' + sceneName)
             return;
         }
         if (!this._popArr) {
             this._popArr = [];
         }
-        ResMgr.inst.loadWithItor(sceneInfo.preResList, this.onProgress, () => {
-            this.onUILoaded(sceneName, data);
+        ResMgr.inst.loadWithItor(moduleInfo.preResList, this.onProgress, () => {
+            this.onUILoaded(moduleInfo, data);
         });
     }
 
@@ -40,11 +41,12 @@ export class SceneMgr {
         // console.log('hasLoadResCount: ' + hasLoadResCount);
     }
 
-    private onUILoaded(sceneName: string, data: any) {
+    private onUILoaded(moduleInfo: ModuleCfgInfo, data: any) {
         if (this.curScene) {//销毁上个场景
             this.curScene.node.destroyAllChildren();
             this.curScene.node.destroy();
         }
+        let sceneName = moduleInfo.name;
         this.curScene = this.addGCom2GRoot(sceneName, true);
         this.initLayer();
         let newScene = this.curScene.node.addComponent(sceneName) as UIScene;//添加场景脚本

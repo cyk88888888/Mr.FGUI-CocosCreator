@@ -61,7 +61,19 @@ const app = new Vue({
                 for (let component of node._components) {
                     let schema = NEX_CONFIG.componentsSchema[component.__classname__];
                     if (schema) {
-                        node[schema.key] = node.getComponent(schema.key);
+                        if(schema.key == 'cc.Sprite'){
+                            for (let index = 0; index < node._components.length; index++) {
+                                const element = node._components[index];
+                                let matchObj = element.name.match(/<(\S*)>/);
+                                if(matchObj[1] == 'Image'){
+                                    node[schema.key] = element;
+                                    break;
+                                }
+                            }
+                            break;
+                        }else{
+                            node[schema.key] = node.getComponent(schema.key);
+                        }
                         for (let i = 0; i < schema.rows.length; i++) {
                             if (schema.rows[i].type === 'color') {
                                 if (!node[schema.key][schema.rows[i].key]) {
