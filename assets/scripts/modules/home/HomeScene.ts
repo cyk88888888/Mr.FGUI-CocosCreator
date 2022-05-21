@@ -21,5 +21,5 @@ export class HomeScene extends UIScene {
         let bottom = BottomTabLayer.show();
     }
 }
-registerModule(HomeScene, ['UI/home'], true);
+registerModule(HomeScene, ['ui/home'], true);
 

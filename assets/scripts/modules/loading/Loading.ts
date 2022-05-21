@@ -14,7 +14,7 @@ export class Loading extends UILayer {
     private _preResList: string[];
     private _toPercent: number = 0;
     protected onEnter() {
-        this._preResList = ['UI/Common'];
+        this._preResList = ['ui/common'];
         let curDownLoadNum: number = 0;//当前已下载个数
         ResMgr.inst.loadWithItor(this._preResList, () => {
             curDownLoadNum++;

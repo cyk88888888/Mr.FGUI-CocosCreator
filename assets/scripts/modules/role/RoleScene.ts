@@ -15,5 +15,5 @@ export class RoleScene extends UIScene {
         }
     }
 }
-registerModule(RoleScene, ['UI/role']);
+registerModule(RoleScene, ['ui/role']);
 
