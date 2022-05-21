@@ -10,7 +10,7 @@ export class SceneMgr {
     public layer: fgui.GComponent;
     public dlg: fgui.GComponent;
     public msg: fgui.GComponent;
-    public topLayer: fgui.GComponent;
+    public menuLayer: fgui.GComponent;
     public curScene: fgui.GComponent;
     private _popArr: UIScene[];
     public static get inst() {
@@ -54,9 +54,9 @@ export class SceneMgr {
     initLayer() {
         let self = this;
         self.layer = self.addGCom2GRoot('UILayer');
+        self.menuLayer = self.addGCom2GRoot('UIMenuLayer');
         self.dlg = self.addGCom2GRoot('UIDlg');
         self.msg = self.addGCom2GRoot('UIMsg');
-        self.topLayer = self.addGCom2GRoot('UITopLayer');
     }
 
     /**
