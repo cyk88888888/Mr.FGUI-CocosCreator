@@ -67,4 +67,10 @@ export class ResMgr {
     public load(resList: string[], cb?: Function, ctx?: any) {
         this.loadWithItor(resList, null, cb, ctx);
     }
+
+    public releaseRes(res: string | string[]){
+        if(typeof res === 'string'){
+
+        }
+    }
 }
