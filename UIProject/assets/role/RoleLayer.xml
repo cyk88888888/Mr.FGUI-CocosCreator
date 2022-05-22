@@ -9,8 +9,8 @@
       <item icon="ui://gkk0ykz2jtzd2"/>
       <item icon="ui://gkk0ykz2jtzd3"/>
     </list>
-    <text id="n2" name="n2" xy="87,767" size="298,39" fontSize="28" color="#ffffff" text="Index of the middle is:"/>
+    <text id="n2" name="n2" xy="87,767" size="299,39" fontSize="28" color="#ffffff" text="Index of the middle is:"/>
     <text id="n3" name="lbl_index" xy="416,766" size="145,32" fontSize="28" color="#ffffff" autoSize="height" text=""/>
-    <component id="n4_jtzd" name="n4" src="jtzd8" fileName="components/btnBack.xml" pkg="g2zhtj9b" xy="11,14"/>
+    <component id="n4_jtzd" name="btn_back" src="jtzd8" fileName="components/btnBack.xml" pkg="g2zhtj9b" xy="11,14"/>
   </displayList>
 </component>

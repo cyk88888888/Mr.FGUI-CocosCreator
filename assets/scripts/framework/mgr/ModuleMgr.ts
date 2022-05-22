@@ -12,6 +12,11 @@ export class ModuleMgr {
         return this._inst;
     }
 
+    /**
+     * 获取对应类的显示view
+     * @param IClass 
+     * @returns 
+     */
     public getGComp(IClass: typeof UIComp) {
         let className = IClass.name;
         let view = fgui.UIPackage.createObject(IClass.pkgName, className).asCom;

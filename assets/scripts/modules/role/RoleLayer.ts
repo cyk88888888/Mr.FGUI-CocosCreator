@@ -16,7 +16,7 @@ export class RoleLayer extends UILayer {
         this.doSpecialEffect();
     }
 
-    private doSpecialEffect(): void {
+    private doSpecialEffect() {
         //change the scale according to the distance to the middle
         var midX: number = this.list.scrollPane.posX + this.list.viewWidth / 2;
         var cnt: number = this.list.numChildren;
@@ -34,9 +34,14 @@ export class RoleLayer extends UILayer {
         this.lbl_index.text = "" + ((this.list.getFirstChildInView() + 1) % this.list.numItems);
     }
 
-    private renderListItem(index: number, item: fgui.GButton): void {
+    private renderListItem(index: number, item: fgui.GButton) {
         item.setPivot(0.5, 0.5);
         item.icon = fgui.UIPackage.getItemURL(RoleLayer.pkgName, "n" + (index + 1));
+    }
+
+    private _tap_btn_back(){
+        console.log('点击了返回按钮');
+        
     }
 }
 
