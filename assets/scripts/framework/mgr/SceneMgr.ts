@@ -13,12 +13,19 @@ export class SceneMgr {
     public msg: fgui.GComponent;
     public menuLayer: fgui.GComponent;
     public curScene: fgui.GComponent;
+    /** 主场景名称*/
+    public mainScene: string;
     private _popArr: UIScene[];
     public static get inst() {
         if (!this._inst) {
             this._inst = new SceneMgr();
+            this._inst._popArr = [];
         }
         return this._inst;
+    }
+
+    public run(scene: string | typeof UIScene, data?: any) {
+
     }
 
     public push(scene: string | typeof UIScene, data?: any) {
@@ -28,13 +35,11 @@ export class SceneMgr {
             console.error('未注册模块：' + sceneName)
             return;
         }
-        if (!this._popArr) {
-            this._popArr = [];
-        }
         ResMgr.inst.loadWithItor(moduleInfo.preResList, this.onProgress, () => {
             this.onUILoaded(moduleInfo, data);
         });
     }
+    
 
     private onProgress(resName: string, hasLoadResCount: number) {
         // console.log('resName: ' + resName);
@@ -42,7 +47,7 @@ export class SceneMgr {
     }
 
     private onUILoaded(moduleInfo: ModuleCfgInfo, data: any) {
-        if (this.curScene) {//销毁上个场景
+        if (!moduleInfo.cacheEnabled && this.curScene) {//销毁上个场景
             this.curScene.node.destroyAllChildren();
             this.curScene.node.destroy();
         }
@@ -79,6 +84,9 @@ export class SceneMgr {
         return newCom;
     }
 
+    /** 返回到上个场景*/
+    public pop() {
 
+    }
 
 }

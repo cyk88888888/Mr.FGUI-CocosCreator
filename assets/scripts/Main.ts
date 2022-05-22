@@ -7,6 +7,7 @@ import { LoadingScene } from './modules/loading/LoadingScene';
 @ccclass('Main')
 export class Main extends Component {
     onLoad() {
+        SceneMgr.inst.mainScene = 'HomeScene';
         fgui.GRoot.create();
         scaleMode.designWidth = 640;
         scaleMode.designHeight = 1280;
