@@ -1,3 +1,8 @@
+/*
+ * @Description: 组件基类
+ * @Author: CYK
+ * @Date: 2022-05-20 09:53:17
+ */
 
 import { _decorator, Component, Node, js } from 'cc';
 import { emmiter } from '../base/Emmiter';

@@ -1,3 +1,8 @@
+/*
+ * @Description: 场景管理器
+ * @Author: CYK
+ * @Date: 2022-05-23 09:27:58
+ */
 import { AssetManager } from "cc";
 import * as fgui from "fairygui-cc";
 import { BaseUT } from "../base/BaseUtil";

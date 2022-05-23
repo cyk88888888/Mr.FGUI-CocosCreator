@@ -1,3 +1,8 @@
+/*
+ * @Description: 
+ * @Author: CYK
+ * @Date: 2022-05-19 11:39:05
+ */
 import { Size } from "cc";
 import * as fgui from "fairygui-cc";
 import { scaleMode } from "./ScaleMode";

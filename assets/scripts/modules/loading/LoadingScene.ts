@@ -1,3 +1,8 @@
+/*
+ * @Description: loading登入页场景
+ * @Author: CYK
+ * @Date: 2022-05-20 09:53:18
+ */
 import { _decorator } from 'cc';
 const { ccclass, property } = _decorator;
 import * as fgui from "fairygui-cc";

@@ -1,8 +1,10 @@
+/*
+ * @Description: 资源管理器
+ * @Author: CYK
+ * @Date: 2022-05-17 17:14:26
+ */
 import * as fgui from "fairygui-cc";
 import { JuHuaDlg } from "../../modules/common/JuHuaDlg";
-/** 
- * 资源管理类
- */
 export class ResMgr {
     private static _inst: ResMgr;
     public static get inst() {

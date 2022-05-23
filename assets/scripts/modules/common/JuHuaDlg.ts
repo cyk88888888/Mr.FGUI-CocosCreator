@@ -1,3 +1,8 @@
+/*
+ * @Description: 转圈等待
+ * @Author: CYK
+ * @Date: 2022-05-18 17:16:30
+ */
 import { _decorator, Component, Node, director } from 'cc';
 const { ccclass, property } = _decorator;
 import * as fgui from "fairygui-cc";

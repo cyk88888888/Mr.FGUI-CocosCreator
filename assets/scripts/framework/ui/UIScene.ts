@@ -1,3 +1,8 @@
+/*
+ * @Description: 
+ * @Author: CYK
+ * @Date: 2022-05-20 09:53:17
+ */
 import { _decorator, Component, Node } from 'cc';
 import { UIComp } from './UIComp';
 import { SceneMgr } from '../mgr/SceneMgr';

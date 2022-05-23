@@ -1,3 +1,8 @@
+/*
+ * @Description: 人物信息页面
+ * @Author: CYK
+ * @Date: 2022-05-23 09:27:58
+ */
 import { _decorator, Component, Node, director } from 'cc';
 const { ccclass, property } = _decorator;
 import * as fgui from "fairygui-cc";

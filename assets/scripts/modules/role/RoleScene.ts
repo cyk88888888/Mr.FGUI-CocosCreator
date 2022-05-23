@@ -1,3 +1,8 @@
+/*
+ * @Description: 
+ * @Author: CYK
+ * @Date: 2022-05-21 11:43:21
+ */
 import { _decorator } from 'cc';
 const { ccclass, property } = _decorator;
 import { registerModule } from '../../framework/mgr/ModuleMgr';

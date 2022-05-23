@@ -1,3 +1,8 @@
+/*
+ * @Description: 
+ * @Author: CYK
+ * @Date: 2022-05-19 15:25:36
+ */
 export class SubLayerMgr {
     private classMap: any;
     constructor() {
