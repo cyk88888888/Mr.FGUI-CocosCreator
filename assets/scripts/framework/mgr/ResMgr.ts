@@ -1,6 +1,8 @@
 import * as fgui from "fairygui-cc";
 import { JuHuaDlg } from "../../modules/common/JuHuaDlg";
-
+/** 
+ * 资源管理类
+ */
 export class ResMgr {
     private static _inst: ResMgr;
     public static get inst() {
@@ -30,7 +32,7 @@ export class ResMgr {
         if (!this._juHuaDlg && fgui.UIPackage.getByName('common')) {
             this._juHuaDlg = JuHuaDlg.show() as JuHuaDlg;
         }
-        
+
         let loadSucc = (resName: string) => {
             hasLoadResCount++;
             console.log('resName: ' + resName + '加载完毕');
@@ -68,9 +70,16 @@ export class ResMgr {
         this.loadWithItor(resList, null, cb, ctx);
     }
 
-    public releaseRes(res: string | string[]){
-        if(typeof res === 'string'){
-
+    /**
+     * 释放资源
+     * @param res 
+     */
+    public releaseRes(res: string | string[]) {
+        let resList = typeof res === 'string' ? [res] : res;
+        for (let i = 0; i < resList.length; i++) {
+            let resName = resList[i];
+            let pkgName = resName.split('/')[1].toLowerCase();
+            fgui.UIPackage.removePackage(pkgName);
         }
     }
 }
