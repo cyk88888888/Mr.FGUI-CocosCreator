@@ -6,6 +6,7 @@
 import { _decorator, Component, Node, director } from 'cc';
 const { ccclass, property } = _decorator;
 import * as fgui from "fairygui-cc";
+import { SceneMgr } from '../../framework/mgr/SceneMgr';
 import { UILayer } from '../../framework/ui/UILayer';
 @ccclass('RoleLayer')
 export class RoleLayer extends UILayer {
@@ -45,7 +46,7 @@ export class RoleLayer extends UILayer {
     }
 
     private _tap_btn_back(){
-        console.log('点击了返回按钮');
+        SceneMgr.inst.pop();
         
     }
 }

@@ -3,7 +3,7 @@
  * @Author: CYK
  * @Date: 2022-05-23 09:27:58
  */
-import { AssetManager } from "cc";
+import { AssetManager, Node } from "cc";
 import * as fgui from "fairygui-cc";
 import { BaseUT } from "../base/BaseUtil";
 import { ModuleCfgInfo } from "../base/ModuleCfgInfo";
@@ -20,7 +20,7 @@ export class SceneMgr {
     public curScene: fgui.GComponent;
     /** 主场景名称*/
     public mainScene: string;
-    private _popArr: UIScene[];
+    private _popArr: Node[];
     public static get inst() {
         if (!this._inst) {
             this._inst = new SceneMgr();
@@ -52,10 +52,17 @@ export class SceneMgr {
     }
 
     private onUILoaded(moduleInfo: ModuleCfgInfo, data: any) {
-        if (!moduleInfo.cacheEnabled && this.curScene) {//销毁上个场景
-            this.curScene.node.destroyAllChildren();
-            this.curScene.node.destroy();
+        if(this.curScene){
+            let lastModuleInfo = moduleInfoMap[this.curScene.node.name];
+            if (!lastModuleInfo.cacheEnabled) {//销毁上个场景
+                this.curScene.node.destroyAllChildren();
+                this.curScene.node.destroy();
+            }else{
+                this._popArr.push(this.curScene.node);
+                this.curScene.node.removeFromParent();
+            }
         }
+      
         let sceneName = moduleInfo.name;
         this.curScene = this.addGCom2GRoot(sceneName, true);
         this.initLayer();
@@ -91,7 +98,16 @@ export class SceneMgr {
 
     /** 返回到上个场景*/
     public pop() {
-
+        if(this.curScene){
+            let lastModuleInfo = moduleInfoMap[this.curScene.node.name];
+            if (!lastModuleInfo.cacheEnabled) {//销毁上个场景
+                this.curScene.node.destroyAllChildren();
+                this.curScene.node.destroy();
+            }
+        }
+        
+        let lastSceneNode = this._popArr.pop();
+        lastSceneNode.setParent(fgui.GRoot.inst.node.getChildByName('Container'));
     }
 
 }

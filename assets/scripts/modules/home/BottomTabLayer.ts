@@ -5,12 +5,12 @@
  */
 import { _decorator, Component, Node } from 'cc';
 import { SceneMgr } from '../../framework/mgr/SceneMgr';
-import { UILayer } from '../../framework/ui/UILayer';
+import { UIMenuLayer } from '../../framework/ui/UIMenuLayer';
 import { RoleScene } from '../role/RoleScene';
 const { ccclass, property } = _decorator;
 
 @ccclass('BottomTabLayer')
-export class BottomTabLayer extends UILayer {
+export class BottomTabLayer extends UIMenuLayer {
     /** 包名称 */
     public static pkgName: string = 'home';
     private onEnter(){
