@@ -162,7 +162,8 @@ export class UIComp extends Component {
 
     public close() {
         let self = this;
-        self.destroy();
+        self.node.destroy();
+        // self.destroy();
     }
 
     private dispose() {
