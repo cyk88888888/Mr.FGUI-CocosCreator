@@ -14,6 +14,10 @@ const { ccclass, property } = _decorator;
 export class UIScene extends UIComp {
     protected mainClassLayer: any;
     protected subLayerMgr: SubLayerMgr;
+    public layer: fgui.GComponent;
+    public dlg: fgui.GComponent;
+    public msg: fgui.GComponent;
+    public menuLayer: fgui.GComponent;
     protected init() {
         this.subLayerMgr = new SubLayerMgr();
     }

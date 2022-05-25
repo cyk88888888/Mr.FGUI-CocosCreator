@@ -20,7 +20,7 @@ export class SceneMgr {
     public curScene: fgui.GComponent;
     /** 主场景名称*/
     public mainScene: string;
-    private _popArr: Node[];
+    private _popArr: fgui.GComponent[];
     public static get inst() {
         if (!this._inst) {
             this._inst = new SceneMgr();
@@ -44,7 +44,7 @@ export class SceneMgr {
             this.onUILoaded(moduleInfo, data);
         });
     }
-    
+
 
     private onProgress(resName: string, hasLoadResCount: number) {
         // console.log('resName: ' + resName);
@@ -52,22 +52,27 @@ export class SceneMgr {
     }
 
     private onUILoaded(moduleInfo: ModuleCfgInfo, data: any) {
-        if(this.curScene){
+        if (this.curScene) {
             let lastModuleInfo = moduleInfoMap[this.curScene.node.name];
             if (!lastModuleInfo.cacheEnabled) {//销毁上个场景
                 this.curScene.node.destroyAllChildren();
                 this.curScene.node.destroy();
-            }else{
-                this._popArr.push(this.curScene.node);
+            } else {
+                this._popArr.push(this.curScene);
                 this.curScene.node.removeFromParent();
             }
         }
-      
+
         let sceneName = moduleInfo.name;
         this.curScene = this.addGCom2GRoot(sceneName, true);
         this.initLayer();
         let newScene = this.curScene.node.addComponent(sceneName) as UIScene;//添加场景脚本
+        newScene.layer = this.layer;
+        newScene.dlg = this.dlg;
+        newScene.msg = this.msg;
+        newScene.menuLayer = this.menuLayer;
         newScene.setData(data);
+
     }
 
     initLayer() {
@@ -98,16 +103,22 @@ export class SceneMgr {
 
     /** 返回到上个场景*/
     public pop() {
-        if(this.curScene){
-            let lastModuleInfo = moduleInfoMap[this.curScene.node.name];
+        let self = this;
+        if (self.curScene) {
+            let lastModuleInfo = moduleInfoMap[self.curScene.node.name];
             if (!lastModuleInfo.cacheEnabled) {//销毁上个场景
-                this.curScene.node.destroyAllChildren();
-                this.curScene.node.destroy();
+                self.curScene.node.destroyAllChildren();
+                self.curScene.node.destroy();
             }
         }
-        
-        let lastSceneNode = this._popArr.pop();
-        lastSceneNode.setParent(fgui.GRoot.inst.node.getChildByName('Container'));
+        let lastSceneNode = self.curScene = self._popArr.pop();
+        let script = lastSceneNode.node.getComponent(lastSceneNode.node.name) as UIScene;
+        self.layer = script.layer;
+        self.menuLayer = script.menuLayer;
+        self.dlg = script.dlg;
+        self.msg = script.msg;
+        fgui.GRoot.inst.addChild(lastSceneNode);
+
     }
 
 }
