@@ -12,6 +12,7 @@ import { BottomTabLayer } from './BottomTabLayer';
 import { HomeLayer } from './HomeLayer';
 @ccclass('HomeScene')
 export class HomeScene extends UIScene {
+    private bottom: BottomTabLayer;
     private ctor() {
         let self = this;
         self.mainClassLayer = HomeLayer;
@@ -23,7 +24,7 @@ export class HomeScene extends UIScene {
     }
 
     private onEnter(){
-        let bottom = BottomTabLayer.show();
+        if(!this.bottom) this.bottom = BottomTabLayer.show() as BottomTabLayer;
         console.log('进入HomeScene');
     }
 

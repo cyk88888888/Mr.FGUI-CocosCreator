@@ -48,16 +48,12 @@ export class UIComp extends Component {
 
     public enterOnPop() {
         let self = this;
-        self.onEnter_b();
-        if (self['onEnter']) self['onEnter']();
-        self.onEnter_a();
+        self.initView(this.view);
     }
 
     public exitOnPush() {
         let self = this;
-        this.onExit_b();
-        if (self["onExit"]) self["onExit"]();
-        this.onExit_a();
+        self.dispose();
     }
 
     protected onEmitter(event: string, listener: any) {
@@ -81,11 +77,9 @@ export class UIComp extends Component {
      */
     protected initView(view: fgui.GComponent) {
         let self = this;
-        if (!this.view) {
-            this.view = view;
-            this.initViewProperty();
-            this.addBtnCLickListener();
-        }
+        this.view = view;
+        this.initViewProperty();
+        this.addBtnCLickListener();
         self.onEnter_b();
         if (self['onEnter']) self['onEnter']();
         self.onEnter_a();
@@ -94,6 +88,7 @@ export class UIComp extends Component {
     /** 初始化属性 */
     private initViewProperty() {
         let self = this;
+        if(!self.view) return;
         let children = self.view._children;
         for (let key in children) {
             let obj = children[key];
@@ -103,7 +98,8 @@ export class UIComp extends Component {
                 let scriptName = obj.packageItem.name;
                 let isHasScript = js.getClassByName(scriptName);//是否有对应脚本类
                 if (isHasScript) {
-                    let script = obj.node.addComponent(scriptName) as UIComp;
+                    let oldCsript = obj.node.getComponent(scriptName) as UIComp;//节点上是否已有脚本
+                    let script = oldCsript ? oldCsript : obj.node.addComponent(scriptName) as UIComp;
                     script.initView(obj);
                 }
             }
@@ -113,6 +109,7 @@ export class UIComp extends Component {
     /**添加按钮点击事件监听**/
     protected addBtnCLickListener() {
         let self = this;
+        if(!self.view) return;
         let children = self.view._children;
         self._objTapMap = {};
         for (let key in children) {
@@ -199,13 +196,14 @@ export class UIComp extends Component {
         }
 
         self.clearAllTimeoutOrInterval();
+
+        this.onExit_b();
+        if (self["onExit"]) self["onExit"]();
+        this.onExit_a();
     }
 
     onDestroy() {
         let self = this;
-        this.onExit_b();
-        if (self["onExit"]) self["onExit"]();
-        this.onExit_a();
         this.dispose();
         self.view = null;
         // if(self.view) self.view.dispose();
