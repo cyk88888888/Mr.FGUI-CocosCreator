@@ -15,8 +15,12 @@ export class HomeLayer extends UILayer {
     private img_equip: fgui.GImage;
     protected onEnter() {
         let self = this;
-        self.btn_close;
-        self.img_equip;
+        console.log('进入HomeLayer');
+    }
+
+
+    private onExit(){
+        console.log('退出HomeLayer');
     }
 
     private _tap_btn_close(e) {

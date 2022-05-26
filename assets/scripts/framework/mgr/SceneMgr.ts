@@ -7,6 +7,7 @@ import { AssetManager, Node } from "cc";
 import * as fgui from "fairygui-cc";
 import { BaseUT } from "../base/BaseUtil";
 import { ModuleCfgInfo } from "../base/ModuleCfgInfo";
+import { UIComp } from "../ui/UIComp";
 import { UIScene } from "../ui/UIScene";
 import { moduleInfoMap } from "./ModuleMgr";
 import { ResMgr } from "./ResMgr";
@@ -127,6 +128,10 @@ export class SceneMgr {
         let self = this;
         let script = scene.node.getComponent(scene.node.name) as UIScene;
         script.exitOnPush();
+        self.eachChildComp(script.layer);
+        self.eachChildComp(script.menuLayer);
+        self.eachChildComp(script.dlg);
+        self.eachChildComp(script.msg);
     }
 
     private enterOnPop(scene: fgui.GComponent) {
@@ -137,6 +142,18 @@ export class SceneMgr {
         self.menuLayer = script.menuLayer;
         self.dlg = script.dlg;
         self.msg = script.msg;
+        self.eachChildComp(script.layer, true);
+        self.eachChildComp(script.menuLayer, true);
+        self.eachChildComp(script.dlg, true);
+        self.eachChildComp(script.msg, true);
     }
 
+    private eachChildComp(comp: fgui.GComponent, isEnter?: boolean) {
+        let children = comp.node.children[0].children;
+            for (let i = 0; i < children.length; i++) {
+                let childNode = children[i];
+                let scriptNode = childNode.getComponent(childNode.name) as UIComp;
+                isEnter ? scriptNode.enterOnPop() : scriptNode.exitOnPush();
+            }
+    }
 }

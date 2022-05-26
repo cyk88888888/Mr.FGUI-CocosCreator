@@ -14,6 +14,11 @@ export class BottomTabLayer extends UIMenuLayer {
     /** 包名称 */
     public static pkgName: string = 'home';
     private onEnter(){
+        console.log('进入BottomTabLayer');
+    }
+
+    private onExit(){
+        console.log('退出BottomTabLayer');
     }
     
     private _tap_btn_equip(){
