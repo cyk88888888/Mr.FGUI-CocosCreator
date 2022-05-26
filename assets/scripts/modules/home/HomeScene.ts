@@ -24,6 +24,11 @@ export class HomeScene extends UIScene {
 
     private onEnter(){
         let bottom = BottomTabLayer.show();
+        console.log('进入HomeScene');
+    }
+
+    private onExit(){
+        console.log('退出HomeScene');
     }
 }
 registerModule(HomeScene, ['ui/home'], true);

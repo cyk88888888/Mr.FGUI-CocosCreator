@@ -46,6 +46,20 @@ export class UIComp extends Component {
         this.data = data;
     }
 
+    public enterOnPop() {
+        let self = this;
+        self.onEnter_b();
+        if (self['onEnter']) self['onEnter']();
+        self.onEnter_a();
+    }
+
+    public exitOnPush() {
+        let self = this;
+        this.onExit_b();
+        if (self["onExit"]) self["onExit"]();
+        this.onExit_a();
+    }
+
     protected onEmitter(event: string, listener: any) {
         let self = this;
         emmiter.on(event, listener, self);
@@ -189,11 +203,12 @@ export class UIComp extends Component {
 
     onDestroy() {
         let self = this;
-        // if(self.view) self.view.dispose();
-        this.dispose();
         this.onExit_b();
         if (self["onExit"]) self["onExit"]();
         this.onExit_a();
+        this.dispose();
+        self.view = null;
+        // if(self.view) self.view.dispose();
     }
 
 }

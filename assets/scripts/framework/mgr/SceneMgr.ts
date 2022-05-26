@@ -30,31 +30,30 @@ export class SceneMgr {
     }
 
     public run(scene: string | typeof UIScene, data?: any) {
-
+        this.showScene(scene, data);
     }
 
     public push(scene: string | typeof UIScene, data?: any) {
+        this.showScene(scene, data, true);
+    }
+
+    private showScene(scene: string | typeof UIScene, data?: any, toPush?: boolean) {
         let sceneName = typeof scene === 'string' ? scene : scene.name;
         let moduleInfo = moduleInfoMap[sceneName];
         if (!moduleInfo) {
             console.error('未注册模块：' + sceneName)
             return;
         }
-        ResMgr.inst.loadWithItor(moduleInfo.preResList, this.onProgress, () => {
-            this.onUILoaded(moduleInfo, data);
+        ResMgr.inst.load(moduleInfo.preResList, () => {
+            this.onUILoaded(moduleInfo, data, toPush);
         });
     }
 
-
-    private onProgress(resName: string, hasLoadResCount: number) {
-        // console.log('resName: ' + resName);
-        // console.log('hasLoadResCount: ' + hasLoadResCount);
-    }
-
-    private onUILoaded(moduleInfo: ModuleCfgInfo, data: any) {
-        this.checkDestoryLastScene();
-        if (this.curScene) {
+    private onUILoaded(moduleInfo: ModuleCfgInfo, data: any, toPush: boolean) {
+        this.checkDestoryLastScene(!toPush);
+        if (toPush && this.curScene) {
             this._popArr.push(this.curScene);
+            this.exitOnPush(this.curScene);
             this.curScene.removeFromParent();
         }
 
@@ -97,29 +96,47 @@ export class SceneMgr {
     }
 
     /**判断销毁上个场景并释放资源 */
-    private checkDestoryLastScene(){
+    private checkDestoryLastScene(destory?: boolean) {
         if (this.curScene) {
             let lastModuleInfo = moduleInfoMap[this.curScene.node.name];
-            if (!lastModuleInfo.cacheEnabled) {//销毁上个场景
+            if (destory && !lastModuleInfo.cacheEnabled) {//销毁上个场景
+                ResMgr.inst.releaseRes(lastModuleInfo.preResList);
+            }
+            if (destory) {
                 this.curScene.node.destroyAllChildren();
                 this.curScene.node.destroy();
-                ResMgr.inst.releaseRes(lastModuleInfo.preResList);
-            } 
+            }
         }
     }
-    
+
     /** 返回到上个场景*/
     public pop() {
         let self = this;
-        self.checkDestoryLastScene();
+        if (self._popArr.length <= 1) {
+            console.error('已经pop到底了！！！！！！！');
+            return;
+        }
+        self.checkDestoryLastScene(true);
 
-        let lastSceneNode = self.curScene = self._popArr.pop();
-        let script = lastSceneNode.node.getComponent(lastSceneNode.node.name) as UIScene;
+        let lastScene = self.curScene = self._popArr.pop();
+        self.enterOnPop(lastScene);
+        fgui.GRoot.inst.addChild(lastScene);
+    }
+
+    private exitOnPush(scene: fgui.GComponent) {
+        let self = this;
+        let script = scene.node.getComponent(scene.node.name) as UIScene;
+        script.exitOnPush();
+    }
+
+    private enterOnPop(scene: fgui.GComponent) {
+        let self = this;
+        let script = scene.node.getComponent(scene.node.name) as UIScene;
+        script.enterOnPop();
         self.layer = script.layer;
         self.menuLayer = script.menuLayer;
         self.dlg = script.dlg;
         self.msg = script.msg;
-        fgui.GRoot.inst.addChild(lastSceneNode);
     }
 
 }
