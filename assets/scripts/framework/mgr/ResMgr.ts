@@ -35,9 +35,9 @@ export class ResMgr {
             this._juHuaDlg = JuHuaDlg.show() as JuHuaDlg;
         }
 
-        let loadSucc = (resName: string) => {
+        let loadSucc = (resName: string, isFromCache?: boolean) => {
             hasLoadResCount++;
-            console.log('resName: ' + resName + '加载完毕');
+            console.log('resName: ' + resName + '加载完毕' + (isFromCache ? '(缓存已有)' : ''));
             if (itorCb) itorCb.call(ctx, resName, hasLoadResCount);
             if (hasLoadResCount == totLen) {
                 this.closeJuHuaDlg();
@@ -49,7 +49,7 @@ export class ResMgr {
             let resName = resList[i];
             let pkgName = resName.split('/')[1].toLowerCase();
             if (fgui.UIPackage.getByName(pkgName)) {//缓存已有
-                loadSucc(resName);
+                loadSucc(resName, true);
             } else {
                 fgui.UIPackage.loadPackage(resName, (err, pkg) => {//加载资源包
                     if (!err) {

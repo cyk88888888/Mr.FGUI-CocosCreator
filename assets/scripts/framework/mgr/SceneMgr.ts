@@ -52,15 +52,10 @@ export class SceneMgr {
     }
 
     private onUILoaded(moduleInfo: ModuleCfgInfo, data: any) {
+        this.checkDestoryLastScene();
         if (this.curScene) {
-            let lastModuleInfo = moduleInfoMap[this.curScene.node.name];
-            if (!lastModuleInfo.cacheEnabled) {//销毁上个场景
-                this.curScene.node.destroyAllChildren();
-                this.curScene.node.destroy();
-            } else {
-                this._popArr.push(this.curScene);
-                this.curScene.node.removeFromParent();
-            }
+            this._popArr.push(this.curScene);
+            this.curScene.removeFromParent();
         }
 
         let sceneName = moduleInfo.name;
@@ -75,7 +70,7 @@ export class SceneMgr {
 
     }
 
-    initLayer() {
+    private initLayer() {
         let self = this;
         self.layer = self.addGCom2GRoot('UILayer');
         self.menuLayer = self.addGCom2GRoot('UIMenuLayer');
@@ -88,7 +83,7 @@ export class SceneMgr {
     * @param name 名称
     * @returns 
     */
-    addGCom2GRoot(name: string, isScene?: boolean): fgui.GComponent {
+    private addGCom2GRoot(name: string, isScene?: boolean): fgui.GComponent {
         let newCom = new fgui.GComponent();
         newCom.node.name = name;
         let size = BaseUT.setFitSize(newCom);
@@ -101,16 +96,23 @@ export class SceneMgr {
         return newCom;
     }
 
+    /**判断销毁上个场景并释放资源 */
+    private checkDestoryLastScene(){
+        if (this.curScene) {
+            let lastModuleInfo = moduleInfoMap[this.curScene.node.name];
+            if (!lastModuleInfo.cacheEnabled) {//销毁上个场景
+                this.curScene.node.destroyAllChildren();
+                this.curScene.node.destroy();
+                ResMgr.inst.releaseRes(lastModuleInfo.preResList);
+            } 
+        }
+    }
+    
     /** 返回到上个场景*/
     public pop() {
         let self = this;
-        if (self.curScene) {
-            let lastModuleInfo = moduleInfoMap[self.curScene.node.name];
-            if (!lastModuleInfo.cacheEnabled) {//销毁上个场景
-                self.curScene.node.destroyAllChildren();
-                self.curScene.node.destroy();
-            }
-        }
+        self.checkDestoryLastScene();
+
         let lastSceneNode = self.curScene = self._popArr.pop();
         let script = lastSceneNode.node.getComponent(lastSceneNode.node.name) as UIScene;
         self.layer = script.layer;
@@ -118,7 +120,6 @@ export class SceneMgr {
         self.dlg = script.dlg;
         self.msg = script.msg;
         fgui.GRoot.inst.addChild(lastSceneNode);
-
     }
 
 }
