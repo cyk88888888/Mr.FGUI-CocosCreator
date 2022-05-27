@@ -113,7 +113,7 @@ export class SceneMgr {
     /** 返回到上个场景*/
     public pop() {
         let self = this;
-        if (self._popArr.length <= 1) {
+        if (self._popArr.length <= 0) {
             console.error('已经pop到底了！！！！！！！');
             return;
         }

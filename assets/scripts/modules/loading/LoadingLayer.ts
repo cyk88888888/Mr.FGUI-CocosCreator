@@ -33,7 +33,7 @@ export class LoadingLayer extends UILayer {
             self.progress.value += 0.5;
             if (!self._isLoadingHome && self.progress.value >= 100) {
                 self._isLoadingHome = true;
-                SceneMgr.inst.push('HomeScene');
+                SceneMgr.inst.run('HomeScene');
             }
         }
     }
