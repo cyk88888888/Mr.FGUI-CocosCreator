@@ -27,13 +27,12 @@ export class HomeScene extends UIScene {
         let self = this;
         self.onEmitter('jumpToLayer', self.jumpToLayer);
         if (!this.bottom) this.bottom = BottomTabLayer.show() as BottomTabLayer;
-
         console.log('进入HomeScene');
     }
 
     private jumpToLayer(data: any) {
         let self = this;
-        if(!data){
+        if (!data) {
             console.error('跳转数据为null');
             return;
         }

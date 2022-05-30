@@ -18,6 +18,7 @@
     <image id="ru41j" name="2.png" path="/images/"/>
     <image id="ru41k" name="bg_loading2.png" path="/images/"/>
     <image id="ru41l" name="4.png" path="/images/"/>
+    <image id="ru41m" name="s9g_4.png" path="/images/" scale="9grid" scale9grid="15,15,30,30"/>
   </resources>
   <publish name=""/>
 </packageDescription>

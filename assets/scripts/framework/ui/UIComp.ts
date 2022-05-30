@@ -88,12 +88,12 @@ export class UIComp extends Component {
     /** 初始化属性 */
     private initViewProperty() {
         let self = this;
-        if(!self.view) return;
+        if (!self.view) return;
         let children = self.view._children;
         for (let key in children) {
             let obj = children[key];
             this[obj.name] = obj;
-            obj.node.name = obj.name + ':  ' + obj.node.name;
+            if (obj.node.name.indexOf(obj.name) == -1) obj.node.name = obj.name + ':  ' + obj.node.name;
             if (obj instanceof fgui.GComponent && obj.packageItem) {//如果是组件，添加对应脚本
                 let scriptName = obj.packageItem.name;
                 let isHasScript = js.getClassByName(scriptName);//是否有对应脚本类
@@ -109,7 +109,7 @@ export class UIComp extends Component {
     /**添加按钮点击事件监听**/
     protected addBtnCLickListener() {
         let self = this;
-        if(!self.view) return;
+        if (!self.view) return;
         let children = self.view._children;
         self._objTapMap = {};
         for (let key in children) {
@@ -173,8 +173,8 @@ export class UIComp extends Component {
 
     public close() {
         let self = this;
-        self.node.destroy();
-        // self.destroy();
+        self.dispose();
+        if (self.view) self.view.removeFromParent();
     }
 
     private dispose() {

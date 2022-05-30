@@ -11,8 +11,6 @@ import { UILayer } from '../../../framework/ui/UILayer';
 export class SettingLayer extends UILayer {
     /** 包名称 */
     public static pkgName: string = 'home';
-    private btn_close: fgui.GButton;
-    private img_equip: fgui.GImage;
     protected onEnter() {
         let self = this;
         console.log('进入SettingLayer');

@@ -3,10 +3,12 @@
  * @Author: CYK
  * @Date: 2022-05-19 15:25:36
  */
+import { js } from "cc";
+import { UILayer } from "../ui/UILayer";
 export class SubLayerMgr {
-    private classMap: any;
+    private _classMap: any;
     constructor() {
-        this.classMap = {};
+        this._classMap = {};
     }
 
     /**
@@ -14,6 +16,23 @@ export class SubLayerMgr {
      * @param layerClass 
      */
     public register(layerClass: any, opt?: any) {
-        this.classMap[layerClass] = opt;
+        let className = layerClass.__className;
+        this._classMap[className] = layerClass;
+    }
+
+    /**显示指定界面（替换模式） */
+    public run(LayerNameOrClass: string | typeof UILayer, data?: any) {
+        let script: any = typeof LayerNameOrClass === 'string' ? js.getClassByName(LayerNameOrClass) : LayerNameOrClass;
+        script.show();
+    }
+
+    /**显示指定界面（入栈模式） */
+    public push(LayerNameOrClass: string | typeof UILayer, data?: any) {
+
+    }
+
+    /**layer出栈 */
+    public pop() {
+
     }
 }

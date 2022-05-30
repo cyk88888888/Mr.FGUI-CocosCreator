@@ -18,7 +18,7 @@ export class ModuleMgr {
     }
 
     /**
-     * 获取对应类的显示view
+     * 获取对应类的显示view（已自动添加对应类名的脚本）
      * @param IClass 
      * @returns 
      */

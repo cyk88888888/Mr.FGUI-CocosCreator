@@ -4,6 +4,9 @@
     <image id="n13_h1du" name="n13" src="h1dug" fileName="images/c1_png.png" xy="0,0" size="640,100">
       <relation target="" sidePair="bottom-bottom"/>
     </image>
+    <image id="n14_ru41" name="img_select" src="ru41m" fileName="images/s9g_4.png" xy="23,5" size="90,90">
+      <relation target="" sidePair="bottom-bottom"/>
+    </image>
     <image id="n0_o8de" name="btn_equip" src="l3um7" fileName="images/ico_zhuangbei.png" xy="23,5" size="90,90" group="n10_y75w"/>
     <image id="n6_ksfi" name="n6" src="l3um9" fileName="images/img_xiantiao.png" xy="127,11" size="8,78" group="n10_y75w"/>
     <image id="n1_o8de" name="btn_shop" src="l3um3" fileName="images/ico_shandian.png" xy="149,5" size="90,90" group="n10_y75w"/>

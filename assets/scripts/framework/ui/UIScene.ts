@@ -47,23 +47,23 @@ export class UIScene extends UIComp {
 
     /**重置到主界面（会清掉当前堆栈中的所有界面） */
     public resetToMain() {
-
+        let self = this;
+        this.subLayerMgr.run(self.mainClassLayer, {});
     }
 
     /**显示指定界面（替换模式） */
     public run(LayerNameOrClass: string | typeof UILayer, data?: any) {
-        let script: any = typeof LayerNameOrClass === 'string' ? js.getClassByName(LayerNameOrClass) : LayerNameOrClass;
-        script.show();
+        this.subLayerMgr.run(LayerNameOrClass, data);
     }
 
     /**显示指定界面（入栈模式） */
     public push(LayerNameOrClass: string | typeof UILayer, data?: any) {
-
+        this.subLayerMgr.push(LayerNameOrClass, data);
     }
 
     /**layer出栈 */
     public pop() {
-
+        this.subLayerMgr.pop();
     }
 }
 
