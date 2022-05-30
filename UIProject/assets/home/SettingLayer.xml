@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="640,1280">
   <displayList>
-    <image id="n0_l3um" name="bg" src="ru41k" fileName="images/bg_loading2.png" xy="0,-60">
+    <image id="n1_ru41" name="bg" src="ru41k" fileName="images/bg_loading2.png" xy="0,-60">
       <relation target="" sidePair="center-center,middle-middle"/>
     </image>
-    <image id="n1_ru41" name="icon" src="ru41l" fileName="images/4.png" xy="141,456">
+    <image id="n0_l3um" name="icon" src="ru41j" fileName="images/2.png" xy="185,524">
       <relation target="" sidePair="center-center,middle-middle"/>
     </image>
   </displayList>

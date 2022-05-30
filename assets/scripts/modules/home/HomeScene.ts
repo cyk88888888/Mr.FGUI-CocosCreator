@@ -23,12 +23,23 @@ export class HomeScene extends UIScene {
         }
     }
 
-    private onEnter(){
-        if(!this.bottom) this.bottom = BottomTabLayer.show() as BottomTabLayer;
+    private onEnter() {
+        let self = this;
+        self.onEmitter('jumpToLayer', self.jumpToLayer);
+        if (!this.bottom) this.bottom = BottomTabLayer.show() as BottomTabLayer;
+
         console.log('进入HomeScene');
     }
 
-    private onExit(){
+    private jumpToLayer(data: any) {
+        let self = this;
+        if(!data){
+            console.error('跳转数据为null');
+            return;
+        }
+        self.run(data.layerName);
+    }
+    private onExit() {
         console.log('退出HomeScene');
     }
 }

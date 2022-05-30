@@ -39,7 +39,7 @@ export class BottomTabLayer extends UIMenuLayer {
     }
 
     private _tap_btn_setting(){
-        console.log("setting");
+        this.emit('jumpToLayer',{layerName: 'SettingLayer'});
     }
 }
 

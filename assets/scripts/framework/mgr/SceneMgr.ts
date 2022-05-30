@@ -3,7 +3,6 @@
  * @Author: CYK
  * @Date: 2022-05-23 09:27:58
  */
-import { AssetManager, Node } from "cc";
 import * as fgui from "fairygui-cc";
 import { BaseUT } from "../base/BaseUtil";
 import { ModuleCfgInfo } from "../base/ModuleCfgInfo";

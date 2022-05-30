@@ -14,6 +14,10 @@
     <component id="o8dec" name="BottomTabLayer.xml" path="/" exported="true"/>
     <image id="h1duf" name="c3_png.png" path="/images/" scale="9grid" scale9grid="23,5,46,10"/>
     <image id="h1dug" name="c1_png.png" path="/images/" scale="9grid" scale9grid="23,5,46,10"/>
+    <component id="ru41h" name="SettingLayer.xml" path="/" exported="true"/>
+    <image id="ru41j" name="2.png" path="/images/"/>
+    <image id="ru41k" name="bg_loading2.png" path="/images/"/>
+    <image id="ru41l" name="4.png" path="/images/"/>
   </resources>
   <publish name=""/>
 </packageDescription>
