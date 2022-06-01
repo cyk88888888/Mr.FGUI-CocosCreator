@@ -17,9 +17,9 @@ export class UIComp extends Component {
     public static pkgName: string = '';
     public data: any;
     private isFirstEnter: boolean;
-    __preload(){
+    __preload() {
         let self = this;
-        if(self.isFirstEnter) return;
+        if (self.isFirstEnter) return;
         self.isFirstEnter = true;
         self.init();
         self.ctor_b();
@@ -127,13 +127,9 @@ export class UIComp extends Component {
             }
         }
     }
-    private _className: string;
-    public get __className(): string {
-        if (!this._className) {
-            let matchObj = this.name.match(/<(\S*)>/);
-            this._className = matchObj ? matchObj[1] : this.name;
-        }
-        return this._className;
+    public static get __className(): string {
+        let matchObj = this.name.match(/<(\S*)>/);
+        return matchObj ? matchObj[1] : this.name;
     }
 
     private timeoutIdArr: number[];

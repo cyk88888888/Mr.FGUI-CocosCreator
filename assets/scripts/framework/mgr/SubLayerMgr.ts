@@ -38,15 +38,32 @@ export class SubLayerMgr {
     }
 
     private _show(LayerNameOrClass: string | typeof UILayer, data?: any, toPush?: boolean) {
-        this.checkDestoryLastLayer(!toPush);
-        if (toPush && this.curLayer) {
-            this._popArr.push(this.curLayer);
-            this.exitOnPush(this.curLayer);
-            this.curLayer.removeFromParent();
+        let script: any = typeof LayerNameOrClass === 'string' ? js.getClassByName(LayerNameOrClass) : LayerNameOrClass;
+        let layerName = script.name;
+        let registerLayer = this._classMap[layerName];
+        let needDestory = !registerLayer && !toPush;//未注册  && 非入栈模式
+       
+        this.checkDestoryLastLayer(needDestory);
+
+        if (this.curLayer) {
+            if (toPush) this._popArr.push(this.curLayer);
+            if (toPush || !needDestory) {
+                this.exitOnPush(this.curLayer);
+                this.curLayer.removeFromParent();
+            }
         }
 
-        let script: any = typeof LayerNameOrClass === 'string' ? js.getClassByName(LayerNameOrClass) : LayerNameOrClass;
+        if (registerLayer && registerLayer.node) {
+            this.curLayer = registerLayer;
+            this.enterOnPop(this.curLayer);
+            SceneMgr.inst.curSceneScript?.layer.addChild(this.curLayer);
+            return;
+        }
+
         this.curLayer = script.show().view;
+        if (this._classMap[layerName]) {
+            this._classMap[layerName] = this.curLayer;
+        }
     }
 
     /**判断销毁上个界面并释放资源 */
@@ -89,7 +106,9 @@ export class SubLayerMgr {
         for (let i = 0; i < children.length; i++) {
             let childNode = children[i];
             let scriptNode = childNode.getComponent(childNode.name) as UIComp;
-            isEnter ? scriptNode.enterOnPop() : scriptNode.exitOnPush();
+            if(scriptNode){
+                isEnter ? scriptNode.enterOnPop() : scriptNode.exitOnPush();
+            }
         }
     }
 
@@ -103,7 +122,7 @@ export class SubLayerMgr {
         self._popArr = [];
     }
 
-    public dispose(){
+    public dispose() {
         this.releaseAllLayer();
     }
 }

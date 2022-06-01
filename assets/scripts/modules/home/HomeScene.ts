@@ -10,6 +10,7 @@ import { registerModule } from '../../framework/mgr/ModuleMgr';
 import { UIScene } from '../../framework/ui/UIScene';
 import { BottomTabLayer } from './BottomTabLayer';
 import { HomeLayer } from './HomeLayer';
+import { SettingLayer } from './setting/SettingLayer';
 @ccclass('HomeScene')
 export class HomeScene extends UIScene {
     private bottom: BottomTabLayer;
@@ -17,7 +18,7 @@ export class HomeScene extends UIScene {
         let self = this;
         self.mainClassLayer = HomeLayer;
         let subLayerMgr = self.subLayerMgr;
-        let classList = [];
+        let classList = [HomeLayer, SettingLayer];
         for (let i = 0; i < classList.length; i++) {
             subLayerMgr.register(classList[i]);
         }
