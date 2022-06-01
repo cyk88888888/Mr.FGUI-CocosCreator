@@ -18,8 +18,7 @@ export class BottomTabLayer extends UIMenuLayer {
 
     private _curSelectIndex: number;
     private _layerInfos: any[];
-    private onEnter() {
-        console.log('进入BottomTabLayer');
+    private ctor(){
         let self = this;
         self._layerInfos = [
             { btn: self['btn_equip'], layer: '' },
@@ -29,6 +28,9 @@ export class BottomTabLayer extends UIMenuLayer {
             { btn: self['btn_setting'], layer: 'SettingLayer' },
         ];
         self.seletcIndex = 2;
+    }
+    private onEnter() {
+        console.log('进入BottomTabLayer');
     }
 
     public get seletcIndex() {

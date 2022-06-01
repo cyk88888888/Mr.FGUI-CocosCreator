@@ -16,14 +16,17 @@ export class UIComp extends Component {
     /** 包名称 */
     public static pkgName: string = '';
     public data: any;
-    constructor() {
-        super();
+    private isFirstEnter: boolean;
+    __preload(){
         let self = this;
+        if(self.isFirstEnter) return;
+        self.isFirstEnter = true;
         self.init();
         self.ctor_b();
         if (self["ctor"]) self["ctor"]();
         self.ctor_a();
         self.init_a();
+        if (self["onFirstEnter"]) self["onFirstEnter"]();
     }
 
     protected init() { }

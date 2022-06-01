@@ -103,8 +103,8 @@ export class SceneMgr {
                 ResMgr.inst.releaseRes(lastModuleInfo.preResList);
             }
             if (destory) {
-                this.curScene.node.destroyAllChildren();
-                this.curScene.node.destroy();
+                BaseUT.destoryGComp(this.curScene);
+                this.curSceneScript?.disposeSubLayerMgr();
             }
         }
     }
@@ -149,10 +149,19 @@ export class SceneMgr {
 
     private eachChildComp(comp: fgui.GComponent, isEnter?: boolean) {
         let children = comp.node.children[0].children;
-            for (let i = 0; i < children.length; i++) {
-                let childNode = children[i];
-                let scriptNode = childNode.getComponent(childNode.name) as UIComp;
-                isEnter ? scriptNode.enterOnPop() : scriptNode.exitOnPush();
-            }
+        for (let i = 0; i < children.length; i++) {
+            let childNode = children[i];
+            let scriptNode = childNode.getComponent(childNode.name) as UIComp;
+            isEnter ? scriptNode.enterOnPop() : scriptNode.exitOnPush();
+        }
+    }
+
+    /**获取当前场景的脚本 */
+    public get curSceneScript(): UIScene {
+        let self = this;
+        if (self.curScene) {
+            return self.curScene.node.getComponent(self.curScene.node.name) as UIScene;
+        }
+        return null;
     }
 }

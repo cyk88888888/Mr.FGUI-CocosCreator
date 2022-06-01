@@ -235,7 +235,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 319.99999999999994,
-      "y": 479.99999999999994,
+      "y": 640,
       "z": 0
     },
     "_lrot": {
@@ -316,7 +316,7 @@
     "_priority": 1073741824,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 479.99999999999994,
+    "_orthoHeight": 640,
     "_near": 1,
     "_far": 2000,
     "_color": {
@@ -356,7 +356,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 640,
-      "height": 960
+      "height": 1280
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",

@@ -27,7 +27,7 @@ export class UIScene extends UIComp {
         let self = this;
         if (self.mainClassLayer) {
             self.subLayerMgr.register(self.mainClassLayer);
-            self.mainClassLayer.show({ str: '我叫' + self.mainClassLayer.name });
+            self.push(self.mainClassLayer, { str: '我叫' + self.mainClassLayer.name });
         }
     }
 
@@ -38,17 +38,12 @@ export class UIScene extends UIComp {
         self.onEnter_a();
     }
 
-    /**
-     * 将view添加到layer层级容器
-     */
-    protected addToLayer() {
-        fgui.GRoot.inst.addChild(this.view);
-    }
 
     /**重置到主界面（会清掉当前堆栈中的所有界面） */
     public resetToMain() {
         let self = this;
-        this.subLayerMgr.run(self.mainClassLayer, {});
+        self.releaseAllLayer();
+        self.push(self.mainClassLayer, {});
     }
 
     /**显示指定界面（替换模式） */
@@ -64,6 +59,16 @@ export class UIScene extends UIComp {
     /**layer出栈 */
     public pop() {
         this.subLayerMgr.pop();
+    }
+
+    /**清除所有layer */
+    public releaseAllLayer() {
+        this.subLayerMgr.releaseAllLayer();
+    }
+
+    public disposeSubLayerMgr(){
+        this.subLayerMgr.dispose();
+        this.subLayerMgr = null;
     }
 }
 
