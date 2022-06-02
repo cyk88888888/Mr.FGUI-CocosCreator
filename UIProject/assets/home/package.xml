@@ -2,7 +2,6 @@
 <packageDescription id="4n4l5lox">
   <resources>
     <component id="l3um0" name="HomeLayer.xml" path="/" exported="true"/>
-    <image id="l3um2" name="h_bg.jpg" path="/images/"/>
     <image id="l3um3" name="ico_shandian.png" path="/images/"/>
     <image id="l3um4" name="ico_shezhi.png" path="/images/"/>
     <image id="l3um5" name="ico_shijie.png" path="/images/"/>
@@ -19,6 +18,15 @@
     <image id="ru41k" name="bg_loading2.png" path="/images/"/>
     <image id="ru41l" name="4.png" path="/images/"/>
     <image id="ru41m" name="s9g_4.png" path="/images/" scale="9grid" scale9grid="15,15,30,30"/>
+    <component id="pzzln" name="EquipLayer.xml" path="/" exported="true"/>
+    <component id="pzzlo" name="TopInfoLayer.xml" path="/" exported="true"/>
+    <image id="pzzlr" name="k26.png" path="/images/"/>
+    <image id="pzzls" name="r3.png" path="/images/"/>
+    <image id="pzzlt" name="item_33.png" path="/images/"/>
+    <component id="pzzlu" name="ShopLayer.xml" path="/" exported="true"/>
+    <component id="pzzlv" name="SkillLayer.xml" path="/" exported="true"/>
+    <image id="pzzly" name="abount.png" path="/images/"/>
+    <image id="pzzlz" name="k1.png" path="/images/"/>
   </resources>
   <publish name=""/>
 </packageDescription>

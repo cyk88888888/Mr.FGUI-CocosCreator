@@ -4,7 +4,7 @@
     <image id="n1_ru41" name="bg" src="ru41k" fileName="images/bg_loading2.png" xy="0,-60">
       <relation target="" sidePair="center-center,middle-middle"/>
     </image>
-    <image id="n0_l3um" name="icon" src="ru41j" fileName="images/2.png" xy="185,524">
+    <image id="n3_pzzl" name="n3" src="pzzly" fileName="images/abount.png" xy="29,390" size="582,499" aspect="true">
       <relation target="" sidePair="center-center,middle-middle"/>
     </image>
   </displayList>

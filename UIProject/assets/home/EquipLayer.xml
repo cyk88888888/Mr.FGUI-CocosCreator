@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="640,1280">
   <displayList>
-    <image id="n0_l3um" name="bg" src="ru41k" fileName="images/bg_loading2.png" xy="0,-60">
+    <image id="n1_ru41" name="bg" src="ru41k" fileName="images/bg_loading2.png" xy="0,-60">
       <relation target="" sidePair="center-center,middle-middle"/>
     </image>
-    <text id="n2_pzzl" name="n2" xy="276,620" size="88,39" fontSize="28" color="#ffffff" text="主界面">
+    <text id="n4_pzzl" name="n4" xy="262,620" size="116,39" fontSize="28" color="#ffffff" text="装备界面">
       <relation target="" sidePair="center-center,middle-middle"/>
     </text>
   </displayList>

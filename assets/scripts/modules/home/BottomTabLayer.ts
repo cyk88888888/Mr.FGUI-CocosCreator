@@ -21,10 +21,10 @@ export class BottomTabLayer extends UIMenuLayer {
     private ctor(){
         let self = this;
         self._layerInfos = [
-            { btn: self['btn_equip'], layer: '' },
-            { btn: self['btn_shop'], layer: '' },
+            { btn: self['btn_equip'], layer: 'EquipLayer' },
+            { btn: self['btn_shop'], layer: 'ShopLayer' },
             { btn: self['btn_home'], layer: 'HomeLayer' },
-            { btn: self['btn_tanlent'], layer: '' },
+            { btn: self['btn_tanlent'], layer: 'SkillLayer' },
             { btn: self['btn_setting'], layer: 'SettingLayer' },
         ];
         self.seletcIndex = 2;
@@ -44,7 +44,7 @@ export class BottomTabLayer extends UIMenuLayer {
     }
 
     private _tap_btn_equip() {
-        SceneMgr.inst.push(RoleScene, { msg: '我是RoleScene' });
+        this.onTap(0);
     }
 
     private _tap_btn_shop() {

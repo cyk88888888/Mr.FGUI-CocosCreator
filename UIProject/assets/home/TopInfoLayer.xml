@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="640,112" opaque="false">
+  <displayList>
+    <graph id="n23_pzzl" name="n23" xy="0,0" size="640,112" type="rect" fillColor="#ff00ccff"/>
+    <image id="n15_pzzl" name="n15" src="pzzlz" fileName="images/k1.png" xy="0,0" size="113,113" aspect="true"/>
+    <text id="n16_pzzl" name="txt_name" xy="116,7" size="150,30" fontSize="21" text="我的名字七个字"/>
+    <image id="n18_pzzl" name="n18" src="pzzlr" fileName="images/k26.png" xy="115,50"/>
+    <text id="n19_pzzl" name="txt_dmd" xy="160,46" size="52,30" fontSize="21" text="9999"/>
+    <image id="n20_pzzl" name="img_head" src="pzzls" fileName="images/r3.png" xy="11,11"/>
+  </displayList>
+</component>
