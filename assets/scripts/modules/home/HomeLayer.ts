@@ -7,6 +7,7 @@ import { _decorator, Component, Node } from 'cc';
 const { ccclass, property } = _decorator;
 import * as fgui from "fairygui-cc";
 import { UILayer } from '../../framework/ui/UILayer';
+import { BagDlg } from './bag/BagDlg';
 @ccclass('HomeLayer')
 export class HomeLayer extends UILayer {
     /** 包名称 */
@@ -18,13 +19,13 @@ export class HomeLayer extends UILayer {
         console.log('进入HomeLayer');
     }
 
+    private _tap_btn_bag(e) {
+        BagDlg.show();
+    }
 
     private onExit(){
         console.log('退出HomeLayer');
     }
 
-    private _tap_btn_close(e) {
-        console.log('点击关闭按钮');
-    }
 }
 

@@ -27,6 +27,19 @@
     <component id="pzzlv" name="SkillLayer.xml" path="/" exported="true"/>
     <image id="pzzly" name="abount.png" path="/images/"/>
     <image id="pzzlz" name="k1.png" path="/images/"/>
+    <image id="pzzl11" name="5.png" path="/images/" scale="9grid" scale9grid="153,96,306,192"/>
+    <component id="pzzl12" name="BagDlg.xml" path="/bag/" exported="true"/>
+    <component id="pzzl13" name="WindowFrame.xml" path="/bag/"/>
+    <image id="pzzl14" name="1.png" path="/images/"/>
+    <image id="pzzl15" name="2(1).png" path="/images/"/>
+    <image id="pzzl16" name="3.png" path="/images/"/>
+    <image id="pzzl17" name="7.png" path="/images/"/>
+    <image id="pzzl18" name="8.png" path="/images/"/>
+    <movieclip id="pzzl19" name="quan.jta" path="/images/"/>
+    <component id="pzzl1a" name="BagGridSub.xml" path="/bag/"/>
+    <component id="pzzl1b" name="dot.xml" path="/bag/"/>
+    <component id="pzzl1c" name="BagButton.xml" path="/bag/"/>
+    <image id="pzzl1d" name="btnimage.png" path="/images/"/>
   </resources>
   <publish name=""/>
 </packageDescription>

@@ -12,11 +12,14 @@ import * as fgui from "fairygui-cc";
 export class UIComp extends Component {
     private _emmitMap: { [event: string]: Function };//已注册的监听事件列表
     private _objTapMap: { [objName: string]: Function };//已添加的显示对象点击事件的记录
+    private _tweenTargetList: any[];//已添加缓动的对象列表
     protected view: fgui.GComponent;
     /** 包名称 */
     public static pkgName: string = '';
     public data: any;
     private isFirstEnter: boolean;
+    /**打开弹窗时是否需要动画 */
+    protected needAnimation: boolean = true;
     __preload() {
         let self = this;
         if (self.isFirstEnter) return;
@@ -27,6 +30,7 @@ export class UIComp extends Component {
         self.ctor_a();
         self.init_a();
         if (self["onFirstEnter"]) self["onFirstEnter"]();
+        if (self.needAnimation) self.onOpenAnimation();
     }
 
     protected init() { }
@@ -44,6 +48,13 @@ export class UIComp extends Component {
     protected onExit_b() { }
 
     protected onExit_a() { }
+
+    /**打开页面时的动画 */
+    protected onOpenAnimation() { }
+    /**关闭页面时的动画 */
+    protected onCloseAnimation(callback?: Function) {
+        if (callback) callback.call(this);
+    }
 
     public setData(data: any) {
         this.data = data;
@@ -127,6 +138,31 @@ export class UIComp extends Component {
             }
         }
     }
+
+    /**获取指定对象的缓动Tweener */
+    protected getTween(target: any, propType?: any) {
+        if (!this._tweenTargetList) {
+            this._tweenTargetList = [];
+        }
+        if (this._tweenTargetList.indexOf(target) == -1) this._tweenTargetList.push(target);
+        return fgui.GTween.getTween(target, propType);
+    }
+
+    /**清除指定对象的缓动Tweener */
+    protected rmTween(target: any, complete?: boolean, propType?: any) {
+        fgui.GTween.kill(target, complete, propType);
+    }
+
+    /**清除所有对象的缓动 */
+    private rmAllTweens() {
+        if (this._tweenTargetList) {
+            for (let i = 0; i < this._tweenTargetList.length; i++) {
+                this.rmTween(this._tweenTargetList[i]);
+            }
+        }
+        this._tweenTargetList = null;
+    }
+
     public static get __className(): string {
         let matchObj = this.name.match(/<(\S*)>/);
         return matchObj ? matchObj[1] : this.name;
@@ -172,8 +208,9 @@ export class UIComp extends Component {
 
     public close() {
         let self = this;
-        self.dispose();
-        if (self.view) self.view.removeFromParent();
+        self.onCloseAnimation(() => {
+            if (self.view) self.view.node.destroy();
+        });
     }
 
     private dispose() {
@@ -195,7 +232,7 @@ export class UIComp extends Component {
         }
 
         self.clearAllTimeoutOrInterval();
-
+        self.rmAllTweens();
         this.onExit_b();
         if (self["onExit"]) self["onExit"]();
         this.onExit_a();

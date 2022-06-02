@@ -9,6 +9,7 @@
     <component id="h1du6" name="CloseButton.xml" path="/components/" exported="true"/>
     <image id="jtzd7" name="22.png" path="/images/"/>
     <component id="jtzd8" name="btnBack.xml" path="/components/" exported="true"/>
+    <component id="pzzla" name="Button1.xml" path="/components/" exported="true"/>
   </resources>
   <publish name=""/>
 </packageDescription>

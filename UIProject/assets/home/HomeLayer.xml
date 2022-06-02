@@ -7,5 +7,8 @@
     <text id="n2_pzzl" name="n2" xy="276,620" size="88,39" fontSize="28" color="#ffffff" text="主界面">
       <relation target="" sidePair="center-center,middle-middle"/>
     </text>
+    <component id="n4_pzzl" name="btn_bag" src="pzzl1c" fileName="bag/BagButton.xml" xy="275,678">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </component>
   </displayList>
 </component>
