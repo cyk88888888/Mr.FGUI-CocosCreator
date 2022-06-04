@@ -17,10 +17,13 @@ export class UIDlg extends UILayer {
   */
   protected addToLayer() {
     let bg = new fgui.GGraph();
-    bg.drawRect(640, math.Color.BLACK, math.Color.BLACK);
+    bg.node.name = bg.name = this.view.node.name + '_dlgMask: GGraph';
+    bg.drawRect(1, math.Color.BLACK, math.Color.BLACK);
     bg.width = fgui.GRoot.inst.width;
     bg.height = fgui.GRoot.inst.height;
+    bg.alpha = 0.6;
     this.view.addChildAt(bg, 0);
+    bg.onClick(this.close, this);
     SceneMgr.inst.dlg.addChild(this.view);
   }
 

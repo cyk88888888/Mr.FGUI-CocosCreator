@@ -8,6 +8,7 @@ import { _decorator, Component, Node, js } from 'cc';
 import { emmiter } from '../base/Emmiter';
 const { ccclass, property } = _decorator;
 import * as fgui from "fairygui-cc";
+import { SceneMgr } from '../mgr/SceneMgr';
 @ccclass('UIComp')
 export class UIComp extends Component {
     private _emmitMap: { [event: string]: Function };//已注册的监听事件列表
@@ -230,6 +231,12 @@ export class UIComp extends Component {
             }
             self._objTapMap = null;
         }
+
+        // if (self.view) {
+        //     let childNodeName = this.view.node.name + '_dlgMask: GGraph';
+        //     let bgMask = this.view.getChild(childNodeName);
+        //     if (bgMask) bgMask.offClick(self.close, self);
+        // }
 
         self.clearAllTimeoutOrInterval();
         self.rmAllTweens();
