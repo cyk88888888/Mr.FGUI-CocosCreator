@@ -223,20 +223,28 @@ export class UIComp extends Component {
             self._emmitMap = null;
         }
 
+        /** 调用node.destory()后会自动注销注册的点击事件,所以注销自定义事件前先判断node.isValid*/
         if (self._objTapMap) {
             let children = self.view._children;
-            for (let objName in self._objTapMap) {
-                let obj: fgui.GObject = children[objName];
-                if (obj && obj instanceof fgui.GObject) obj.offClick(self._objTapMap[objName], self);
+            for (let key in children) {
+                let obj = children[key];
+                if (obj instanceof fgui.GObject) {
+                    let objName = obj.name;
+                    if (self._objTapMap[objName]) {
+                        let tapFunc = self["_tap_" + objName];
+                        if(obj.node.isValid) obj.offClick(tapFunc, self);
+                    }
+                }
             }
             self._objTapMap = null;
         }
 
-        // if (self.view) {
-        //     let childNodeName = this.view.node.name + '_dlgMask: GGraph';
-        //     let bgMask = this.view.getChild(childNodeName);
-        //     if (bgMask) bgMask.offClick(self.close, self);
-        // }
+        if (self.view) {
+            let childNodeName = this.view.node.name + '_dlgMask: GGraph';
+            let bgMask = this.view.getChild(childNodeName);
+            let hasClickListener = bgMask && bgMask.node.isValid && bgMask.hasClickListener();
+            if (hasClickListener) bgMask.offClick(self.close, self);
+        }
 
         self.clearAllTimeoutOrInterval();
         self.rmAllTweens();
