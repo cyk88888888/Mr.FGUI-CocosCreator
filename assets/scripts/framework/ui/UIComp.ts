@@ -31,7 +31,6 @@ export class UIComp extends Component {
         self.ctor_a();
         self.init_a();
         if (self["onFirstEnter"]) self["onFirstEnter"]();
-        if (self.needAnimation) self.onOpenAnimation();
     }
 
     protected init() { }
@@ -99,6 +98,10 @@ export class UIComp extends Component {
         self.onEnter_b();
         if (self['onEnter']) self['onEnter']();
         self.onEnter_a();
+        if (self.needAnimation){
+            self.needAnimation = false;
+            self.onOpenAnimation();
+        } 
     }
 
     /** 初始化属性 */
@@ -142,7 +145,7 @@ export class UIComp extends Component {
         if(this['btn_close']){
             this['btn_close'].onClick(self.close, self);
         }
-        
+
         let btnClose = this['frame']?.getChild('closeButton');
         if(btnClose){
             btnClose.onClick(self.close, self);
@@ -155,6 +158,7 @@ export class UIComp extends Component {
             this._tweenTargetList = [];
         }
         if (this._tweenTargetList.indexOf(target) == -1) this._tweenTargetList.push(target);
+        
         return fgui.GTween.getTween(target, propType);
     }
 

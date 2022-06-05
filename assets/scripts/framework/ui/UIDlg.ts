@@ -30,7 +30,7 @@ export class UIDlg extends UILayer {
 
   protected onOpenAnimation() {
     let self = this;
-    let tween = self.getTween(this);
+    let tween = self.getTween(this.view);
     tween;
   }
 }
