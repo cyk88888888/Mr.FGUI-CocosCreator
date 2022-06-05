@@ -138,6 +138,10 @@ export class UIComp extends Component {
                 }
             }
         }
+        let btnClose = this['frame']?.getChild('closeButton');
+        if(btnClose){
+            btnClose.onClick(self.close, self);
+        }
     }
 
     /**获取指定对象的缓动Tweener */

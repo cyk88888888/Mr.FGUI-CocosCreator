@@ -10,13 +10,18 @@ import { UIDlg } from '../../../framework/ui/UIDlg';
 
 @ccclass('BagDlg')
 export class BagDlg extends UIDlg {
-     /** 包名称 */
+    /** 包名称 */
     public static pkgName: string = 'home';
 
-    private frame:any;
-
-    private onEnter(){
+    private frame: any;
+    private onEnter() {
         let self = this;
         self.frame;
+        console.log('进入' + this.node.name);
+        
+    }
+
+    private onExit(){
+        console.log('退出' + this.node.name);
     }
 }
