@@ -3,7 +3,7 @@
  * @Author: CYK
  * @Date: 2022-05-09 09:43:11
  */
-import { _decorator, Component, Node, math } from 'cc';
+import { _decorator, Component, Node, math, Color } from 'cc';
 import * as fgui from "fairygui-cc";
 import { SceneMgr } from '../mgr/SceneMgr';
 import { UIComp } from './UIComp';
@@ -18,8 +18,8 @@ export class UIDlg extends UILayer {
   protected addToLayer() {
     let bg = new fgui.GGraph();
     bg.node.name = bg.name = this.view.node.name + '_dlgMask: GGraph';
-    bg.drawRect(1, math.Color.BLACK, math.Color.BLACK);
-    bg.alpha = 0.6;
+    let modalLayerColor: Color = new Color(0x00, 0x00, 0x00, 180);
+    bg.drawRect(1, modalLayerColor, modalLayerColor);
     bg.setSize(Math.ceil(fgui.GRoot.inst.width), Math.ceil(fgui.GRoot.inst.height));
     bg.setPosition((this.view.width - bg.width) / 2, (this.view.height - bg.height) / 2);
     this.view.addChildAt(bg, 0);
