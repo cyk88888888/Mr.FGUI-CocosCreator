@@ -17,11 +17,6 @@ export class BagDlg extends UIDlg {
     private onEnter() {
         let self = this;
         self.frame;
-        console.log('进入' + this.node.name);
         
-    }
-
-    private onExit(){
-        console.log('退出' + this.node.name);
     }
 }

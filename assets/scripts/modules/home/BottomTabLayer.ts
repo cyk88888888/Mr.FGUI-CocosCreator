@@ -30,7 +30,6 @@ export class BottomTabLayer extends UIMenuLayer {
         self.seletcIndex = 2;
     }
     private onEnter() {
-        console.log('进入BottomTabLayer');
     }
 
     public get seletcIndex() {
@@ -73,7 +72,6 @@ export class BottomTabLayer extends UIMenuLayer {
     }
 
     private onExit() {
-        console.log('退出BottomTabLayer');
     }
 }
 

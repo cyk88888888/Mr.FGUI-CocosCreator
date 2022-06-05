@@ -24,6 +24,7 @@ export class UIDlg extends UILayer {
     bg.setPosition((this.view.width - bg.width) / 2, (this.view.height - bg.height) / 2);
     this.view.addChildAt(bg, 0);
     bg.onClick(this.close, this);
+
     SceneMgr.inst.dlg.addChild(this.view);
   }
 

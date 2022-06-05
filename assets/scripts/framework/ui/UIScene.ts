@@ -33,6 +33,7 @@ export class UIScene extends UIComp {
 
     onLoad() {
         let self = this;
+        console.log('进入' + this.node.name);
         self.onEnter_b();
         if (self['onEnter']) self['onEnter']();
         self.onEnter_a();

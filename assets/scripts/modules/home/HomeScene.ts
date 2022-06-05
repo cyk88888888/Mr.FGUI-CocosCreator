@@ -35,7 +35,6 @@ export class HomeScene extends UIScene {
         self.onEmitter('jumpToLayer', self.jumpToLayer);
         if (!this.top) this.top = <UIMenuLayer>TopInfoLayer.show();
         if (!this.bottom) this.bottom = <UIMenuLayer>BottomTabLayer.show();
-        console.log('进入HomeScene');
     }
 
     private jumpToLayer(data: any) {
@@ -47,7 +46,6 @@ export class HomeScene extends UIScene {
         self.run(data.layerName);
     }
     private onExit() {
-        console.log('退出HomeScene');
     }
 }
 registerModule(HomeScene, ['ui/home'], true);

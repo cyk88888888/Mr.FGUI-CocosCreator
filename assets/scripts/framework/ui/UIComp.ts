@@ -95,6 +95,7 @@ export class UIComp extends Component {
         this.view = view;
         this.initViewProperty();
         this.addBtnCLickListener();
+        console.log('进入' + this.node.name);
         self.onEnter_b();
         if (self['onEnter']) self['onEnter']();
         self.onEnter_a();
@@ -138,6 +139,10 @@ export class UIComp extends Component {
                 }
             }
         }
+        if(this['btn_close']){
+            this['btn_close'].onClick(self.close, self);
+        }
+        
         let btnClose = this['frame']?.getChild('closeButton');
         if(btnClose){
             btnClose.onClick(self.close, self);
@@ -252,6 +257,7 @@ export class UIComp extends Component {
 
         self.clearAllTimeoutOrInterval();
         self.rmAllTweens();
+        console.log('退出' + this.node.name);
         this.onExit_b();
         if (self["onExit"]) self["onExit"]();
         this.onExit_a();

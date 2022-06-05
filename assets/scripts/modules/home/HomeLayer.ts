@@ -16,7 +16,6 @@ export class HomeLayer extends UILayer {
     private img_equip: fgui.GImage;
     protected onEnter() {
         let self = this;
-        console.log('进入HomeLayer');
     }
 
     private _tap_btn_bag(e) {
@@ -24,7 +23,6 @@ export class HomeLayer extends UILayer {
     }
 
     private onExit(){
-        console.log('退出HomeLayer');
     }
 
 }

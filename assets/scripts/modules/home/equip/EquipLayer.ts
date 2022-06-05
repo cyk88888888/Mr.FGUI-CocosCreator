@@ -13,12 +13,10 @@ export class EquipLayer extends UILayer {
     public static pkgName: string = 'home';
     protected onEnter() {
         let self = this;
-        console.log('进入EquipLayer');
     }
 
 
     private onExit(){
-        console.log('退出EquipLayer');
     }
 
 }

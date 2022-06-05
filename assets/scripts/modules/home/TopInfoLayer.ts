@@ -19,7 +19,6 @@ export class TopInfoLayer extends UIMenuLayer {
         let self = this;
     }
     private onEnter() {
-        console.log('进入TopInfoLayer');
     }
 
     private _tap_img_head() {

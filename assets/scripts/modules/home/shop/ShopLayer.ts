@@ -13,12 +13,10 @@ export class ShopLayer extends UILayer {
     public static pkgName: string = 'home';
     protected onEnter() {
         let self = this;
-        console.log('进入ShopLayer');
     }
 
 
     private onExit(){
-        console.log('退出ShopLayer');
     }
 
 }
