@@ -20,7 +20,8 @@ export class UIDlg extends UILayer {
     bg.node.name = bg.name = this.view.node.name + '_dlgMask: GGraph';
     bg.drawRect(1, math.Color.BLACK, math.Color.BLACK);
     bg.alpha = 0.6;
-    bg.setSize(fgui.GRoot.inst.width,fgui.GRoot.inst.height);
+    bg.setSize(Math.ceil(fgui.GRoot.inst.width), Math.ceil(fgui.GRoot.inst.height));
+    bg.setPosition((this.view.width - bg.width) / 2, (this.view.height - bg.height) / 2);
     this.view.addChildAt(bg, 0);
     bg.onClick(this.close, this);
     SceneMgr.inst.dlg.addChild(this.view);
