@@ -3,7 +3,7 @@
  * @Author: CYK
  * @Date: 2022-05-20 09:53:17
  */
-import { _decorator, Component, Node, js } from 'cc';
+import { _decorator, Component, Node, js, path } from 'cc';
 import { emmiter } from '../base/Emmiter';
 const { ccclass, property } = _decorator;
 import * as fgui from "fairygui-cc";
@@ -121,7 +121,12 @@ export class UIComp extends Component {
                 var pi: fgui.PackageItem = fgui.UIPackage.getItemByURL(obj.defaultItem + '');
                 if (pi) {
                     let __class: any = js.getClassByName(pi.name);
-                    fgui.UIObjectFactory.setExtension("ui://VirtualList/mailItem", __class);
+                    if (__class) {
+                        obj.itemRenderer = function(){};
+                        obj.setVirtual();
+                        let url = 'ui://' + pi.owner.name + '/' + pi.name;
+                        fgui.UIObjectFactory.setExtension(url, __class);
+                    }
                 }
             }
         }

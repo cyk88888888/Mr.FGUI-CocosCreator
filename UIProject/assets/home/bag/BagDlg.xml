@@ -30,14 +30,14 @@
     <image id="n9" name="n9" src="pzzl17" fileName="images/7.png" xy="61,767" size="511,2" group="n26_pzzl"/>
     <image id="n10" name="n10" src="pzzl18" fileName="images/8.png" xy="61,774" size="130,124" group="n26_pzzl"/>
     <loader id="n11" name="n11" xy="67,781" size="120,110" group="n26_pzzl" align="center" vAlign="middle"/>
-    <text id="n12" name="n12" xy="205,810" size="111,34" group="n26_pzzl" fontSize="24" color="#ff0099" text="Selected:"/>
+    <text id="n12" name="n12" xy="205,810" size="112,34" group="n26_pzzl" fontSize="24" color="#ff0099" text="Selected:"/>
     <text id="n13" name="n13" xy="336,810" size="119,28" group="n26_pzzl" fontSize="24" color="#ff0099" autoSize="height" text=""/>
     <list id="n25_osdo" name="n25" xy="185,742" size="269,19" group="n26_pzzl" touchable="false" layout="row" colGap="40" defaultItem="ui://4n4l5loxpzzl1b" align="center" selectionController="page">
       <item/>
       <item/>
       <item/>
     </list>
-    <group id="n26_pzzl" name="n26" xy="0,349" size="640,582" advanced="true">
+    <group id="n26_pzzl" name="grp_bag" xy="0,349" size="640,582" advanced="true">
       <relation target="" sidePair="center-center,middle-middle"/>
     </group>
   </displayList>

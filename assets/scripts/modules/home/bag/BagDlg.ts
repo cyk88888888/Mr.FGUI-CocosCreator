@@ -17,14 +17,18 @@ export class BagDlg extends UIDlg {
     private list: fgui.GList;
     private n11: fgui.GLoader;
     private n13: fgui.GTextField;
+
+    private _bagDataList: any[];
     private onEnter() {
         let self = this;
+        self._bagDataList = [];
         self.list.on(fgui.Event.CLICK_ITEM, this.onClickItem, this);
-        self.list.itemRenderer = this.renderListItem.bind(this);
-        self.list.setVirtual();
+        // self.list.itemRenderer = <fgui.ListItemRenderer>this.renderListItem.bind(this);
+        // self.list.setVirtual();
         self.list.numItems = 45;
-        self.list.selectedIndex = 0;
+        self.list.selectedIndex = 1;
         self.onClickItem(self.list.getChildAt(self.list.selectedIndex));
+    
         // self.list.addSelection(0, true);
     }
 
@@ -33,8 +37,8 @@ export class BagDlg extends UIDlg {
         item.text = "" + Math.floor(Math.random() * 100);
     }
 
-    private onClickItem(item: fgui.GButton): void {
-        this.n11.icon = item.icon;
-        this.n13.text = item.icon;
+    private onClickItem(item: BagIR): void {
+        this.n11.icon = item.loader.icon;
+        this.n13.text = item.count.text;
     }
 }
