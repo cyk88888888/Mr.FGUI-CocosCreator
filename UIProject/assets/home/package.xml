@@ -36,7 +36,7 @@
     <image id="pzzl17" name="7.png" path="/images/"/>
     <image id="pzzl18" name="8.png" path="/images/"/>
     <movieclip id="pzzl19" name="quan.jta" path="/images/"/>
-    <component id="pzzl1a" name="BagGridSub.xml" path="/bag/"/>
+    <component id="pzzl1a" name="BagIR.xml" path="/bag/"/>
     <component id="pzzl1b" name="dot.xml" path="/bag/"/>
     <component id="pzzl1c" name="BagButton.xml" path="/bag/"/>
     <image id="pzzl1d" name="btnimage.png" path="/images/"/>

@@ -117,6 +117,13 @@ export class UIComp extends Component {
                     script.initView(obj);
                 }
             }
+            if (obj instanceof fgui.GList) {
+                var pi: fgui.PackageItem = fgui.UIPackage.getItemByURL(obj.defaultItem + '');
+                if (pi) {
+                    let __class: any = js.getClassByName(pi.name);
+                    fgui.UIObjectFactory.setExtension("ui://VirtualList/mailItem", __class);
+                }
+            }
         }
     }
 

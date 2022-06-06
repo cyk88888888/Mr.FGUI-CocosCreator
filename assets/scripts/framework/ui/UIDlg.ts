@@ -19,7 +19,7 @@ export class UIDlg extends UILayer {
   protected addToLayer() {
     let bg = this.graph_bg = new fgui.GGraph();
     bg.node.name = bg.name = this.dlgMaskName;
-    let modalLayerColor: Color = new Color(0x00, 0x00, 0x00, 180);
+    let modalLayerColor: Color = new Color(0x00, 0x00, 0x00, 255 * 0.4);
     bg.drawRect(1, modalLayerColor, modalLayerColor);
     bg.setSize(Math.ceil(fgui.GRoot.inst.width), Math.ceil(fgui.GRoot.inst.height));
     bg.setPosition((this.view.width - bg.width) / 2, (this.view.height - bg.height) / 2);
@@ -28,7 +28,6 @@ export class UIDlg extends UILayer {
     this.needAnimation ? SceneMgr.inst.dlg.addChild(bg) : this.view.addChildAt(this.graph_bg, 0);
     SceneMgr.inst.dlg.addChild(this.view);
     if (this.needAnimation) {
-      this.needAnimation = false;
       this.onOpenAnimation();
     }
   }
