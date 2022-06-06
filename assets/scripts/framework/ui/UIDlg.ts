@@ -18,31 +18,30 @@ export class UIDlg extends UILayer {
   */
   protected addToLayer() {
     let bg = this.graph_bg = new fgui.GGraph();
-    bg.node.name = bg.name = this.view.node.name + '_dlgMask: GGraph';
+    bg.node.name = bg.name = '__mask: GGraph';
     let modalLayerColor: Color = new Color(0x00, 0x00, 0x00, 180);
     bg.drawRect(1, modalLayerColor, modalLayerColor);
     bg.setSize(Math.ceil(fgui.GRoot.inst.width), Math.ceil(fgui.GRoot.inst.height));
     bg.setPosition((this.view.width - bg.width) / 2, (this.view.height - bg.height) / 2);
     bg.onClick(this.close, this);
-    bg.touchable = true;
     this.view.setPivot(0.5, 0.5);
     SceneMgr.inst.dlg.addChild(bg);
     SceneMgr.inst.dlg.addChild(this.view);
   }
 
   protected onOpenAnimation() {
-    let self = this;
     this.view.setScale(0.1, 0.1);
-    fgui.GTween.to2(0.1, 0.1, 1, 1, 0.3)
+    fgui.GTween.to2(0.1, 0.1, 1, 1, 0.2)
       .setTarget(this.view, this.view.setScale)
       .setEase(fgui.EaseType.QuadOut)
       .onComplete(() => {
+        this.view.addChildAt(this.graph_bg, 0);
       }, this);
   }
 
   protected onCloseAnimation(cb: Function) {
     this.graph_bg && this.graph_bg.removeFromParent();
-    fgui.GTween.to2(1, 1, 0.1, 0.1, 0.3)
+    fgui.GTween.to2(1, 1, 0.1, 0.1, 0.2)
       .setTarget(this.view, this.view.setScale)
       .setEase(fgui.EaseType.QuadOut)
       .onComplete(cb, this);

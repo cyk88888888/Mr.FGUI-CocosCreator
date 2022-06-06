@@ -249,7 +249,7 @@ export class UIComp extends Component {
         }
 
         if (self.view) {
-            let childNodeName = this.view.node.name + '_dlgMask: GGraph';
+            let childNodeName = '__mask: GGraph';
             let bgMask = this.view.getChild(childNodeName);
             let hasClickListener = bgMask && bgMask.node.isValid && bgMask.hasClickListener();
             if (hasClickListener) bgMask.offClick(self.close, self);
