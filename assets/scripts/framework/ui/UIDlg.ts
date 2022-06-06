@@ -17,22 +17,19 @@ export class UIDlg extends UILayer {
   * 将view添加到layer层级容器
   */
   protected addToLayer() {
-    let bgMask = this.view.getChild(this.dlgMaskName);
-    if (!bgMask) {
-      let bg = this.graph_bg = new fgui.GGraph();
-      bg.node.name = bg.name = this.dlgMaskName;
-      let modalLayerColor: Color = new Color(0x00, 0x00, 0x00, 180);
-      bg.drawRect(1, modalLayerColor, modalLayerColor);
-      bg.setSize(Math.ceil(fgui.GRoot.inst.width), Math.ceil(fgui.GRoot.inst.height));
-      bg.setPosition((this.view.width - bg.width) / 2, (this.view.height - bg.height) / 2);
-      bg.onClick(this.close, this);
-      this.view.setPivot(0.5, 0.5);
-      this.needAnimation && !bgMask ? SceneMgr.inst.dlg.addChild(bg) : this.view.addChildAt(this.graph_bg, 0);
-      SceneMgr.inst.dlg.addChild(this.view);
-      if (this.needAnimation) {
-        this.needAnimation = false;
-        this.onOpenAnimation();
-      }
+    let bg = this.graph_bg = new fgui.GGraph();
+    bg.node.name = bg.name = this.dlgMaskName;
+    let modalLayerColor: Color = new Color(0x00, 0x00, 0x00, 180);
+    bg.drawRect(1, modalLayerColor, modalLayerColor);
+    bg.setSize(Math.ceil(fgui.GRoot.inst.width), Math.ceil(fgui.GRoot.inst.height));
+    bg.setPosition((this.view.width - bg.width) / 2, (this.view.height - bg.height) / 2);
+    bg.onClick(this.close, this);
+    this.view.setPivot(0.5, 0.5);
+    this.needAnimation ? SceneMgr.inst.dlg.addChild(bg) : this.view.addChildAt(this.graph_bg, 0);
+    SceneMgr.inst.dlg.addChild(this.view);
+    if (this.needAnimation) {
+      this.needAnimation = false;
+      this.onOpenAnimation();
     }
   }
 
