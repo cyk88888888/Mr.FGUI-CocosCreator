@@ -98,10 +98,6 @@ export class UIComp extends Component {
         self.onEnter_b();
         if (self['onEnter']) self['onEnter']();
         self.onEnter_a();
-        if (self.needAnimation){
-            self.needAnimation = false;
-            self.onOpenAnimation();
-        } 
     }
 
     /** 初始化属性 */
