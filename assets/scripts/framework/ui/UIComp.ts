@@ -21,6 +21,7 @@ export class UIComp extends Component {
     private isFirstEnter: boolean;
     /**打开弹窗时是否需要动画 */
     protected needAnimation: boolean = true;
+    protected dlgMaskName = '__mask: GGraph';
     __preload() {
         let self = this;
         if (self.isFirstEnter) return;
@@ -249,8 +250,7 @@ export class UIComp extends Component {
         }
 
         if (self.view) {
-            let childNodeName = '__mask: GGraph';
-            let bgMask = this.view.getChild(childNodeName);
+            let bgMask = this.view.getChild(self.dlgMaskName);
             let hasClickListener = bgMask && bgMask.node.isValid && bgMask.hasClickListener();
             if (hasClickListener) bgMask.offClick(self.close, self);
         }

@@ -17,16 +17,23 @@ export class UIDlg extends UILayer {
   * 将view添加到layer层级容器
   */
   protected addToLayer() {
-    let bg = this.graph_bg = new fgui.GGraph();
-    bg.node.name = bg.name = '__mask: GGraph';
-    let modalLayerColor: Color = new Color(0x00, 0x00, 0x00, 180);
-    bg.drawRect(1, modalLayerColor, modalLayerColor);
-    bg.setSize(Math.ceil(fgui.GRoot.inst.width), Math.ceil(fgui.GRoot.inst.height));
-    bg.setPosition((this.view.width - bg.width) / 2, (this.view.height - bg.height) / 2);
-    bg.onClick(this.close, this);
-    this.view.setPivot(0.5, 0.5);
-    SceneMgr.inst.dlg.addChild(bg);
-    SceneMgr.inst.dlg.addChild(this.view);
+    let bgMask = this.view.getChild(this.dlgMaskName);
+    if (!bgMask) {
+      let bg = this.graph_bg = new fgui.GGraph();
+      bg.node.name = bg.name = this.dlgMaskName;
+      let modalLayerColor: Color = new Color(0x00, 0x00, 0x00, 180);
+      bg.drawRect(1, modalLayerColor, modalLayerColor);
+      bg.setSize(Math.ceil(fgui.GRoot.inst.width), Math.ceil(fgui.GRoot.inst.height));
+      bg.setPosition((this.view.width - bg.width) / 2, (this.view.height - bg.height) / 2);
+      bg.onClick(this.close, this);
+      this.view.setPivot(0.5, 0.5);
+      this.needAnimation && !bgMask ? SceneMgr.inst.dlg.addChild(bg) : this.view.addChildAt(this.graph_bg, 0);
+      SceneMgr.inst.dlg.addChild(this.view);
+      if (this.needAnimation) {
+        this.needAnimation = false;
+        this.onOpenAnimation();
+      }
+    }
   }
 
   protected onOpenAnimation() {
@@ -41,10 +48,14 @@ export class UIDlg extends UILayer {
 
   protected onCloseAnimation(cb: Function) {
     this.graph_bg && this.graph_bg.removeFromParent();
-    fgui.GTween.to2(1, 1, 0.1, 0.1, 0.2)
-      .setTarget(this.view, this.view.setScale)
-      .setEase(fgui.EaseType.QuadOut)
-      .onComplete(cb, this);
+    if (this.needAnimation) {
+      fgui.GTween.to2(1, 1, 0.1, 0.1, 0.2)
+        .setTarget(this.view, this.view.setScale)
+        .setEase(fgui.EaseType.QuadOut)
+        .onComplete(cb, this);
+    } else {
+      cb.call(this);
+    }
   }
 }
 

@@ -21,10 +21,6 @@ export class UILayer extends UIComp {
         self.initView(view);
         BaseUT.setFitSize(self.view);
         self.addToLayer();
-        if (self.needAnimation){
-            self.needAnimation = false;
-            self.onOpenAnimation();
-        } 
         return self;
     }
     /**
