@@ -3,12 +3,10 @@
  * @Author: CYK
  * @Date: 2022-05-20 09:53:17
  */
-
 import { _decorator, Component, Node, js } from 'cc';
 import { emmiter } from '../base/Emmiter';
 const { ccclass, property } = _decorator;
 import * as fgui from "fairygui-cc";
-import { SceneMgr } from '../mgr/SceneMgr';
 @ccclass('UIComp')
 export class UIComp extends Component {
     private _emmitMap: { [event: string]: Function };//已注册的监听事件列表
@@ -139,12 +137,12 @@ export class UIComp extends Component {
                 }
             }
         }
-        if(this['btn_close']){
+        if (this['btn_close']) {
             this['btn_close'].onClick(self.close, self);
         }
 
         let btnClose = this['frame']?.getChild('closeButton');
-        if(btnClose){
+        if (btnClose) {
             btnClose.onClick(self.close, self);
         }
     }
@@ -155,7 +153,7 @@ export class UIComp extends Component {
             this._tweenTargetList = [];
         }
         if (this._tweenTargetList.indexOf(target) == -1) this._tweenTargetList.push(target);
-        
+
         return fgui.GTween.getTween(target, propType);
     }
 
@@ -242,7 +240,7 @@ export class UIComp extends Component {
                     let objName = obj.name;
                     if (self._objTapMap[objName]) {
                         let tapFunc = self["_tap_" + objName];
-                        if(obj.node.isValid) obj.offClick(tapFunc, self);
+                        if (obj.node.isValid) obj.offClick(tapFunc, self);
                     }
                 }
             }
