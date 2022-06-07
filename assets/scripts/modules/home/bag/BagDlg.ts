@@ -3,7 +3,7 @@
  * @Author: CYK
  * @Date: 2022-06-02 17:20:24
  */
-import { _decorator, Component, Node, director } from 'cc';
+import { _decorator } from 'cc';
 const { ccclass, property } = _decorator;
 import * as fgui from "fairygui-cc";
 import { UIDlg } from '../../../framework/ui/UIDlg';
@@ -26,7 +26,6 @@ export class BagDlg extends UIDlg {
 
     private onEnter() {
         let self = this;
-        self.list_bag.on(fgui.Event.CLICK_ITEM, this.onClickItem, this);
         self.setSelectData(this._tempLen - 1);
     }
 
@@ -39,7 +38,7 @@ export class BagDlg extends UIDlg {
         return self._bagDataList;
     }
 
-    private onClickItem(item: BagIR, evt: any): void {
+    private _click_list_bag(item: BagIR, evt: any) {
         this.showDetail(item.data);
     }
 

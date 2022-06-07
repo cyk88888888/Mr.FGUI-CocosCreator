@@ -26,9 +26,9 @@ export class UIComp extends Component {
         self.onInited();
     }
 
-    protected onInited(){
+    protected onInited() {
         let self = this;
-        if(self.isInited) return;
+        if (self.isInited) return;
         self.isInited = true;
         self.init();
         self.ctor_b();
@@ -163,12 +163,24 @@ export class UIComp extends Component {
         self._objTapMap = {};
         for (let key in children) {
             let obj = children[key];
+            let objName = obj.name;
+            //监听元素点击事件
             if (obj instanceof fgui.GObject) {
-                let objName = obj.name;
                 if (self["_tap_" + objName]) {
                     let tapFunc = self["_tap_" + objName];
-                    self._objTapMap[objName] = tapFunc;
-                    obj.onClick(tapFunc, self);
+                    let eventName = fgui.Event.CLICK;
+                    self._objTapMap[objName + '&' + eventName] = tapFunc;
+                    obj.on(eventName, tapFunc, self);
+                }
+            }
+
+            //监听列表子项点击事件
+            if (obj instanceof fgui.GList) {
+                if (self['_click_' + obj.name]) {
+                    let tapFunc = self["_click_" + obj.name];
+                    let eventName = fgui.Event.CLICK_ITEM;
+                    self._objTapMap[objName + '&' + eventName] = tapFunc;
+                    obj.on(eventName, tapFunc, this);
                 }
             }
         }
@@ -268,15 +280,13 @@ export class UIComp extends Component {
 
         /** 调用node.destory()后会自动注销注册的点击事件,所以注销自定义事件前先判断node.isValid*/
         if (self._objTapMap) {
-            let children = self.view._children;
-            for (let key in children) {
-                let obj = children[key];
-                if (obj instanceof fgui.GObject) {
-                    let objName = obj.name;
-                    if (self._objTapMap[objName]) {
-                        let tapFunc = self["_tap_" + objName];
-                        if (obj.node.isValid) obj.offClick(tapFunc, self);
-                    }
+            for (let key in self._objTapMap) {
+                let splitKey = key.split('&');
+                let objName = splitKey[0];
+                let eventName = splitKey[1];
+                let obj = self[objName];
+                if (obj.node.isValid) {
+                    obj.off(eventName, self._objTapMap[key], self);
                 }
             }
             self._objTapMap = null;
