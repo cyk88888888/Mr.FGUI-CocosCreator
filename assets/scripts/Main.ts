@@ -12,8 +12,9 @@ import { LoadingScene } from './modules/loading/LoadingScene';
 @ccclass('Main')
 export class Main extends Component {
     onLoad() {
-        SceneMgr.inst.mainScene = 'HomeScene';
         fgui.GRoot.create();
+        SceneMgr.inst.mainScene = 'HomeScene';//设置主场景
+        fgui.UIConfig.buttonSound = "ui://common/click";//设置全局按钮点击音效
         scaleMode.designWidth = 640;
         scaleMode.designHeight = 1280;
         scaleMode.designHeight_min = 1030;

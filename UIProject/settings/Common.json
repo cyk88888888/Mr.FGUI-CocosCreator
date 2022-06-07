@@ -15,10 +15,10 @@
   "scrollBars": {
     "horizontal": "",
     "vertical": "",
-    "defaultDisplay": "visible"
+    "defaultDisplay": "hidden"
   },
   "tipsRes": "",
-  "buttonClickSound": "",
+  "buttonClickSound": "ui://g2zhtj9blviib",
   "pivot": "default",
   "fileName": "Common"
 }

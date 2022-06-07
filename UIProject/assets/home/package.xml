@@ -40,6 +40,8 @@
     <component id="pzzl1b" name="dot.xml" path="/bag/"/>
     <component id="pzzl1c" name="BagButton.xml" path="/bag/"/>
     <image id="pzzl1d" name="btnimage.png" path="/images/"/>
+    <component id="e0g51e" name="TabBottomIR1.xml" path="/components/" exported="true"/>
+    <component id="e0g51f" name="TabBottomIR.xml" path="/components/"/>
   </resources>
   <publish name=""/>
 </packageDescription>

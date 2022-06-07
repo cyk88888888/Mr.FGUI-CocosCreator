@@ -14,63 +14,33 @@ const { ccclass, property } = _decorator;
 export class BottomTabLayer extends UIMenuLayer {
     /** 包名称 */
     public static pkgName: string = 'home';
-    private img_select: fgui.GImage;
+    private list_bottom: fgui.GList;
 
     private _curSelectIndex: number;
     private _layerInfos: any[];
     private onEnter() {
         let self = this;
         self._layerInfos = [
-            { btn: self['btn_equip'], layer: 'EquipLayer' },
-            { btn: self['btn_shop'], layer: 'ShopLayer' },
-            { btn: self['btn_home'], layer: 'HomeLayer' },
-            { btn: self['btn_tanlent'], layer: 'SkillLayer' },
-            { btn: self['btn_setting'], layer: 'SettingLayer' },
+            { layer: 'EquipLayer' },
+            { layer: 'ShopLayer' },
+            { layer: 'HomeLayer' },
+            { layer: 'SkillLayer' },
+            { layer: 'SettingLayer' },
         ];
     }
 
     private onFirstEnter() {
         let self = this;
-        self.seletcIndex = 2;
+        self._curSelectIndex = self.list_bottom.selectedIndex = 2;
     }
 
-    public get seletcIndex() {
-        return this._curSelectIndex;
-    }
-
-    public set seletcIndex(value: number) {
-        this._curSelectIndex = value;
-        let layerInfo = this._layerInfos[value];
-        this.img_select.x = layerInfo.btn.x;
-    }
-
-    private _tap_btn_equip() {
-        this.onTap(0);
-    }
-
-    private _tap_btn_shop() {
-        this.onTap(1);
-    }
-
-    private _tap_btn_home() {
-        this.onTap(2);
-    }
-
-    private _tap_btn_tanlent() {
-        this.onTap(3);
-    }
-
-    private _tap_btn_setting() {
-        this.onTap(4);
-    }
-
-    private onTap(index: number) {
-        let layerInfo = this._layerInfos[index];
+    private _click_list_bottom(item: any, evt: any) {
+        let self = this;
+        if (self._curSelectIndex == self.list_bottom.selectedIndex) return;
+        self._curSelectIndex = self.list_bottom.selectedIndex
+        let layerInfo = self._layerInfos[self._curSelectIndex];
         let layerName = layerInfo.layer;
-        if (this.seletcIndex == index || layerName == '') return;
-        this.seletcIndex = index;
-        this.emit('jumpToLayer', { layerName: layerName });
-
+        self.emit('jumpToLayer', { layerName: layerName });
     }
 
     private onExit() {
