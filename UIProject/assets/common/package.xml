@@ -12,7 +12,14 @@
     <component id="pzzla" name="Button1.xml" path="/components/" exported="true"/>
     <sound id="lviib" name="click.wav" path="/sound/" exported="true"/>
     <sound id="lviic" name="tabswitch.wav" path="/sound/" exported="true"/>
-    <sound id="lviie" name="bg.mp3" path="/sound/" exported="true"/>
+    <sound id="lviie" name="bg00.mp3" path="/sound/" exported="true"/>
+    <sound id="h6f1f" name="bg01.mp3" path="/sound/" exported="true"/>
+    <sound id="h6f1h" name="bg02.mp3" path="/sound/" exported="true"/>
+    <sound id="h6f1i" name="bg03.mp3" path="/sound/" exported="true"/>
+    <sound id="h6f1j" name="bg04.mp3" path="/sound/" exported="true"/>
+    <sound id="h6f1k" name="bg05.mp3" path="/sound/" exported="true"/>
+    <sound id="h6f1l" name="bg06.mp3" path="/sound/" exported="true"/>
+    <sound id="h6f1m" name="bg07.mp3" path="/sound/" exported="true"/>
   </resources>
   <publish name=""/>
 </packageDescription>

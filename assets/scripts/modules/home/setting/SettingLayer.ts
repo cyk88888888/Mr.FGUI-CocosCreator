@@ -6,6 +6,7 @@
 import { _decorator, Component, Node } from 'cc';
 const { ccclass, property } = _decorator;
 import * as fgui from "fairygui-cc";
+import { SoundMrg } from '../../../framework/mgr/SoundMrg';
 import { UILayer } from '../../../framework/ui/UILayer';
 @ccclass('SettingLayer')
 export class SettingLayer extends UILayer {
@@ -13,10 +14,12 @@ export class SettingLayer extends UILayer {
     public static pkgName: string = 'home';
     protected onEnter() {
         let self = this;
+        SoundMrg.inst.playBg('ui://common/bg02');
     }
 
 
     private onExit(){
+        SoundMrg.inst.playMainBg();
     }
 
 }
