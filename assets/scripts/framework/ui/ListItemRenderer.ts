@@ -33,6 +33,7 @@ export class ListItemRenderer extends fgui.GButton {
 
     public setData(data: any) {
         this.data = data;
+        if(this['dchg']) this['dchg']();
     }
 
     protected onConstruct(): void {

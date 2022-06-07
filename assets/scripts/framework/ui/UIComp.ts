@@ -122,10 +122,14 @@ export class UIComp extends Component {
                 if (pi) {
                     let __class: any = js.getClassByName(pi.name);
                     if (__class) {
-                        obj.itemRenderer = function(){};
-                        obj.setVirtual();
                         let url = 'ui://' + pi.owner.name + '/' + pi.name;
                         fgui.UIObjectFactory.setExtension(url, __class);
+                        let dataList = self['_data_' + obj.name] ? self['_data_' + obj.name]() : [];
+                        obj.itemRenderer = function (index: number, item: any) { item.setData(dataList[index]); };
+                        obj.setVirtual();//列表设置为复用列表
+                        if (dataList.length > 0) {
+                            obj.numItems = dataList.length;
+                        }
                     }
                 }
             }

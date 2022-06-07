@@ -15,8 +15,13 @@ export class BagIR extends ListItemRenderer {
 
     private onEnter(){
         let self = this;
-        self.selectBg;
-        self.loader.icon = "Icons/i" + Math.floor(Math.random() * 10);
-        self.count.text = "" + Math.floor(Math.random() * 100);
+       
+    }
+
+    private dchg(){
+        let self = this;
+        let data = self.data;
+        self.loader.icon = data.icon;
+        self.count.text = "" + data.count;
     }
 }
