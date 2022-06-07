@@ -7,6 +7,7 @@ import { _decorator } from 'cc';
 const { ccclass, property } = _decorator;
 import * as fgui from "fairygui-cc";
 import { registerModule } from '../../framework/mgr/ModuleMgr';
+import { SoundMrg } from '../../framework/mgr/SoundMrg';
 import { UIMenuLayer } from '../../framework/ui/UIMenuLayer';
 import { UIScene } from '../../framework/ui/UIScene';
 import { BottomTabLayer } from './BottomTabLayer';
@@ -46,6 +47,7 @@ export class HomeScene extends UIScene {
         self.run(data.layerName);
     }
     private onExit() {
+        SoundMrg.inst.playMainBg();
     }
 }
 registerModule(HomeScene, ['ui/home'], true);

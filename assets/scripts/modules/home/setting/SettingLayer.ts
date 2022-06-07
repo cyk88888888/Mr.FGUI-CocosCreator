@@ -19,7 +19,7 @@ export class SettingLayer extends UILayer {
 
 
     private onExit(){
-        SoundMrg.inst.playMainBg();
+        
     }
 
 }

@@ -18,7 +18,6 @@ export class EquipLayer extends UILayer {
     }
 
     private onExit(){
-        SoundMrg.inst.playMainBg();
     }
 
 }

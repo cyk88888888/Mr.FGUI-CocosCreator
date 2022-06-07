@@ -15,8 +15,15 @@ export class SoundMrg {
         return this._inst;
     }
 
-    /**默认背景音乐 */
-    public defaultBgMusic: string;
+    private _defaultBgMusic:string;
+    public get defaultBgMusic(){
+        return this._defaultBgMusic;
+    }
+    /**设置默认背景音乐 */
+    public set defaultBgMusic(value:string){
+        this._defaultBgMusic = value;
+        this.curBgMusic = value;
+    } 
     public curBgMusic: string;
 
     /**播放默认背景音乐 */
