@@ -15,9 +15,6 @@ export class TopInfoLayer extends UIMenuLayer {
     /** 包名称 */
     public static pkgName: string = 'home';
 
-    private ctor(){
-        let self = this;
-    }
     private onEnter() {
     }
 

@@ -17,19 +17,24 @@ export class UIComp extends Component {
     public static pkgName: string = '';
     public data: any;
     private isFirstEnter: boolean;
+    private isInited: boolean;
     /**打开弹窗时是否需要动画 */
     protected needAnimation: boolean = true;
     protected dlgMaskName = '__mask: GGraph';
     __preload() {
         let self = this;
-        if (self.isFirstEnter) return;
-        self.isFirstEnter = true;
+        self.onInited();
+    }
+
+    protected onInited(){
+        let self = this;
+        if(self.isInited) return;
+        self.isInited = true;
         self.init();
         self.ctor_b();
         if (self["ctor"]) self["ctor"]();
         self.ctor_a();
         self.init_a();
-        if (self["onFirstEnter"]) self["onFirstEnter"]();
     }
 
     protected init() { }
@@ -57,6 +62,7 @@ export class UIComp extends Component {
 
     public setData(data: any) {
         this.data = data;
+        if (this['dchg']) this['dchg']();
     }
 
     public enterOnPop() {
@@ -90,12 +96,16 @@ export class UIComp extends Component {
      */
     protected initView(view: fgui.GComponent) {
         let self = this;
-        this.view = view;
-        this.initViewProperty();
-        this.addBtnCLickListener();
-        console.log('进入' + this.node.name);
+        self.view = view;
+        self.initViewProperty();
+        self.addBtnCLickListener();
+        console.log('进入' + self.node.name);
         self.onEnter_b();
         if (self['onEnter']) self['onEnter']();
+        if (!self.isFirstEnter) {
+            self.isFirstEnter = true;
+            if (self["onFirstEnter"]) self["onFirstEnter"]();
+        }
         self.onEnter_a();
     }
 
@@ -106,7 +116,7 @@ export class UIComp extends Component {
         let children = self.view._children;
         for (let key in children) {
             let obj = children[key];
-            this[obj.name] = obj;
+            self[obj.name] = obj;
             if (obj.node.name.indexOf(obj.name) == -1) obj.node.name = obj.name + ':  ' + obj.node.name;
             if (obj instanceof fgui.GComponent && obj.packageItem) {//如果是组件，添加对应脚本
                 let scriptName = obj.packageItem.name;
@@ -124,15 +134,24 @@ export class UIComp extends Component {
                     if (__class) {
                         let url = 'ui://' + pi.owner.name + '/' + pi.name;
                         fgui.UIObjectFactory.setExtension(url, __class);
-                        let dataList = self['_data_' + obj.name] ? self['_data_' + obj.name]() : [];
-                        obj.itemRenderer = function (index: number, item: any) { item.setData(dataList[index]); };
                         obj.setVirtual();//列表设置为复用列表
-                        if (dataList.length > 0) {
-                            obj.numItems = dataList.length;
-                        }
+                        self.refreshList(obj.name);
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * 刷新列表数据
+     * @param listId 列表id名称
+     */
+    protected refreshList(listId: string) {
+        let self = this;
+        if (self[listId] && self['_data_' + listId]) {
+            let dataList = self['_data_' + listId]();
+            self[listId].itemRenderer = function (index: number, item: any) { item.setData(dataList[index]); };
+            self[listId].numItems = dataList.length;
         }
     }
 
@@ -153,11 +172,11 @@ export class UIComp extends Component {
                 }
             }
         }
-        if (this['btn_close']) {
-            this['btn_close'].onClick(self.close, self);
+        if (self['btn_close']) {
+            self['btn_close'].onClick(self.close, self);
         }
 
-        let btnClose = this['frame']?.getChild('closeButton');
+        let btnClose = self['frame']?.getChild('closeButton');
         if (btnClose) {
             btnClose.onClick(self.close, self);
         }

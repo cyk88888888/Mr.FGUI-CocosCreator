@@ -17,6 +17,7 @@ export class UILayer extends UIComp {
 
     protected show(view: GComponent, data?: any): UILayer {
         let self = this;
+        self.onInited();
         self.setData(data);
         self.initView(view);
         BaseUT.setFitSize(self.view);

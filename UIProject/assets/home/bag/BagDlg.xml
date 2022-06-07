@@ -37,6 +37,9 @@
       <item/>
       <item/>
     </list>
+    <component id="n27_lvii" name="btn_refresh" src="pzzla" fileName="components/Button1.xml" pkg="g2zhtj9b" xy="464,854" group="n26_pzzl">
+      <Button title="刷新列表"/>
+    </component>
     <group id="n26_pzzl" name="grp_bag" xy="0,349" size="640,582" advanced="true">
       <relation target="" sidePair="center-center,middle-middle"/>
     </group>
