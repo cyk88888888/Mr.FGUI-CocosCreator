@@ -29,20 +29,22 @@ export class ResMgr {
      * @param cb 全部下载完成回调
      * @param ctx 
      */
-    public loadWithItor(res: string[] | string, itorCb?: Function, cb?: Function, ctx?: any) {
+    public loadWithItor(res: string[] | string, itorCb?: Function, cb?: Function, ctx?: any, needJuHua: boolean = true) {
         let resList = typeof res === 'string' ? [res] : res;
         let totLen = resList.length;//待下载总个数
         let hasLoadResCount: number = 0;//已下载个数
-        let isAllLoaded = true;
-        for (let i = 0; i < totLen; i++) {
-            let resName = resList[i];
-            if (!this.get(resName)) {
-                isAllLoaded = false;
-                break;
+        if (needJuHua) {
+            let isAllLoaded = true;
+            for (let i = 0; i < totLen; i++) {
+                let resName = resList[i];
+                if (!this.get(resName)) {
+                    isAllLoaded = false;
+                    break;
+                }
             }
-        }
-        if (!isAllLoaded && !this._juHuaDlg && this.get('ui/common')) {
-            this._juHuaDlg = JuHuaDlg.show() as JuHuaDlg;
+            if (!isAllLoaded && !this._juHuaDlg && this.get('ui/common')) {
+                this._juHuaDlg = JuHuaDlg.show() as JuHuaDlg;
+            }
         }
 
         let loadSucc = (resName: string, isFromCache?: boolean) => {
@@ -87,9 +89,18 @@ export class ResMgr {
      * @param cb 全部下载完成回调
      * @param ctx 
      */
-    public load(res: string[] | string, cb?: Function, ctx?: any) {
-        let resList = typeof res === 'string' ? [res] : res;
+    public load(resList: string[] | string, cb?: Function, ctx?: any) {
         this.loadWithItor(resList, null, cb, ctx);
+    }
+
+    /**
+     * 下载资源(无菊花模式)
+     * @param resList 资源列表
+     * @param cb 全部下载完成回调
+     * @param ctx 
+     */
+    public loadWithoutJuHua(resList: string[] | string, cb?: Function, ctx?: any) {
+        this.loadWithItor(resList, null, cb, ctx, false);
     }
 
     /**获取已加载缓存的资源 */

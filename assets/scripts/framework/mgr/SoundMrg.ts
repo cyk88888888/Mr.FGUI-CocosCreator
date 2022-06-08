@@ -37,6 +37,7 @@ export class SoundMrg {
         let self = this;
         if (self.curBgMusic == url) return;
         // ResMgr.inst.releaseRes(self.curBgMusic);//释放上个音效资源
+        self.curBgMusic = url;
         let mainNode = director.getScene().getChildByName('Main');
         let audioSource = mainNode.getComponent(AudioSource);
         var pi: fgui.PackageItem = fgui.UIPackage.getItemByURL(url);
@@ -44,15 +45,15 @@ export class SoundMrg {
             let sound: AudioClip = <AudioClip>pi.owner.getItemAsset(pi);
             doPlay(sound);
         } else {
-            ResMgr.inst.load([url], () => {
+            ResMgr.inst.loadWithoutJuHua(url, () => {
                 let sound = ResMgr.inst.get(url) as AudioClip;
+                if (self.curBgMusic != url) return;//加载完成的不是最后一次赋值的值
                 doPlay(sound);
             }, self)
         }
 
         function doPlay(audioClip: AudioClip) {
             if (audioClip) {
-                self.curBgMusic = url;
                 audioSource.stop();
                 audioSource.clip = audioClip;
                 audioSource.play();

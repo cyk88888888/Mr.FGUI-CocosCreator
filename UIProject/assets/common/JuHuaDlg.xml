@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="640,1280">
   <displayList>
-    <graph id="n2_yfcg" name="mask_alpha0" xy="0,-110" size="640,1500" alpha="0" type="rect" fillColor="#70000000">
-      <relation target="" sidePair="center-center,middle-middle"/>
-    </graph>
     <graph id="n1_kb40" name="mask_gray" xy="0,-110" size="640,1500" type="rect" fillColor="#70000000">
       <relation target="" sidePair="center-center,middle-middle"/>
     </graph>
