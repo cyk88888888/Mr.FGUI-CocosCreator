@@ -6,9 +6,8 @@
 import { _decorator, Component, Node, math, Color } from 'cc';
 import * as fgui from "fairygui-cc";
 import { SceneMgr } from '../mgr/SceneMgr';
-import { UIComp } from './UIComp';
 import { UILayer } from './UILayer';
-const { ccclass, property } = _decorator;
+const { ccclass } = _decorator;
 
 @ccclass('UIDlg')
 export class UIDlg extends UILayer {

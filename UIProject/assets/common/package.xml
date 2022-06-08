@@ -8,8 +8,6 @@
     <image id="jtzd7" name="22.png" path="/images/"/>
     <component id="jtzd8" name="btnBack.xml" path="/components/" exported="true"/>
     <component id="pzzla" name="Button1.xml" path="/components/" exported="true"/>
-    <sound id="lviib" name="click.wav" path="/sound/" exported="true"/>
-    <sound id="lviic" name="tabswitch.wav" path="/sound/"/>
   </resources>
   <publish name=""/>
 </packageDescription>

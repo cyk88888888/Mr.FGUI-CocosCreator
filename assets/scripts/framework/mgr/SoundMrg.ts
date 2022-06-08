@@ -4,7 +4,7 @@
  * @Date: 2022-05-23 09:27:58
  */
 import * as fgui from "fairygui-cc";
-import { director, Color, view, Vec2, AudioClip, View, AudioSourceComponent, Event, Node, AudioSource } from "cc";
+import { director, AudioClip, Node, AudioSource } from "cc";
 import { ResMgr } from "./ResMgr";
 export class SoundMrg {
     private static _inst: SoundMrg;

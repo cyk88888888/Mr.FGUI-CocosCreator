@@ -13249,12 +13249,25 @@ class GButton extends GComponent {
     }
     onClick_1() {
         if (this._sound) {
-            var pi = UIPackage.getItemByURL(this._sound);
-            if (pi) {
-                var sound = pi.owner.getItemAsset(pi);
-                if (sound)
-                    GRoot.inst.playOneShotSound(sound, this._soundVolumeScale);
+            if (resources.get(this._sound)) {
+                GRoot.inst.playOneShotSound(resources.get(this._sound), this._soundVolumeScale);
             }
+            else {
+                resources.load(this._sound, Asset, (err, asset) => {
+                    if (!err) {
+                        GRoot.inst.playOneShotSound(asset, this._soundVolumeScale);
+                    }
+                    else {
+                        console.error('resName: ' + this._sound + '加载失败');
+                    }
+                });
+            }
+            // var pi: PackageItem = UIPackage.getItemByURL(this._sound);
+            // if (pi) {
+            //     var sound: AudioClip = <AudioClip>pi.owner.getItemAsset(pi);
+            //     if (sound)
+            //         GRoot.inst.playOneShotSound(sound, this._soundVolumeScale);
+            // }
         }
         if (this._mode == ButtonMode.Check) {
             if (this._changeStateOnClick) {
