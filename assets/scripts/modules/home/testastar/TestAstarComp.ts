@@ -47,7 +47,7 @@ export class TestAstarComp extends UIComp {
 
         let lineGraphics = self.graphicsGrid._content;
         lineGraphics.clear();
-        lineGraphics.lineWidth = 2;
+        lineGraphics.lineWidth = 3;
         for (let i = 0; i < numCols + 1; i++)//画竖线
         {
             lineGraphics.moveTo(i * self._cellSize, 0);
