@@ -61,5 +61,33 @@ export class SoundMrg {
         }
     }
 
+    /**场景音效节点 */
+    public subSoundNode: Node;
+    /**
+     * 播放音效
+     * @param url 音效资源路径
+     * @param isLoop 是否循环 
+     */
+    public playSound(url: string, loop?: boolean) {
+        if (!this.subSoundNode) return;
+        let audioSource = this.subSoundNode.getComponent(AudioSource);
+        var pi: fgui.PackageItem = fgui.UIPackage.getItemByURL(url);
+        if (pi) {
+            let sound: AudioClip = <AudioClip>pi.owner.getItemAsset(pi);
+            doPlay(sound, url, loop);
+        } else {
+            ResMgr.inst.loadWithoutJuHua(url, () => {
+                let sound = ResMgr.inst.get(url) as AudioClip;
+                doPlay(sound, url, loop);
+            }, self)
+        }
+
+        function doPlay(audioClip: AudioClip, url: string, loop?: boolean) {
+            if (!audioClip) throw '音效资源不存在: ' + url;
+            audioSource.loop = loop;
+            audioSource.clip = audioClip;
+            loop ? audioSource.play() : audioSource.playOneShot(audioClip);
+        }
+    }
 }
 
