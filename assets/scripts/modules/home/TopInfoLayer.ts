@@ -6,6 +6,7 @@
 import { _decorator, Component, Node } from 'cc';
 import * as fgui from "fairygui-cc";
 import { SceneMgr } from '../../framework/mgr/SceneMgr';
+import { SoundMrg } from '../../framework/mgr/SoundMrg';
 import { UIMenuLayer } from '../../framework/ui/UIMenuLayer';
 import { RoleScene } from '../role/RoleScene';
 const { ccclass, property } = _decorator;
@@ -19,6 +20,7 @@ export class TopInfoLayer extends UIMenuLayer {
     }
 
     private _tap_img_head() {
+        SoundMrg.inst.playSound('sound/tabswitch');
         SceneMgr.inst.push(RoleScene, { msg: '我是RoleScene' });
     }
 }
