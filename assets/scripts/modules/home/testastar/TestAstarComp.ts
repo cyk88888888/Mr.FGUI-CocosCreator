@@ -41,8 +41,8 @@ export class TestAstarComp extends UIComp {
         let screenWh = self.screenWh;
         let width = screenWh[0];
         let height = screenWh[1];
-        let numCols = Math.ceil(width / self._cellSize);
-        let numRows = Math.ceil(height / self._cellSize);
+        let numCols = Math.floor(width / self._cellSize);
+        let numRows = Math.floor(height / self._cellSize);
         self._grid = new Grid(numCols, numRows);
 
         let lineGraphics = self.graphicsGrid._content;
