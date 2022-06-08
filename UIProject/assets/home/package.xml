@@ -42,6 +42,8 @@
     <image id="pzzl1d" name="btnimage.png" path="/images/"/>
     <component id="e0g51e" name="TabBottomIR1.xml" path="/components/" exported="true"/>
     <component id="e0g51f" name="TabBottomIR.xml" path="/components/"/>
+    <component id="yfcg1g" name="TestAstarComp.xml" path="/astar/" exported="true"/>
+    <component id="yfcg1h" name="AstarContainer.xml" path="/astar/"/>
   </resources>
   <publish name=""/>
 </packageDescription>

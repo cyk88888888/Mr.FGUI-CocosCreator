@@ -4,11 +4,11 @@
     <image id="n0_l3um" name="bg" src="ru41k" fileName="images/bg_loading2.png" xy="0,-60">
       <relation target="" sidePair="center-center,middle-middle"/>
     </image>
-    <text id="n2_pzzl" name="n2" xy="276,620" size="88,39" fontSize="28" color="#ffffff" text="主界面">
-      <relation target="" sidePair="center-center,middle-middle"/>
-    </text>
-    <component id="n4_pzzl" name="btn_bag" src="pzzl1c" fileName="bag/BagButton.xml" xy="275,678">
-      <relation target="" sidePair="center-center,middle-middle"/>
+    <component id="n4_pzzl" name="btn_bag" src="pzzl1c" fileName="bag/BagButton.xml" xy="531,1065">
+      <relation target="" sidePair="right-right,bottom-bottom"/>
+    </component>
+    <component id="n6_yfcg" name="astarComp" src="yfcg1g" fileName="astar/TestAstarComp.xml" xy="0,115" size="640,932">
+      <relation target="" sidePair="height-height"/>
     </component>
   </displayList>
 </component>

@@ -124,6 +124,7 @@ export class UIComp extends Component {
                 if (isHasScript) {
                     let oldCsript = obj.node.getComponent(scriptName) as UIComp;//节点上是否已有脚本
                     let script = oldCsript ? oldCsript : obj.node.addComponent(scriptName) as UIComp;
+                    script.onInited();
                     script.initView(obj);
                 }
             }
