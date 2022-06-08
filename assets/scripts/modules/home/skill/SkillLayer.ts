@@ -14,7 +14,7 @@ export class SkillLayer extends UILayer {
     public static pkgName: string = 'home';
     protected onEnter() {
         let self = this;
-        SoundMrg.inst.playBg('ui://common/bg04');
+        SoundMrg.inst.playBg('sound/bg04');
     }
 
 

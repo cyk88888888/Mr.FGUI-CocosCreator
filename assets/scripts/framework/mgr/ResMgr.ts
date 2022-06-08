@@ -3,6 +3,7 @@
  * @Author: CYK
  * @Date: 2022-05-17 17:14:26
  */
+import { Asset, resources } from "cc";
 import * as fgui from "fairygui-cc";
 import { JuHuaDlg } from "../../modules/common/JuHuaDlg";
 export class ResMgr {
@@ -23,12 +24,13 @@ export class ResMgr {
     }
     /**
      * 加载资源
-     * @param resList 资源列表
+     * @param res 资源列表
      * @param itorCb 单个资源加载完毕回调
      * @param cb 全部下载完成回调
      * @param ctx 
      */
-    public loadWithItor(resList: string[], itorCb?: Function, cb?: Function, ctx?: any) {
+    public loadWithItor(res: string[] | string, itorCb?: Function, cb?: Function, ctx?: any) {
+        let resList = typeof res === 'string' ? [res] : res;
         let totLen = resList.length;//待下载总个数
         let hasLoadResCount: number = 0;//已下载个数
         if (!this._juHuaDlg && fgui.UIPackage.getByName('common')) {
@@ -47,17 +49,26 @@ export class ResMgr {
 
         for (let i = 0; i < totLen; i++) {
             let resName = resList[i];
-            let pkgName = resName.split('/')[1].toLowerCase();
-            if (fgui.UIPackage.getByName(pkgName)) {//缓存已有
+            if (this.get(resName)) {//缓存已有
                 loadSucc(resName, true);
             } else {
-                fgui.UIPackage.loadPackage(resName, (err, pkg) => {//加载资源包
-                    if (!err) {
-                        loadSucc(resName);
-                    } else {
-                        console.error('resName: ' + resName + '加载失败');
-                    }
-                });
+                if (resName.startsWith('ui/')) {//fgui包资源
+                    fgui.UIPackage.loadPackage(resName, (err, pkg) => {//加载资源包
+                        if (!err) {
+                            loadSucc(resName);
+                        } else {
+                            console.error('resName: ' + resName + '加载失败');
+                        }
+                    });
+                } else {
+                    resources.load(resName, Asset, (err: Error | null, asset: Asset) => {
+                        if (!err) {
+                            loadSucc(resName);
+                        } else {
+                            console.error('resName: ' + resName + '加载失败');
+                        }
+                    })
+                }
             }
         }
     }
@@ -68,10 +79,20 @@ export class ResMgr {
      * @param cb 全部下载完成回调
      * @param ctx 
      */
-    public load(resList: string[], cb?: Function, ctx?: any) {
+    public load(res: string[] | string, cb?: Function, ctx?: any) {
+        let resList = typeof res === 'string' ? [res] : res;
         this.loadWithItor(resList, null, cb, ctx);
     }
 
+    /**获取已加载缓存的资源 */
+    public get(resName: string) {
+        if (resName.startsWith('ui/')) {//fgui包资源
+            let pkgName = resName.split('/')[1].toLowerCase();
+            return fgui.UIPackage.getByName(pkgName);
+        } else {
+            return resources.get(resName);
+        }
+    }
     /**
      * 释放资源
      * @param res 
@@ -80,8 +101,13 @@ export class ResMgr {
         let resList = typeof res === 'string' ? [res] : res;
         for (let i = 0; i < resList.length; i++) {
             let resName = resList[i];
-            let pkgName = resName.split('/')[1].toLowerCase();
-            fgui.UIPackage.removePackage(pkgName);
+            if (resName.startsWith('ui/')) {//fgui包资源
+                let pkgName = resName.split('/')[1].toLowerCase();
+                fgui.UIPackage.removePackage(pkgName);
+            } else {
+                resources.release(resName);
+            }
+
         }
     }
 }

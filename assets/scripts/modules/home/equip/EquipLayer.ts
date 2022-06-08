@@ -14,7 +14,7 @@ export class EquipLayer extends UILayer {
     public static pkgName: string = 'home';
     protected onEnter() {
         let self = this;
-        SoundMrg.inst.playBg('ui://common/bg01');
+        SoundMrg.inst.playBg('sound/bg01');
     }
 
     private onExit(){

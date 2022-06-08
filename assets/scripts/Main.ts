@@ -14,7 +14,7 @@ import { LoadingScene } from './modules/loading/LoadingScene';
 export class Main extends Component {
     onLoad() {
         fgui.GRoot.create();
-        SoundMrg.inst.defaultBgMusic = "ui://common/bg00";//设置默认背景音乐
+        SoundMrg.inst.defaultBgMusic = "sound/bg00";//设置默认背景音乐
         SceneMgr.inst.mainScene = 'HomeScene';//设置主场景
         fgui.UIConfig.buttonSound = "ui://common/click";//设置全局按钮点击音效
         scaleMode.designWidth = 640;
