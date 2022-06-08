@@ -34,8 +34,9 @@ export class SoundMrg {
 
     /**播放背景音乐 */
     public playBg(url: string) {
-        if (this.curBgMusic == url) return;
-        // ResMgr.inst.releaseRes(this.curBgMusic);//释放上个音效资源
+        let self = this;
+        if (self.curBgMusic == url) return;
+        // ResMgr.inst.releaseRes(self.curBgMusic);//释放上个音效资源
         let mainNode = director.getScene().getChildByName('Main');
         let audioSource = mainNode.getComponent(AudioSource);
         var pi: fgui.PackageItem = fgui.UIPackage.getItemByURL(url);
@@ -45,13 +46,13 @@ export class SoundMrg {
         } else {
             ResMgr.inst.load([url], () => {
                 let sound = ResMgr.inst.get(url) as AudioClip;
-                doPlay.call(this, sound);
-            }, this)
+                doPlay(sound);
+            }, self)
         }
 
         function doPlay(audioClip: AudioClip) {
             if (audioClip) {
-                this.curBgMusic = url;
+                self.curBgMusic = url;
                 audioSource.stop();
                 audioSource.clip = audioClip;
                 audioSource.play();

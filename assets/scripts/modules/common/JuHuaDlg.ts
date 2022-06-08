@@ -10,6 +10,23 @@ import { UIMsg } from '../../framework/ui/UIMsg';
 
 @ccclass('JuHuaDlg')
 export class JuHuaDlg extends UIMsg {
-     /** 包名称 */
+    /** 包名称 */
     public static pkgName: string = 'common';
+
+    private mask_alpha0: fgui.GGraph;
+    private mask_gray: fgui.GGraph;
+    private mv_loading: fgui.GGraph;
+    private onEnter() {
+        let self = this;
+        self.setMaskVsb(false);
+        self.setTimeout(() => {
+            self.setMaskVsb(true);
+        }, 4000);
+    }
+
+    private setMaskVsb(isShow: boolean) {
+        let self = this;
+        self.mask_alpha0.visible = !isShow;
+        self.mask_gray.visible = self.mv_loading.visible = isShow;
+    }
 }

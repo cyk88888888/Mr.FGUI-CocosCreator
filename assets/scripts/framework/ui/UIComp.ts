@@ -252,6 +252,7 @@ export class UIComp extends Component {
                 clearTimeout(self.timeoutIdArr[i]);
             }
             self.timeoutIdArr = null;
+            console.log('清除timeoutIdArr: ' + self.node.name);
         }
 
         if (self.intervalIdArr) {
@@ -259,6 +260,7 @@ export class UIComp extends Component {
                 clearInterval(self.intervalIdArr[i]);
             }
             self.intervalIdArr = null;
+            console.log('清除intervalIdArr: ' + self.node.name);
         }
     }
 

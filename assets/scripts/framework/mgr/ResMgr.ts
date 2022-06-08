@@ -33,7 +33,15 @@ export class ResMgr {
         let resList = typeof res === 'string' ? [res] : res;
         let totLen = resList.length;//待下载总个数
         let hasLoadResCount: number = 0;//已下载个数
-        if (!this._juHuaDlg && fgui.UIPackage.getByName('common')) {
+        let isAllLoaded = true;
+        for (let i = 0; i < totLen; i++) {
+            let resName = resList[i];
+            if (!this.get(resName)) {
+                isAllLoaded = false;
+                break;
+            }
+        }
+        if (!isAllLoaded && !this._juHuaDlg && this.get('ui/common')) {
             this._juHuaDlg = JuHuaDlg.show() as JuHuaDlg;
         }
 
