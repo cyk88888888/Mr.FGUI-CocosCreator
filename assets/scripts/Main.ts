@@ -9,6 +9,7 @@ import * as fgui from "fairygui-cc";
 import { scaleMode } from './framework/base/ScaleMode';
 import { SceneMgr } from './framework/mgr/SceneMgr';
 import { SoundMrg } from './framework/mgr/SoundMrg';
+import { TickMgr } from './framework/mgr/TickMgr';
 import { LoadingScene } from './modules/loading/LoadingScene';
 @ccclass('Main')
 export class Main extends Component {
@@ -28,7 +29,7 @@ export class Main extends Component {
     }
 
     update(dt: number){
-
+        TickMgr.inst.onTick(dt);
     }
 }
 

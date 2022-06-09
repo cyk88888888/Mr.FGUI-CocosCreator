@@ -3,17 +3,16 @@
  * @Author: CYK
  * @Date: 2022-05-20 09:53:17
  */
-import { _decorator, Component, Node, js, path } from 'cc';
+import { _decorator, js } from 'cc';
 import { emmiter } from '../base/Emmiter';
-const { ccclass, property } = _decorator;
+const { ccclass } = _decorator;
 import * as fgui from "fairygui-cc";
-import { ModuleMgr } from '../mgr/ModuleMgr';
-import { BaseUT } from '../base/BaseUtil';
+import { TickMgr } from '../mgr/TickMgr';
 @ccclass('UIComp')
 export class UIComp extends fgui.GComponent {
     private _emmitMap: { [event: string]: Function };//已注册的监听事件列表
     private _objTapMap: { [objName: string]: Function };//已添加的显示对象点击事件的记录
-    public chilidCompClassMap: { [className: string]: any };//子组件的控制脚本类
+    public chilidCompClassMap: { [className: string]: UIComp };//子组件的控制脚本类
     private _tweenTargetList: any[];//已添加缓动的对象列表
     protected view: fgui.GComponent;
     /** 包名称 */
@@ -23,22 +22,26 @@ export class UIComp extends fgui.GComponent {
     /**打开弹窗时是否需要动画 */
     protected needAnimation: boolean = true;
     protected dlgMaskName = '__mask: GGraph';//弹出底部灰色rect名称
-    constructor(view?: fgui.GComponent) {
+    protected hasDestory: boolean;//是否已被销毁
+    private _allList: fgui.GList[];
+    constructor() {
         super();
         this.ctor_b();
         if (this["ctor"]) this["ctor"]();
         this.ctor_a();
+    }
+
+    /**初始化UI */
+    protected intiUI() {
         let className = this.className;
         let scriptClass = js.getClassByName(className);//是否有对应脚本类
-        this.view = view ? view : fgui.UIPackage.createObject(scriptClass['pkgName'], className).asCom;
-        if(view){
-            this.view.name = className;
-        }else{
-            this.view.name = this.view.node.name = this.node.name = className;
-            this.node.removeAllChildren();
-            this._container = this.view._container;
-            this.node.addChild(this._container);
-        }
+        this.view = fgui.UIPackage.createObject(scriptClass['pkgName'], className).asCom;
+        this.view.node.name = this.node.name = className;
+        this.addChild(this.view);
+        //todo.....
+        // this.node.removeAllChildren();
+        // this._container = this.view._container;
+        // this.node.addChild(this._container);
         this.onUIInited();
     }
 
@@ -105,7 +108,7 @@ export class UIComp extends fgui.GComponent {
         let self = this;
         self.initViewProperty();
         self.addListener();
-        self.chilidCompClassMap[self.view.name] = this;
+        self.chilidCompClassMap[self.className] = this;
         console.log('进入' + self.className);
         self.onEnter_b();
         if (self['onEnter']) self['onEnter']();
@@ -114,6 +117,11 @@ export class UIComp extends fgui.GComponent {
             if (self["onFirstEnter"]) self["onFirstEnter"]();
         }
         self.onEnter_a();
+        self.refreshAllList();
+
+        if (self['update']) {
+            TickMgr.inst.addTick(this.className, { cb: self['update'], ctx: self });
+        }
     }
 
     /** 初始化属性 */
@@ -122,6 +130,7 @@ export class UIComp extends fgui.GComponent {
         if (!self.view) return;
         let children = self.view._children;
         self.chilidCompClassMap = {};
+        self._allList = [];
         for (let key in children) {
             let obj = children[key];
             self[obj.name] = obj;
@@ -130,11 +139,12 @@ export class UIComp extends fgui.GComponent {
                 let scriptName = obj.packageItem.name;
                 let scriptClass = js.getClassByName(scriptName);//是否有对应脚本类
                 if (scriptClass) {
-                    let script = self.chilidCompClassMap[obj.name] ? self.chilidCompClassMap[obj.name] : new scriptClass(obj);
+                    let script = self.chilidCompClassMap[obj.name] ? self.chilidCompClassMap[obj.name] : new scriptClass();
                     script['view'] = obj;
                     script['initView']();
                 }
             }
+
             if (obj instanceof fgui.GList) {
                 var pi: fgui.PackageItem = fgui.UIPackage.getItemByURL(obj.defaultItem + '');
                 if (pi) {
@@ -143,10 +153,18 @@ export class UIComp extends fgui.GComponent {
                         let url = 'ui://' + pi.owner.name + '/' + pi.name;
                         fgui.UIObjectFactory.setExtension(url, __class);//注册列表子项
                         obj.setVirtual();//列表设置为复用列表
-                        self.refreshList(obj.name);
+                        self._allList.push(obj);
                     }
                 }
             }
+
+        }
+    }
+
+    private refreshAllList() {
+        let self = this;
+        for (let i = 0; i < self._allList.length; i++) {
+            self.refreshList(self._allList[i].name);
         }
     }
 
@@ -296,9 +314,11 @@ export class UIComp extends fgui.GComponent {
 
     public destory() {
         let self = this;
+        if (self.hasDestory) return;
         self._dispose();
         self.chilidCompClassMap = null;
         self.dispose();
+        self.hasDestory = true;
     }
 
     private _dispose() {
@@ -333,9 +353,13 @@ export class UIComp extends fgui.GComponent {
         self.rmAllTweens();
 
         //子组件退出
-        for (let key in self.chilidCompClassMap) {
-            let script = self.chilidCompClassMap[key];
-            script['exitOnPush']();
+        // for (let key in self.chilidCompClassMap) {
+        //     let script = self.chilidCompClassMap[key];
+        //     script['exitOnPush']();
+        // }
+
+        if (self['update']) {
+            TickMgr.inst.rmTick(this.className);
         }
 
         console.log('退出' + this.className);

@@ -3,9 +3,7 @@
  * @Author: CYK
  * @Date: 2022-05-23 09:27:58
  */
-import * as fgui from "fairygui-cc";
 import { ModuleCfgInfo } from "../base/ModuleCfgInfo";
-import { UIComp } from "../ui/UIComp";
 import { UIScene } from "../ui/UIScene";
 
 export class ModuleMgr {

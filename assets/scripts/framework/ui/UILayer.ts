@@ -13,8 +13,9 @@ const { ccclass, property } = _decorator;
 @ccclass('UILayer')
 export class UILayer extends UIComp {
     public curParent: fgui.GComponent;
-    protected show( data?: any): UILayer {
+    show(data?: any): UILayer {
         let self = this;
+        self.intiUI();
         self.setData(data);
         return self;
     }

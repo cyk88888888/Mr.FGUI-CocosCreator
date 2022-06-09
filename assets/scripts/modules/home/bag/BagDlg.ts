@@ -21,11 +21,13 @@ export class BagDlg extends UIDlg {
     private _bagDataList: any[];
     private _tempLen: number;
     private ctor() {
-        this._tempLen = 45;
+
     }
 
     private onEnter() {
         let self = this;
+        this._tempLen = 45;
+        self.refreshList('list_bag');
         self.setSelectData(this._tempLen - 1);
     }
 
@@ -58,6 +60,6 @@ export class BagDlg extends UIDlg {
         let self = this;
         self._tempLen = 25;
         self.refreshList('list_bag');
-        self.setSelectData(self._tempLen - 1, true);
+        self.setSelectData(this._tempLen - 1, true);
     }
 }

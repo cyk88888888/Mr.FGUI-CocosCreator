@@ -23,7 +23,7 @@ export class UIScene {
     public menuLayer: fgui.GComponent;
 
     private _moduleParam: any;
-    private _isFirstEnter: boolean;
+    private _isFirstEnter: boolean = true;
     private _emmitMap: { [event: string]: Function };//已注册的监听事件列表
     public entity: fgui.GComponent;//场景实体
     private _chilidCompClassMap: { [className: string]: any };//当前场景每个层级的UIComp的控制脚本类
@@ -74,8 +74,8 @@ export class UIScene {
 
         self.onEnter_b();
         if (self['onEnter']) self['onEnter']();
-        if (!self._isFirstEnter) {
-            self._isFirstEnter = true;
+        if (self._isFirstEnter) {
+            self._isFirstEnter = false;
             if (self["onFirstEnter"]) self["onFirstEnter"]();
         }
         if (self.mainClassLayer) {

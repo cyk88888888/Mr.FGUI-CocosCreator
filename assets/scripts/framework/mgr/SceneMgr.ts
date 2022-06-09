@@ -50,7 +50,7 @@ export class SceneMgr {
         this.checkDestoryLastScene(!toPush);
         if (toPush && this.curScene) {
             this._popArr.push(this.curScene);
-            this.exitOnPush(this.curScene);
+            this.onExit(this.curScene);
             this.curScene.removeFromParent();
         }
 
@@ -68,10 +68,7 @@ export class SceneMgr {
                 ResMgr.inst.releaseRes(lastModuleInfo.preResList);
             }
 
-            this.exitOnPush(this.curScene, destory);
-            if (destory) {
-                this.curScene.destory();
-            }
+            this.onExit(this.curScene, destory);
         }
     }
 
@@ -85,11 +82,11 @@ export class SceneMgr {
         self.checkDestoryLastScene(true);
 
         self.curScene = self._popArr.pop();
-        self.enterOnPop(self.curScene);
+        self.onEnter(self.curScene);
         self.curScene.addToGRoot();
     }
 
-    private exitOnPush(scene: UIScene, destory?: boolean) {
+    private onExit(scene: UIScene, destory?: boolean) {
         let self = this;
         let script = scene;
         self.eachChildComp(script.layer, false, destory);
@@ -99,7 +96,7 @@ export class SceneMgr {
         destory ? script.destory() : script.exitOnPush();
     }
 
-    private enterOnPop(scene: UIScene) {
+    private onEnter(scene: UIScene) {
         let self = this;
         let script = scene;
         script.enterOnPop();
