@@ -19,11 +19,11 @@ export class UIScene extends UIComp {
     public dlg: fgui.GComponent;
     public msg: fgui.GComponent;
     public menuLayer: fgui.GComponent;
-    protected init() {
+    protected __init() {
         this.subLayerMgr = new SubLayerMgr();
     }
 
-    protected init_a() {
+    protected __init_a() {
         let self = this;
         if (self.mainClassLayer) {
             self.subLayerMgr.register(self.mainClassLayer);

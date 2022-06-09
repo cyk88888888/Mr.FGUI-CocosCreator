@@ -27,6 +27,15 @@ export class Grid {
         }
     }
 
+    public resetWalkable(){
+        let self = this;
+        for (let i = 0; i < self._numCols; i++) {
+            for (let j = 0; j < self._numRows; j++) {
+                self._nodes[i][j].walkable = true;
+            }
+        }
+    }
+
     public getNode(x: number, y: number) {
         let self = this;
         return self._nodes[x][y] as Nodes;

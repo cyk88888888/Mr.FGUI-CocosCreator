@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="640,755" opaque="false">
   <displayList>
-    <graph id="n3_yfcg" name="graphicsGrid" xy="0,755" size="100,100" lineSize="2">
-      <relation target="" sidePair="bottom-bottom"/>
-    </graph>
     <component id="n2_yfcg" name="grp_container" src="yfcg1h" fileName="astar/AstarContainer.xml" xy="0,0" size="640,755">
       <relation target="" sidePair="width-width,height-height"/>
     </component>
+    <graph id="n5_juy8" name="ground" xy="0,755" size="100,100" touchable="false" lineSize="2">
+      <relation target="" sidePair="bottom-bottom"/>
+    </graph>
+    <graph id="n3_yfcg" name="graphicsGrid" xy="0,755" size="100,100" touchable="false" lineSize="2">
+      <relation target="" sidePair="bottom-bottom"/>
+    </graph>
+    <graph id="n4_juy8" name="graphicsPath" xy="0,755" size="100,100" touchable="false" lineSize="2">
+      <relation target="" sidePair="bottom-bottom"/>
+    </graph>
+    <graph id="n6_juy8" name="wall" xy="0,755" size="100,100" touchable="false" lineSize="2">
+      <relation target="" sidePair="bottom-bottom"/>
+    </graph>
+    <graph id="n7_juy8" name="graphicsBlock" xy="0,755" size="100,100" touchable="false" lineSize="2">
+      <relation target="" sidePair="bottom-bottom"/>
+    </graph>
+    <graph id="n8_juy8" name="graphicsPlayer" xy="0,0" size="100,100" touchable="false" lineSize="2"/>
   </displayList>
 </component>

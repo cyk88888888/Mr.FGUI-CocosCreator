@@ -30,16 +30,16 @@ export class UIComp extends Component {
         let self = this;
         if (self.isInited) return;
         self.isInited = true;
-        self.init();
+        self.__init();
         self.ctor_b();
         if (self["ctor"]) self["ctor"]();
         self.ctor_a();
-        self.init_a();
+        self.__init_a();
     }
 
-    protected init() { }
+    protected __init() { }
 
-    protected init_a() { }
+    protected __init_a() { }
 
     protected ctor_b() { }
 
@@ -98,7 +98,7 @@ export class UIComp extends Component {
         let self = this;
         self.view = view;
         self.initViewProperty();
-        self.addBtnCLickListener();
+        self.addListener();
         console.log('进入' + self.node.name);
         self.onEnter_b();
         if (self['onEnter']) self['onEnter']();
@@ -156,12 +156,18 @@ export class UIComp extends Component {
         }
     }
 
-    /**添加按钮点击事件监听**/
-    protected addBtnCLickListener() {
+    /**添加事件监听**/
+    protected addListener() {
         let self = this;
         if (!self.view) return;
         let children = self.view._children;
         self._objTapMap = {};
+
+        if (self['_size_change_' + self.view.name]) {
+            self.view.on(fgui.Event.SIZE_CHANGED, self['_size_change_' + self.view.name], self);
+            self._objTapMap[fgui.Event.SIZE_CHANGED] = self['_size_change_' + self.view.name];
+        }
+
         for (let key in children) {
             let obj = children[key];
             let objName = obj.name;
@@ -172,6 +178,10 @@ export class UIComp extends Component {
                     let eventName = fgui.Event.CLICK;
                     self._objTapMap[objName + '&' + eventName] = tapFunc;
                     obj.on(eventName, tapFunc, self);
+                }
+                if (self['_size_change_' + objName]) {
+                    obj.on(fgui.Event.SIZE_CHANGED, self['_size_change_' + objName], self);
+                    self._objTapMap[fgui.Event.SIZE_CHANGED] = self['_size_change_' + objName];
                 }
             }
 
@@ -232,6 +242,7 @@ export class UIComp extends Component {
             cb.call(this);
         }, timeout);
         this.timeoutIdArr.push(timeoutId);
+        return timeoutId;
     }
 
     private intervalIdArr: number[];
@@ -241,6 +252,7 @@ export class UIComp extends Component {
             cb.call(this);
         }, timeout);
         this.intervalIdArr.push(intervalId);
+        return intervalId;
     }
 
     /**
