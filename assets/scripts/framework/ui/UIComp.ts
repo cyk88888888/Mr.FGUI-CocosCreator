@@ -7,39 +7,34 @@ import { _decorator, Component, Node, js, path } from 'cc';
 import { emmiter } from '../base/Emmiter';
 const { ccclass, property } = _decorator;
 import * as fgui from "fairygui-cc";
+import { ModuleMgr } from '../mgr/ModuleMgr';
+import { BaseUT } from '../base/BaseUtil';
 @ccclass('UIComp')
-export class UIComp extends Component {
+export class UIComp extends fgui.GComponent {
     private _emmitMap: { [event: string]: Function };//已注册的监听事件列表
     private _objTapMap: { [objName: string]: Function };//已添加的显示对象点击事件的记录
+    public chilidCompClassMap: { [className: string]: any };//子组件的控制脚本类
     private _tweenTargetList: any[];//已添加缓动的对象列表
     protected view: fgui.GComponent;
     /** 包名称 */
     public static pkgName: string = '';
     public data: any;
     private isFirstEnter: boolean;
-    private isInited: boolean;
     /**打开弹窗时是否需要动画 */
     protected needAnimation: boolean = true;
-    protected dlgMaskName = '__mask: GGraph';
-    __preload() {
-        let self = this;
-        self.onInited();
+    protected dlgMaskName = '__mask: GGraph';//弹出底部灰色rect名称
+    constructor() {
+        super();
+        this.ctor_b();
+        if (this["ctor"]) this["ctor"]();
+        this.ctor_a();
+        let className = this.className;
+        let scriptClass = js.getClassByName(className);//是否有对应脚本类
+        this.view = fgui.UIPackage.createObject(scriptClass['pkgName'], className).asCom;
+        this.view.name = this.view.node.name = this.node.name = className;
+        this.addChild(this.view);
+        this.onUIInited();
     }
-
-    protected onInited() {
-        let self = this;
-        if (self.isInited) return;
-        self.isInited = true;
-        self.__init();
-        self.ctor_b();
-        if (self["ctor"]) self["ctor"]();
-        self.ctor_a();
-        self.__init_a();
-    }
-
-    protected __init() { }
-
-    protected __init_a() { }
 
     protected ctor_b() { }
 
@@ -60,6 +55,13 @@ export class UIComp extends Component {
         if (callback) callback.call(this);
     }
 
+    protected onUIInited() {
+        let self = this;
+        self.initView();
+        BaseUT.setFitSize(self.view);
+        if (self['addToLayer']) self['addToLayer']();
+    }
+
     public setData(data: any) {
         this.data = data;
         if (this['dchg']) this['dchg']();
@@ -67,12 +69,12 @@ export class UIComp extends Component {
 
     public enterOnPop() {
         let self = this;
-        self.initView(this.view);
+        self.initView();
     }
 
     public exitOnPush() {
         let self = this;
-        self.dispose();
+        self._dispose();
     }
 
     protected onEmitter(event: string, listener: any) {
@@ -94,12 +96,12 @@ export class UIComp extends Component {
     /**
      * 初始化view
      */
-    protected initView(view: fgui.GComponent) {
+    protected initView() {
         let self = this;
-        self.view = view;
         self.initViewProperty();
         self.addListener();
-        console.log('进入' + self.node.name);
+        self.chilidCompClassMap[self.view.name] = this;
+        console.log('进入' + self.className);
         self.onEnter_b();
         if (self['onEnter']) self['onEnter']();
         if (!self.isFirstEnter) {
@@ -114,18 +116,18 @@ export class UIComp extends Component {
         let self = this;
         if (!self.view) return;
         let children = self.view._children;
+        self.chilidCompClassMap = {};
         for (let key in children) {
             let obj = children[key];
             self[obj.name] = obj;
             if (obj.node.name.indexOf(obj.name) == -1) obj.node.name = obj.name + ':  ' + obj.node.name;
             if (obj instanceof fgui.GComponent && obj.packageItem) {//如果是组件，添加对应脚本
                 let scriptName = obj.packageItem.name;
-                let isHasScript = js.getClassByName(scriptName);//是否有对应脚本类
-                if (isHasScript) {
-                    let oldCsript = obj.node.getComponent(scriptName) as UIComp;//节点上是否已有脚本
-                    let script = oldCsript ? oldCsript : obj.node.addComponent(scriptName) as UIComp;
-                    script.onInited();
-                    script.initView(obj);
+                let scriptClass = js.getClassByName(scriptName);//是否有对应脚本类
+                if (scriptClass) {
+                    let script = self.chilidCompClassMap[obj.name] ? self.chilidCompClassMap[obj.name] : new scriptClass();
+                    script['view'] = obj;
+                    script['initView']();
                 }
             }
             if (obj instanceof fgui.GList) {
@@ -134,7 +136,7 @@ export class UIComp extends Component {
                     let __class: any = js.getClassByName(pi.name);
                     if (__class) {
                         let url = 'ui://' + pi.owner.name + '/' + pi.name;
-                        fgui.UIObjectFactory.setExtension(url, __class);
+                        fgui.UIObjectFactory.setExtension(url, __class);//注册列表子项
                         obj.setVirtual();//列表设置为复用列表
                         self.refreshList(obj.name);
                     }
@@ -231,8 +233,11 @@ export class UIComp extends Component {
     }
 
     public static get __className(): string {
-        let matchObj = this.name.match(/<(\S*)>/);
-        return matchObj ? matchObj[1] : this.name;
+        return this.constructor.name;
+    }
+
+    protected get className(){
+        return this.constructor.name;
     }
 
     private timeoutIdArr: number[];
@@ -280,11 +285,18 @@ export class UIComp extends Component {
     public close() {
         let self = this;
         self.onCloseAnimation(() => {
-            if (self.view) self.view.node.destroy();
+            self.destory();
         });
     }
 
-    private dispose() {
+    public destory() {
+        let self = this;
+        self._dispose();
+        self.chilidCompClassMap = null;
+        self.dispose();
+    }
+
+    private _dispose() {
         let self = this;
         if (self._emmitMap) {
             for (let event in self._emmitMap) {
@@ -293,7 +305,6 @@ export class UIComp extends Component {
             self._emmitMap = null;
         }
 
-        /** 调用node.destory()后会自动注销注册的点击事件,所以注销自定义事件前先判断node.isValid*/
         if (self._objTapMap) {
             for (let key in self._objTapMap) {
                 let splitKey = key.split('&');
@@ -315,18 +326,17 @@ export class UIComp extends Component {
 
         self.clearAllTimeoutOrInterval();
         self.rmAllTweens();
-        console.log('退出' + this.node.name);
+
+        //子组件退出
+        for (let key in self.chilidCompClassMap) {
+            let script = self.chilidCompClassMap[key];
+            script['exitOnPush']();
+        }
+
+        console.log('退出' + this.className);
         this.onExit_b();
         if (self["onExit"]) self["onExit"]();
         this.onExit_a();
     }
-
-    onDestroy() {
-        let self = this;
-        this.dispose();
-        self.view = null;
-        // if(self.view) self.view.dispose();
-    }
-
 }
 

@@ -15,7 +15,9 @@ export class UIMsg extends UILayer {
   * 将view添加到layer层级容器
   */
   protected addToLayer() {
-    SceneMgr.inst.msg.addChild(this.view);
+    let parent = SceneMgr.inst.curScene.msg;
+    this.curParent = parent;
+    parent.addChild(this);
   }
 }
 

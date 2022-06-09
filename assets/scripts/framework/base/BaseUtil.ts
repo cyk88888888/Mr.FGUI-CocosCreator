@@ -19,8 +19,7 @@ export namespace BaseUT{
     }
 
     /**销毁对应节点 */
-    export function destoryGComp(comp: fgui.GComponent){
-        comp.node.destroyAllChildren();
-        comp.node.destroy();
+    export function destoryGComp(comp: any){
+        comp.destory();
     }
 }

@@ -24,8 +24,10 @@ export class UIDlg extends UILayer {
     bg.setPosition((this.view.width - bg.width) / 2, (this.view.height - bg.height) / 2);
     bg.onClick(this.close, this);
     this.view.setPivot(0.5, 0.5);
-    this.needAnimation ? SceneMgr.inst.dlg.addChild(bg) : this.view.addChildAt(this.graph_bg, 0);
-    SceneMgr.inst.dlg.addChild(this.view);
+    this.needAnimation ? SceneMgr.inst.curScene.dlg.addChild(bg) : this.view.addChildAt(this.graph_bg, 0);
+    let parent = SceneMgr.inst.curScene.dlg;
+    this.curParent = parent;
+    parent.addChild(this);
     if (this.needAnimation) {
       this.onOpenAnimation();
     }

@@ -11,8 +11,8 @@ import { UILayer } from "../ui/UILayer";
 import { SceneMgr } from "./SceneMgr";
 export class SubLayerMgr {
     private _classMap: any;
-    public curLayer: fgui.GComponent;
-    private _popArr: fgui.GComponent[];
+    public curLayer: UILayer;
+    private _popArr: UILayer[];
     constructor() {
         this._classMap = {};
         this._popArr = [];
@@ -48,19 +48,19 @@ export class SubLayerMgr {
         if (this.curLayer) {
             if (toPush) this._popArr.push(this.curLayer);
             if (toPush || !needDestory) {
-                this.exitOnPush(this.curLayer);
+                this.exitOnPush();
                 this.curLayer.removeFromParent();
             }
         }
 
         if (registerLayer && registerLayer.node) {
             this.curLayer = registerLayer;
-            this.enterOnPop(this.curLayer);
-            SceneMgr.inst.curSceneScript?.layer.addChild(this.curLayer);
+            this.enterOnPop();
+            this.curLayer.curParent.addChild(this.curLayer);
             return;
         }
 
-        this.curLayer = script.show().view;
+        this.curLayer = script.show();
         if (this._classMap[layerName]) {
             this._classMap[layerName] = this.curLayer;
         }
@@ -83,33 +83,20 @@ export class SubLayerMgr {
         self.checkDestoryLastLayer(true);
 
         self.curLayer = self._popArr.pop();
-        self.enterOnPop(self.curLayer);
-        SceneMgr.inst.curSceneScript?.layer.addChild(self.curLayer);
+        self.enterOnPop();
+        SceneMgr.inst.curScene.layer.addChild(self.curLayer);
     }
 
-    private exitOnPush(layer: fgui.GComponent) {
+    private exitOnPush() {
         let self = this;
-        let script = layer.node.getComponent(layer.node.name) as UILayer;
+        let script = this.curLayer;
         script.exitOnPush();
-        self.eachChildComp(layer);
     }
 
-    private enterOnPop(layer: fgui.GComponent) {
+    private enterOnPop() {
         let self = this;
-        let script = layer.node.getComponent(layer.node.name) as UILayer;
+        let script = this.curLayer;
         script.enterOnPop();
-        self.eachChildComp(layer, true);
-    }
-
-    private eachChildComp(comp: fgui.GComponent, isEnter?: boolean) {
-        let children = comp.node.children[0].children;
-        for (let i = 0; i < children.length; i++) {
-            let childNode = children[i];
-            let scriptNode = childNode.getComponent(childNode.name) as UIComp;
-            if(scriptNode){
-                isEnter ? scriptNode.enterOnPop() : scriptNode.exitOnPush();
-            }
-        }
     }
 
     /**清除所有layer */
@@ -117,7 +104,7 @@ export class SubLayerMgr {
         let self = this;
         this.checkDestoryLastLayer(true);
         for (let i = 0; i < self._popArr.length; i++) {
-            BaseUT.destoryGComp(self._popArr[i]);
+            self._popArr[i].destory();
         }
         self._popArr = [];
     }

@@ -3,6 +3,7 @@
  * @Author: CYK
  * @Date: 2022-05-23 09:27:58
  */
+import { js } from "cc";
 import * as fgui from "fairygui-cc";
 import { BaseUT } from "../base/BaseUtil";
 import { ModuleCfgInfo } from "../base/ModuleCfgInfo";
@@ -13,14 +14,11 @@ import { ResMgr } from "./ResMgr";
 
 export class SceneMgr {
     private static _inst: SceneMgr;
-    public layer: fgui.GComponent;
-    public dlg: fgui.GComponent;
-    public msg: fgui.GComponent;
-    public menuLayer: fgui.GComponent;
-    public curScene: fgui.GComponent;
+    public curScene: UIScene;
     /** 主场景名称*/
     public mainScene: string;
-    private _popArr: fgui.GComponent[];
+    private _popArr: UIScene[];
+
     public static get inst() {
         if (!this._inst) {
             this._inst = new SceneMgr();
@@ -39,6 +37,7 @@ export class SceneMgr {
 
     private showScene(scene: string | typeof UIScene, data?: any, toPush?: boolean) {
         let sceneName = typeof scene === 'string' ? scene : scene.name;
+        if (this.curScene && this.curScene.className == sceneName) return;//相同场景
         let moduleInfo = moduleInfoMap[sceneName];
         if (!moduleInfo) {
             console.error('未注册模块：' + sceneName)
@@ -58,41 +57,9 @@ export class SceneMgr {
         }
 
         let sceneName = moduleInfo.name;
-        this.curScene = this.addGCom2GRoot(sceneName, true);
-        this.initLayer();
-        let newScene = this.curScene.node.addComponent(sceneName) as UIScene;//添加场景脚本
-        newScene.layer = this.layer;
-        newScene.dlg = this.dlg;
-        newScene.msg = this.msg;
-        newScene.menuLayer = this.menuLayer;
-        newScene.setData(data);
-
-    }
-
-    private initLayer() {
-        let self = this;
-        self.layer = self.addGCom2GRoot('UILayer');
-        self.menuLayer = self.addGCom2GRoot('UIMenuLayer');
-        self.dlg = self.addGCom2GRoot('UIDlg');
-        self.msg = self.addGCom2GRoot('UIMsg');
-    }
-
-    /**
-    * 添加层级容器到GRoot
-    * @param name 名称
-    * @returns 
-    */
-    private addGCom2GRoot(name: string, isScene?: boolean): fgui.GComponent {
-        let newCom = new fgui.GComponent();
-        newCom.node.name = name;
-        let size = BaseUT.setFitSize(newCom);
-        if (isScene) {
-            newCom.x = (fgui.GRoot.inst.width - size.width) / 2;
-            newCom.y = (fgui.GRoot.inst.height - size.height) / 2;
-        }
-        let parent = isScene ? fgui.GRoot.inst : this.curScene;
-        parent.addChild(newCom);
-        return newCom;
+        let scriptClass = js.getClassByName(sceneName);//是否有对应脚本类
+        this.curScene = new scriptClass() as UIScene;
+        this.curScene._init_(sceneName, data);
     }
 
     /**判断销毁上个场景并释放资源 */
@@ -102,9 +69,10 @@ export class SceneMgr {
             if (destory && !lastModuleInfo.cacheEnabled) {//销毁上个场景
                 ResMgr.inst.releaseRes(lastModuleInfo.preResList);
             }
+
+            this.exitOnPush(this.curScene, destory);
             if (destory) {
-                BaseUT.destoryGComp(this.curScene);
-                this.curSceneScript?.disposeSubLayerMgr();
+                this.curScene.destory();
             }
         }
     }
@@ -118,41 +86,37 @@ export class SceneMgr {
         }
         self.checkDestoryLastScene(true);
 
-        let lastScene = self.curScene = self._popArr.pop();
-        self.enterOnPop(lastScene);
-        fgui.GRoot.inst.addChild(lastScene);
+        self.curScene = self._popArr.pop();
+        self.enterOnPop(self.curScene);
+        self.curScene.addToGRoot();
     }
 
-    private exitOnPush(scene: fgui.GComponent) {
+    private exitOnPush(scene: UIScene, destory?: boolean) {
         let self = this;
-        let script = scene.node.getComponent(scene.node.name) as UIScene;
-        script.exitOnPush();
-        self.eachChildComp(script.layer);
-        self.eachChildComp(script.menuLayer);
-        self.eachChildComp(script.dlg);
-        self.eachChildComp(script.msg);
+        let script = scene;
+        self.eachChildComp(script.layer, false, destory);
+        self.eachChildComp(script.menuLayer, false, destory);
+        self.eachChildComp(script.dlg, false, destory);
+        self.eachChildComp(script.msg, false, destory);
+        destory ? script.destory() : script.exitOnPush();
     }
 
-    private enterOnPop(scene: fgui.GComponent) {
+    private enterOnPop(scene: UIScene) {
         let self = this;
-        let script = scene.node.getComponent(scene.node.name) as UIScene;
+        let script = scene;
         script.enterOnPop();
-        self.layer = script.layer;
-        self.menuLayer = script.menuLayer;
-        self.dlg = script.dlg;
-        self.msg = script.msg;
         self.eachChildComp(script.layer, true);
         self.eachChildComp(script.menuLayer, true);
         self.eachChildComp(script.dlg, true);
         self.eachChildComp(script.msg, true);
     }
 
-    private eachChildComp(comp: fgui.GComponent, isEnter?: boolean) {
+    private eachChildComp(comp: fgui.GComponent, isEnter?: boolean, destory?: boolean) {
         let children = comp.node.children[0].children;
         for (let i = 0; i < children.length; i++) {
             let childNode = children[i];
-            let scriptNode = childNode.getComponent(childNode.name) as UIComp;
-            isEnter ? scriptNode.enterOnPop() : scriptNode.exitOnPush();
+            let script = this.curScene.chilidCompClassMap[childNode.name] as UIComp;
+            isEnter ? script.enterOnPop() : destory ? script.destory() : script.exitOnPush();
         }
     }
 
@@ -160,7 +124,7 @@ export class SceneMgr {
     public get curSceneScript(): UIScene {
         let self = this;
         if (self.curScene) {
-            return self.curScene.node.getComponent(self.curScene.node.name) as UIScene;
+            return self.curScene;
         }
         return null;
     }

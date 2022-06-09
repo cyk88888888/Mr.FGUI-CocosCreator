@@ -15,7 +15,9 @@ export class UIMenuLayer extends UILayer {
      * 将view添加到layer层级容器
      */
     protected addToLayer() {
-        SceneMgr.inst.menuLayer.addChild(this.view);
+        let parent = SceneMgr.inst.curScene.menuLayer;
+        this.curParent = parent;
+        parent.addChild(this);
     }
 }
 

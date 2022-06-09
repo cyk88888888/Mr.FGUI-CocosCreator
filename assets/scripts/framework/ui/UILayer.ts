@@ -7,21 +7,14 @@ import { _decorator, Component, Node } from 'cc';
 import { UIComp } from './UIComp';
 import * as fgui from "fairygui-cc";
 import { SceneMgr } from '../mgr/SceneMgr';
-import { BaseUT } from '../base/BaseUtil';
-import { ModuleMgr } from '../mgr/ModuleMgr';
-import { GComponent } from 'fairygui-cc/GComponent';
 const { ccclass, property } = _decorator;
 
 @ccclass('UILayer')
 export class UILayer extends UIComp {
-
-    protected show(view: GComponent, data?: any): UILayer {
+    public curParent: fgui.GComponent;
+    protected show( data?: any): UILayer {
         let self = this;
-        self.onInited();
         self.setData(data);
-        self.initView(view);
-        BaseUT.setFitSize(self.view);
-        self.addToLayer();
         return self;
     }
     /**
@@ -30,17 +23,19 @@ export class UILayer extends UIComp {
     * @returns 
    */
     public static show(data?: any) {
-        let view = ModuleMgr.inst.getGComp(this);
-        let script = view.node.getComponent(this);
-        script.show(view, data);
-        return script;
+        let newSelf = new this();
+        newSelf.show(data);
+        SceneMgr.inst.curScene.setChildLayerClass(newSelf);
+        return newSelf;
     }
 
     /**
      * 将view添加到layer层级容器
      */
     protected addToLayer() {
-        SceneMgr.inst.layer.addChild(this.view);
+        let parent = SceneMgr.inst.curScene.layer;
+        this.curParent = parent;
+        parent.addChild(this);
     }
 }
 
