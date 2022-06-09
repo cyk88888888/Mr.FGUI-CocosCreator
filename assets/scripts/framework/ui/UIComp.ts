@@ -19,20 +19,26 @@ export class UIComp extends fgui.GComponent {
     /** 包名称 */
     public static pkgName: string = '';
     public data: any;
-    private isFirstEnter: boolean;
+    private isFirstEnter: boolean = true;
     /**打开弹窗时是否需要动画 */
     protected needAnimation: boolean = true;
     protected dlgMaskName = '__mask: GGraph';//弹出底部灰色rect名称
-    constructor() {
+    constructor(view?: fgui.GComponent) {
         super();
         this.ctor_b();
         if (this["ctor"]) this["ctor"]();
         this.ctor_a();
         let className = this.className;
         let scriptClass = js.getClassByName(className);//是否有对应脚本类
-        this.view = fgui.UIPackage.createObject(scriptClass['pkgName'], className).asCom;
-        this.view.name = this.view.node.name = this.node.name = className;
-        this.addChild(this.view);
+        this.view = view ? view : fgui.UIPackage.createObject(scriptClass['pkgName'], className).asCom;
+        if(view){
+            this.view.name = className;
+        }else{
+            this.view.name = this.view.node.name = this.node.name = className;
+            this.node.removeAllChildren();
+            this._container = this.view._container;
+            this.node.addChild(this._container);
+        }
         this.onUIInited();
     }
 
@@ -58,7 +64,6 @@ export class UIComp extends fgui.GComponent {
     protected onUIInited() {
         let self = this;
         self.initView();
-        BaseUT.setFitSize(self.view);
         if (self['addToLayer']) self['addToLayer']();
     }
 
@@ -104,8 +109,8 @@ export class UIComp extends fgui.GComponent {
         console.log('进入' + self.className);
         self.onEnter_b();
         if (self['onEnter']) self['onEnter']();
-        if (!self.isFirstEnter) {
-            self.isFirstEnter = true;
+        if (self.isFirstEnter) {
+            self.isFirstEnter = false;
             if (self["onFirstEnter"]) self["onFirstEnter"]();
         }
         self.onEnter_a();
@@ -125,7 +130,7 @@ export class UIComp extends fgui.GComponent {
                 let scriptName = obj.packageItem.name;
                 let scriptClass = js.getClassByName(scriptName);//是否有对应脚本类
                 if (scriptClass) {
-                    let script = self.chilidCompClassMap[obj.name] ? self.chilidCompClassMap[obj.name] : new scriptClass();
+                    let script = self.chilidCompClassMap[obj.name] ? self.chilidCompClassMap[obj.name] : new scriptClass(obj);
                     script['view'] = obj;
                     script['initView']();
                 }
@@ -236,7 +241,7 @@ export class UIComp extends fgui.GComponent {
         return this.constructor.name;
     }
 
-    protected get className(){
+    protected get className() {
         return this.constructor.name;
     }
 

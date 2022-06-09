@@ -7,6 +7,7 @@ import { _decorator, Component, Node } from 'cc';
 import { UIComp } from './UIComp';
 import * as fgui from "fairygui-cc";
 import { SceneMgr } from '../mgr/SceneMgr';
+import { BaseUT } from '../base/BaseUtil';
 const { ccclass, property } = _decorator;
 
 @ccclass('UILayer')
@@ -35,6 +36,8 @@ export class UILayer extends UIComp {
     protected addToLayer() {
         let parent = SceneMgr.inst.curScene.layer;
         this.curParent = parent;
+        BaseUT.setFitSize(this);
+        BaseUT.setFitSize(this.view);
         parent.addChild(this);
     }
 }

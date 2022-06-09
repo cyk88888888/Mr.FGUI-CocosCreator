@@ -5,6 +5,7 @@
  */
 import { _decorator, Component, Node, math, Color } from 'cc';
 import * as fgui from "fairygui-cc";
+import { BaseUT } from '../base/BaseUtil';
 import { SceneMgr } from '../mgr/SceneMgr';
 import { UILayer } from './UILayer';
 const { ccclass } = _decorator;
@@ -27,6 +28,8 @@ export class UIDlg extends UILayer {
     this.needAnimation ? SceneMgr.inst.curScene.dlg.addChild(bg) : this.view.addChildAt(this.graph_bg, 0);
     let parent = SceneMgr.inst.curScene.dlg;
     this.curParent = parent;
+    BaseUT.setFitSize(this);
+    BaseUT.setFitSize(this.view);
     parent.addChild(this);
     if (this.needAnimation) {
       this.onOpenAnimation();

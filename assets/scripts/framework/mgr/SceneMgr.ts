@@ -43,9 +43,7 @@ export class SceneMgr {
             console.error('未注册模块：' + sceneName)
             return;
         }
-        ResMgr.inst.load(moduleInfo.preResList, () => {
-            this.onUILoaded(moduleInfo, data, toPush);
-        });
+        ResMgr.inst.load(moduleInfo.preResList, this.onUILoaded.bind(this, moduleInfo, data, toPush));
     }
 
     private onUILoaded(moduleInfo: ModuleCfgInfo, data: any, toPush: boolean) {
