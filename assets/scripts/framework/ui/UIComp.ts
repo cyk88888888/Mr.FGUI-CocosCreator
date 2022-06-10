@@ -24,17 +24,15 @@ export class UIComp extends fgui.GComponent {
     protected dlgMaskName = '__mask: GGraph';//弹出底部灰色rect名称
     protected hasDestory: boolean;//是否已被销毁
     private _allList: fgui.GList[];
-    bb: number;
+    protected needRefreshListOnEnter: boolean = true;
     public constructor(view?: fgui.GComponent) {
         super();
-        this.bb = 60;
-        TickMgr.inst.nextTick(function () {
-            this.ctor_b();
-            if (this['ctor']) this['ctor']();
-            this.ctor_a();
-        }, this)
-
         if (!view) {
+            TickMgr.inst.nextTick(function () {
+                this.ctor_b();
+                if (this['ctor']) this['ctor']();
+                this.ctor_a();
+            }, this)
             this.on(fgui.Event.ADD_TO_SATGE, this.onAddToStage, this);
             let className = this.className;
             let scriptClass = js.getClassByName(className);//是否有对应脚本类
@@ -53,7 +51,7 @@ export class UIComp extends fgui.GComponent {
         this.view = viewObj;
         BaseUT.setFitSize(this.view);
         this.view.node.name = this.node.name = this.className;
-        TickMgr.inst.nextTick(function () {
+        TickMgr.inst.nextTick(() => {
             this.initView();
         }, this)
     }
@@ -114,9 +112,11 @@ export class UIComp extends fgui.GComponent {
      */
     protected initView() {
         let self = this;
+        if (self.hasDestory) {
+            return;
+        }
         self.initViewProperty();
         self.addListener();
-        self.chilidCompClassMap[self.className] = this;
         console.log('进入' + self.className);
         self.onEnter_b();
         if (self['onEnter']) self['onEnter']();
@@ -137,7 +137,7 @@ export class UIComp extends fgui.GComponent {
         let self = this;
         if (!self.view) return;
         let children = self.view._children;
-        self.chilidCompClassMap = {};
+        if (!self.chilidCompClassMap) self.chilidCompClassMap = {};
         self._allList = [];
         for (let key in children) {
             let obj = children[key];
@@ -147,7 +147,14 @@ export class UIComp extends fgui.GComponent {
                 let scriptName = obj.packageItem.name;
                 let scriptClass = js.getClassByName(scriptName);//是否有对应脚本类
                 if (scriptClass) {
-                    let script = self.chilidCompClassMap[obj.name] ? self.chilidCompClassMap[obj.name] : new scriptClass(obj);
+                    let oldScript = self.chilidCompClassMap[obj.name];
+                    let script = oldScript ? oldScript : new scriptClass(obj);
+                    self.chilidCompClassMap[obj.name] = script as UIComp;
+                    if (!oldScript) {
+                        script['ctor_b']();
+                        if (script['ctor']) script['ctor']();
+                        script['ctor_a']();
+                    }
                     script['view'] = obj;
                     script['initView']();
                 }
@@ -171,6 +178,7 @@ export class UIComp extends fgui.GComponent {
 
     private refreshAllList() {
         let self = this;
+        if(!self.needRefreshListOnEnter) return;
         for (let i = 0; i < self._allList.length; i++) {
             self.refreshList(self._allList[i].name);
         }
@@ -320,11 +328,11 @@ export class UIComp extends fgui.GComponent {
         });
     }
 
-    public addView(){
+    public addView() {
         this.curParent.addChild(this.view);
     }
 
-    public removeView(){
+    public removeView() {
         let self = this;
         self.view.removeFromParent();
     }

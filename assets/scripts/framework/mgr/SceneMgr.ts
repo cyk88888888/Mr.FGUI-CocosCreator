@@ -47,11 +47,12 @@ export class SceneMgr {
     }
 
     private onUILoaded(moduleInfo: ModuleCfgInfo, data: any, toPush: boolean) {
-        this.checkDestoryLastScene(!toPush);
         if (toPush && this.curScene) {
             this._popArr.push(this.curScene);
             this.onExit(this.curScene);
             this.curScene.removeFromParent();
+        }else{
+            this.checkDestoryLastScene(!toPush);
         }
 
         let sceneName = moduleInfo.name;

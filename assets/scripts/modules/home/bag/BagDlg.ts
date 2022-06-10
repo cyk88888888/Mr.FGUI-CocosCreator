@@ -20,16 +20,17 @@ export class BagDlg extends UIDlg {
 
     private _bagDataList: any[];
     private _tempLen: number;
-    private cc: number;
-    private ctor() {
-        this.cc = 55;
+
+    private ctor(){
+        let self = this;
+        self.needRefreshListOnEnter = false;
     }
 
     private onEnter() {
         let self = this;
         this._tempLen = 45;
         self.refreshList('list_bag');
-        self.setSelectData(this._tempLen - 1);
+        self.setSelectData(0);
     }
 
     private _data_list_bag() {
@@ -47,6 +48,7 @@ export class BagDlg extends UIDlg {
 
     private setSelectData(selIdx: number, ani?: boolean) {
         let self = this;
+        if (!self._bagDataList || self._bagDataList.length == 0) return;
         self.list_bag.selectedIndex = selIdx;
         self.list_bag.scrollToView(self.list_bag.selectedIndex, ani);
         self.showDetail(self._bagDataList[self.list_bag.selectedIndex]);

@@ -6,7 +6,7 @@
       <gearDisplay controller="button" pages="1,3"/>
     </image>
     <loader id="n4" name="icon" xy="0,0" size="90,90" align="center" vAlign="middle" fill="scale"/>
-    <image id="n13_e0g5" name="n13" src="l3um9" fileName="images/img_xiantiao.png" xy="104,6" size="8,78"/>
+    <image id="n13_e0g5" name="n13" src="l3um9" fileName="images/img_xiantiao.png" xy="104,6" size="8,140"/>
   </displayList>
   <Button mode="Radio"/>
 </component>

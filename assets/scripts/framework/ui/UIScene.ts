@@ -17,6 +17,7 @@ export class UIScene {
     public dlg: fgui.GComponent;
     public msg: fgui.GComponent;
     public menuLayer: fgui.GComponent;
+    private _sceneName: string;
 
     private _moduleParam: any;
     private _isFirstEnter: boolean = true;
@@ -65,15 +66,10 @@ export class UIScene {
     /**场景初始化 */
     public _init_(sceneName: string, data?: any) {
         let self = this;
+        self._sceneName = sceneName;
         self._chilidCompClassMap = {};
         self.createEntityAndLayer(sceneName, data);
-
-        self.onEnter_b();
-        if (self['onEnter']) self['onEnter']();
-        if (self._isFirstEnter) {
-            self._isFirstEnter = false;
-            if (self["onFirstEnter"]) self["onFirstEnter"]();
-        }
+        self.__doEnter();
         if (self.mainClassLayer) {
             self.subLayerMgr.register(self.mainClassLayer);
             self.push(self.mainClassLayer, { str: '我叫' + self.mainClassLayer.name });
@@ -117,6 +113,17 @@ export class UIScene {
         return newCom;
     }
 
+    private __doEnter(){
+        let self = this;
+        console.log('进入' + self._sceneName);
+        self.onEnter_b();
+        if (self['onEnter']) self['onEnter']();
+        if (self._isFirstEnter) {
+            self._isFirstEnter = false;
+            if (self["onFirstEnter"]) self["onFirstEnter"]();
+        }
+    }
+
     public setData(data: any) {
         this._moduleParam = data;
     }
@@ -131,9 +138,7 @@ export class UIScene {
 
     public enterOnPop() {
         let self = this;
-        self.onEnter_b();
-        if (self['onEnter']) self['onEnter']();
-        self.onEnter_a();
+        self.__doEnter();
     }
 
     public exitOnPush() {
@@ -193,6 +198,7 @@ export class UIScene {
             }
             self._emmitMap = null;
         }
+        console.log('退出' + self._sceneName);
         this.onExit_b();
         if (self["onExit"]) self["onExit"]();
         this.onExit_a();

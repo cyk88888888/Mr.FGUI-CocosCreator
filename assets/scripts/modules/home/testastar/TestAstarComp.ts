@@ -28,22 +28,20 @@ export class TestAstarComp extends UIComp {
     private _startFrame: boolean;
     private _speed: number;//人物移动速度、
 
-    // private ctor() {
-    //     let self = this;
-    //     self._cellSize = 40;
-    //     self._speed = 1;
-    // }
-
-    private onEnter() {
+    private ctor() {
         let self = this;
         self._cellSize = 40;
         self._speed = 1;
     }
 
-    private _size_change_astarComp(){
+    private onEnter() {
         let self = this;
         self.initGrid();
         self.onReset(); 
+    }
+
+    private _size_change_astarComp(){
+       
     }
 
     /** 生成网格，并随机放置一些障碍 */

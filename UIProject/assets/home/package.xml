@@ -8,7 +8,7 @@
     <image id="l3um6" name="ico_tianfu.png" path="/images/"/>
     <image id="l3um7" name="ico_zhuangbei.png" path="/images/"/>
     <image id="l3um8" name="img_dingkaung.png" path="/images/" scale="9grid" scale9grid="32,9,64,10"/>
-    <image id="l3um9" name="img_xiantiao.png" path="/images/"/>
+    <image id="l3um9" name="img_xiantiao.png" path="/images/" scale="9grid" scale9grid="1,44,2,24"/>
     <image id="l3uma" name="z_suotou.png" path="/images/"/>
     <component id="o8dec" name="BottomTabLayer.xml" path="/" exported="true"/>
     <image id="h1duf" name="c3_png.png" path="/images/" scale="9grid" scale9grid="23,5,46,10"/>
