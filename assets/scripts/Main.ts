@@ -11,11 +11,13 @@ import { SceneMgr } from './framework/mgr/SceneMgr';
 import { SoundMrg } from './framework/mgr/SoundMrg';
 import { TickMgr } from './framework/mgr/TickMgr';
 import { LoadingScene } from './modules/loading/LoadingScene';
+import { Test2 } from './modules/test/Test2';
 @ccclass('Main')
 export class Main extends Component {
     @property(Node)
     subSoundNode: Node;
     onLoad() {
+        let test2 = new Test2();
         fgui.GRoot.create();
         SoundMrg.inst.defaultBgMusic = "sound/bg00";//设置默认背景音乐
         SoundMrg.inst.subSoundNode = this.subSoundNode;//设置场景音效节点
