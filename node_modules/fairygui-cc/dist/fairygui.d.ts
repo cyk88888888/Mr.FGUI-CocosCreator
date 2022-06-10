@@ -2038,6 +2038,8 @@ declare module 'fairygui-cc/event/Event' {
         static XY_CHANGED: string;
         static SIZE_CHANGED: string;
         static SIZE_DELAY_CHANGE: string;
+        static ADD_TO_SATGE: string;
+        static REMOVE_FROM_SATGE: string;
         static DRAG_START: string;
         static DRAG_MOVE: string;
         static DRAG_END: string;

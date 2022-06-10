@@ -3,14 +3,12 @@
  * @Author: CYK
  * @Date: 2022-05-09 09:43:11
  */
-import { _decorator, Component, Node, math, Color } from 'cc';
+import { Color } from 'cc';
 import * as fgui from "fairygui-cc";
 import { BaseUT } from '../base/BaseUtil';
 import { SceneMgr } from '../mgr/SceneMgr';
 import { UILayer } from './UILayer';
-const { ccclass } = _decorator;
 
-@ccclass('UIDlg')
 export class UIDlg extends UILayer {
   private graph_bg: fgui.GGraph;
   /**

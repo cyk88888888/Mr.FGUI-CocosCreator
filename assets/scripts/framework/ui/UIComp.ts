@@ -5,10 +5,8 @@
  */
 import { _decorator, js } from 'cc';
 import { emmiter } from '../base/Emmiter';
-const { ccclass } = _decorator;
 import * as fgui from "fairygui-cc";
 import { TickMgr } from '../mgr/TickMgr';
-@ccclass('UIComp')
 export class UIComp extends fgui.GComponent {
     private _emmitMap: { [event: string]: Function };//已注册的监听事件列表
     private _objTapMap: { [objName: string]: Function };//已添加的显示对象点击事件的记录
@@ -24,11 +22,16 @@ export class UIComp extends fgui.GComponent {
     protected dlgMaskName = '__mask: GGraph';//弹出底部灰色rect名称
     protected hasDestory: boolean;//是否已被销毁
     private _allList: fgui.GList[];
-    constructor() {
+    public constructor() {
         super();
         this.ctor_b();
         if (this["ctor"]) this["ctor"]();
         this.ctor_a();
+        this.on(fgui.Event.ADD_TO_SATGE, this.onAddToStage, this);
+    }
+
+    private onAddToStage() {
+        this;
     }
 
     /**初始化UI */

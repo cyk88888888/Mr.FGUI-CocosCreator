@@ -239,6 +239,14 @@ const factors = [
     [gfx.BlendFactor.SRC_ALPHA, gfx.BlendFactor.ONE_MINUS_SRC_ALPHA], //custom2
 ];
 
+/*
+ * @Author: ‘cyk’ '935765353@qq.com'
+ * @Date: 2022-06-08 15:04:51
+ * @LastEditors: ‘cyk’ '935765353@qq.com'
+ * @LastEditTime: 2022-06-10 10:48:17
+ * @FilePath: \Cocos-FGUISrc\src\event\Event.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 class Event extends Event$1 {
     constructor(type, bubbles) {
         super(type, bubbles);
@@ -281,6 +289,8 @@ Event.STATUS_CHANGED = "fui_status_changed";
 Event.XY_CHANGED = "fui_xy_changed";
 Event.SIZE_CHANGED = "fui_size_changed";
 Event.SIZE_DELAY_CHANGE = "fui_size_delay_change";
+Event.ADD_TO_SATGE = "fui_add_to_stage";
+Event.REMOVE_FROM_SATGE = "fui_remove_from_stage";
 Event.DRAG_START = "fui_drag_start";
 Event.DRAG_MOVE = "fui_drag_move";
 Event.DRAG_END = "fui_drag_end";
@@ -10124,6 +10134,7 @@ class GComponent extends GObject {
             this._children.splice(index, 1);
             child.group = null;
             this._container.removeChild(child.node);
+            child.node.emit(Event.REMOVE_FROM_SATGE);
             if (this._childrenRenderOrder == ChildrenRenderOrder.Arch)
                 this._partner.callLater(this.buildNativeDisplayList);
             if (dispose)
@@ -10318,6 +10329,7 @@ class GComponent extends GObject {
     onChildAdd(child, index) {
         child.node.parent = this._container;
         child.node.active = child._finalVisible;
+        child.node.emit(Event.ADD_TO_SATGE);
         if (this._buildingDisplayList)
             return;
         let cnt = this._children.length;

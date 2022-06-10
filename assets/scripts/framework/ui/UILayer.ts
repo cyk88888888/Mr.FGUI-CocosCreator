@@ -8,12 +8,10 @@ import { UIComp } from './UIComp';
 import * as fgui from "fairygui-cc";
 import { SceneMgr } from '../mgr/SceneMgr';
 import { BaseUT } from '../base/BaseUtil';
-const { ccclass, property } = _decorator;
 
-@ccclass('UILayer')
 export class UILayer extends UIComp {
     public curParent: fgui.GComponent;
-    show(data?: any): UILayer {
+    private show(data?: any): UILayer {
         let self = this;
         self.intiUI();
         self.setData(data);

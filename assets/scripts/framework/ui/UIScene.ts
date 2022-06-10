@@ -3,17 +3,13 @@
  * @Author: CYK
  * @Date: 2022-05-20 09:53:17
  */
-import { _decorator, Component, Node, js } from 'cc';
 import { UIComp } from './UIComp';
-import { SceneMgr } from '../mgr/SceneMgr';
 import * as fgui from "fairygui-cc";
 import { SubLayerMgr } from '../mgr/SubLayerMgr';
 import { UILayer } from './UILayer';
 import { emmiter } from '../base/Emmiter';
 import { BaseUT } from '../base/BaseUtil';
-const { ccclass, property } = _decorator;
 
-@ccclass('UIScene')
 export class UIScene {
     protected mainClassLayer: typeof UILayer;
     protected subLayerMgr: SubLayerMgr;
