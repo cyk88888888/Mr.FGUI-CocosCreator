@@ -319,6 +319,11 @@ export class UIComp extends fgui.GComponent {
         });
     }
 
+    public removeView(){
+        let self = this;
+        self.view.removeFromParent();
+    }
+
     public destory() {
         let self = this;
         if (self.hasDestory) return;
