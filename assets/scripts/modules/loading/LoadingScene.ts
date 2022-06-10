@@ -20,6 +20,10 @@ export class LoadingScene extends UIScene {
             subLayerMgr.register(classList[i]);
         }
     }
+
+    private onEnter() {
+        this;
+    }
 }
 registerModule(LoadingScene, ['ui/loading']);
 

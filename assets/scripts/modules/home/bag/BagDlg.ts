@@ -14,14 +14,15 @@ export class BagDlg extends UIDlg {
     /** 包名称 */
     public static pkgName: string = 'home';
 
-    private list_bag: fgui.GList;
+    public list_bag: fgui.GList;
     private n11: fgui.GLoader;
     private n13: fgui.GTextField;
 
     private _bagDataList: any[];
     private _tempLen: number;
+    private cc: number;
     private ctor() {
-
+        this.cc = 55;
     }
 
     private onEnter() {

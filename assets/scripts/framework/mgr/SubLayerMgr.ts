@@ -42,7 +42,7 @@ export class SubLayerMgr {
         let layerName = script.name;
         let registerLayer = this._classMap[layerName];
         let needDestory = !registerLayer && !toPush;//未注册  && 非入栈模式
-       
+
         this.checkDestoryLastLayer(needDestory);
 
         if (this.curLayer) {

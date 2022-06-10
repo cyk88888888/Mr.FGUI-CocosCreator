@@ -27,24 +27,34 @@ export class UIComp extends fgui.GComponent {
     public constructor(view?: fgui.GComponent) {
         super();
         this.bb = 60;
-        this.ctor_b();
-        if (this['ctor']) this['ctor']();
-        this.ctor_a();
+        TickMgr.inst.nextTick(function () {
+            this.ctor_b();
+            if (this['ctor']) this['ctor']();
+            this.ctor_a();
+        }, this)
+
         if (!view) {
-            this.node.on(fgui.Event.ADD_TO_SATGE, this.onAddToStage, this);
+            this.on(fgui.Event.ADD_TO_SATGE, this.onAddToStage, this);
+            let className = this.className;
+            let scriptClass = js.getClassByName(className);//是否有对应脚本类
+            if (!scriptClass) throw '未找到' + className + '类脚本';
+            fgui.UIPackage.createObject(scriptClass['pkgName'], className, null, this.onCreateUIObject, this).asCom;
         }
     }
 
     private onAddToStage() {
-        this.removeFromParent();
-        let className = this.className;
-        let scriptClass = js.getClassByName(className);//是否有对应脚本类
-        this.view = fgui.UIPackage.createObject(scriptClass['pkgName'], className).asCom;
-        BaseUT.setFitSize(this.view);
-        this.view.node.name = this.node.name = className;
         this.parent.addChild(this.view);
+        this.removeFromParent();
         this.onViewAdd();
-        this.initView();
+    }
+
+    private onCreateUIObject(viewObj: fgui.GComponent) {
+        this.view = viewObj;
+        BaseUT.setFitSize(this.view);
+        this.view.node.name = this.node.name = this.className;
+        TickMgr.inst.nextTick(function () {
+            this.initView();
+        }, this)
     }
 
     protected ctor_b() { }
@@ -253,7 +263,7 @@ export class UIComp extends fgui.GComponent {
     }
 
     public static get __className(): string {
-        return this.constructor.name;
+        return this.name;
     }
 
     protected get className() {

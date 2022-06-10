@@ -18,18 +18,16 @@ export class LoadingLayer extends UILayer {
 
     private _preResList: string[];
     private _toPercent: number = 40;//默认加载到40%
-    private aa: number;
-    private ctor(){
-        this.aa = 50;
-    }
 
     private onEnter() {
+        let self = this;
         this._preResList = ['ui/common'];
         let curDownLoadNum: number = 0;//当前已下载个数
-        ResMgr.inst.loadWithItor(this._preResList, function() {
+        ResMgr.inst.loadWithItor(this._preResList, () => {
+            self;
             curDownLoadNum++;
             this._toPercent += (curDownLoadNum / this._preResList.length) * 60;
-        }, null, this, false);
+        });
     }
 
     private update(dt: number) {

@@ -1624,7 +1624,7 @@ declare module 'fairygui-cc/UIPackage' {
                 */
             static loadPackage(path: string, onProgress?: (finish: number, total: number, item: AssetManager.RequestItem) => void, onComplete?: (error: Error, pkg: UIPackage) => void): void;
             static removePackage(packageIdOrName: string): void;
-            static createObject(pkgName: string, resName: string, userClass?: new () => GObject): GObject;
+            static createObject(pkgName: string, resName: string, userClass?: new () => GObject, cb?: Function, ctx?: any): GObject;
             static createObjectFromURL(url: string, userClass?: new () => GObject): GObject;
             static getItemURL(pkgName: string, resName: string): string;
             static getItemByURL(url: string): PackageItem;
@@ -2040,6 +2040,7 @@ declare module 'fairygui-cc/event/Event' {
         static SIZE_DELAY_CHANGE: string;
         static ADD_TO_SATGE: string;
         static REMOVE_FROM_SATGE: string;
+        static ON_CREATE_UI_OBJECT: string;
         static DRAG_START: string;
         static DRAG_MOVE: string;
         static DRAG_END: string;

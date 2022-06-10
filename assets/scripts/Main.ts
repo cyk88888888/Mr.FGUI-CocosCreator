@@ -21,6 +21,7 @@ export class Main extends Component {
         SoundMrg.inst.subSoundNode = this.subSoundNode;//设置场景音效节点
         SceneMgr.inst.mainScene = 'HomeScene';//设置主场景
         fgui.UIConfig.buttonSound = "sound/click";//设置全局按钮点击音效
+        TickMgr.inst.mainNode = this;
         scaleMode.designWidth = 640;
         scaleMode.designHeight = 1280;
         scaleMode.designHeight_min = 1030;

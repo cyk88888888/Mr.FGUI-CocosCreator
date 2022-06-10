@@ -18,8 +18,8 @@ export class UILayer extends UIComp {
    */
     public static show(data?: any) {
         let newSelf = new this();
-        newSelf.addToLayer();
         newSelf.setData(data);
+        if (newSelf['addToLayer']) newSelf['addToLayer']();
         SceneMgr.inst.curScene.setChildLayerClass(newSelf);
         return newSelf;
     }

@@ -1,9 +1,13 @@
+import { director } from "cc";
+import { Main } from "../../Main";
+
 /*
  * @Description: 帧管理器
  * @Author: CYK
  * @Date: 2022-06-09 23:46:58
  */
 export class TickMgr {
+    public mainNode: Main;
     private static _inst: TickMgr;
     public static get inst() {
         if (!this._inst) {
@@ -38,6 +42,13 @@ export class TickMgr {
         if (this._tickMap && this._tickMap[tickName]) {
             delete this._tickMap[tickName];
         }
+    }
+
+    /**延迟一帧执行 */
+    public nextTick(callback: Function, ctx:any){
+        this.mainNode.scheduleOnce(function(){
+            if(callback) callback.call(ctx);
+        })
     }
 }
 

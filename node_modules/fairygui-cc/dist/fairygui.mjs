@@ -243,7 +243,7 @@ const factors = [
  * @Author: ‘cyk’ '935765353@qq.com'
  * @Date: 2022-06-08 15:04:51
  * @LastEditors: ‘cyk’ '935765353@qq.com'
- * @LastEditTime: 2022-06-10 10:48:17
+ * @LastEditTime: 2022-06-10 14:19:05
  * @FilePath: \Cocos-FGUISrc\src\event\Event.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -291,6 +291,7 @@ Event.SIZE_CHANGED = "fui_size_changed";
 Event.SIZE_DELAY_CHANGE = "fui_size_delay_change";
 Event.ADD_TO_SATGE = "fui_add_to_stage";
 Event.REMOVE_FROM_SATGE = "fui_remove_from_stage";
+Event.ON_CREATE_UI_OBJECT = "fui_on_create_ui_object";
 Event.DRAG_START = "fui_drag_start";
 Event.DRAG_MOVE = "fui_drag_move";
 Event.DRAG_END = "fui_drag_end";
@@ -5130,10 +5131,20 @@ class UIPackage {
         if (pkg._path)
             delete _instById[pkg._path];
     }
-    static createObject(pkgName, resName, userClass) {
+    static createObject(pkgName, resName, userClass, cb, ctx) {
         var pkg = UIPackage.getByName(pkgName);
-        if (pkg)
-            return pkg.createObject(resName, userClass);
+        if (pkg) {
+            let g = pkg.createObject(resName, userClass);
+            if (g) {
+                if (cb) {
+                    cb.call(ctx, g);
+                }
+                g._partner.callLater(() => {
+                    g.node.emit(Event.ON_CREATE_UI_OBJECT, g);
+                });
+            }
+            return g;
+        }
         else
             return null;
     }
