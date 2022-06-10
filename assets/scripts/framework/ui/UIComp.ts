@@ -7,6 +7,7 @@ import { _decorator, js } from 'cc';
 import { emmiter } from '../base/Emmiter';
 import * as fgui from "fairygui-cc";
 import { TickMgr } from '../mgr/TickMgr';
+import { BaseUT } from '../base/BaseUtil';
 export class UIComp extends fgui.GComponent {
     private _emmitMap: { [event: string]: Function };//已注册的监听事件列表
     private _objTapMap: { [objName: string]: Function };//已添加的显示对象点击事件的记录
@@ -22,30 +23,28 @@ export class UIComp extends fgui.GComponent {
     protected dlgMaskName = '__mask: GGraph';//弹出底部灰色rect名称
     protected hasDestory: boolean;//是否已被销毁
     private _allList: fgui.GList[];
-    public constructor() {
+    bb: number;
+    public constructor(view?: fgui.GComponent) {
         super();
+        this.bb = 60;
         this.ctor_b();
-        if (this["ctor"]) this["ctor"]();
+        if (this['ctor']) this['ctor']();
         this.ctor_a();
-        this.on(fgui.Event.ADD_TO_SATGE, this.onAddToStage, this);
+        if (!view) {
+            this.node.on(fgui.Event.ADD_TO_SATGE, this.onAddToStage, this);
+        }
     }
 
     private onAddToStage() {
-        this;
-    }
-
-    /**初始化UI */
-    protected intiUI() {
+        this.removeFromParent();
         let className = this.className;
         let scriptClass = js.getClassByName(className);//是否有对应脚本类
         this.view = fgui.UIPackage.createObject(scriptClass['pkgName'], className).asCom;
+        BaseUT.setFitSize(this.view);
         this.view.node.name = this.node.name = className;
-        this.addChild(this.view);
-        //todo.....
-        // this.node.removeAllChildren();
-        // this._container = this.view._container;
-        // this.node.addChild(this._container);
-        this.onUIInited();
+        this.parent.addChild(this.view);
+        this.onViewAdd();
+        this.initView();
     }
 
     protected ctor_b() { }
@@ -60,17 +59,12 @@ export class UIComp extends fgui.GComponent {
 
     protected onExit_a() { }
 
+    protected onViewAdd() { }
     /**打开页面时的动画 */
     protected onOpenAnimation() { }
     /**关闭页面时的动画 */
     protected onCloseAnimation(callback?: Function) {
         if (callback) callback.call(this);
-    }
-
-    protected onUIInited() {
-        let self = this;
-        self.initView();
-        if (self['addToLayer']) self['addToLayer']();
     }
 
     public setData(data: any) {
@@ -142,7 +136,7 @@ export class UIComp extends fgui.GComponent {
                 let scriptName = obj.packageItem.name;
                 let scriptClass = js.getClassByName(scriptName);//是否有对应脚本类
                 if (scriptClass) {
-                    let script = self.chilidCompClassMap[obj.name] ? self.chilidCompClassMap[obj.name] : new scriptClass();
+                    let script = self.chilidCompClassMap[obj.name] ? self.chilidCompClassMap[obj.name] : new scriptClass(obj);
                     script['view'] = obj;
                     script['initView']();
                 }
@@ -320,6 +314,7 @@ export class UIComp extends fgui.GComponent {
         if (self.hasDestory) return;
         self._dispose();
         self.chilidCompClassMap = null;
+        self.view.dispose();
         self.dispose();
         self.hasDestory = true;
     }

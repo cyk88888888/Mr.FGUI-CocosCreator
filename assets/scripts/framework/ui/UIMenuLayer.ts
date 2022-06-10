@@ -15,8 +15,6 @@ export class UIMenuLayer extends UILayer {
     protected addToLayer() {
         let parent = SceneMgr.inst.curScene.menuLayer;
         this.curParent = parent;
-        BaseUT.setFitSize(this);
-        BaseUT.setFitSize(this.view);
         parent.addChild(this);
     }
 }

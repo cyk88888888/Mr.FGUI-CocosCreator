@@ -11,12 +11,6 @@ import { BaseUT } from '../base/BaseUtil';
 
 export class UILayer extends UIComp {
     public curParent: fgui.GComponent;
-    private show(data?: any): UILayer {
-        let self = this;
-        self.intiUI();
-        self.setData(data);
-        return self;
-    }
     /**
     * 显示界面
     * @param data 
@@ -24,7 +18,8 @@ export class UILayer extends UIComp {
    */
     public static show(data?: any) {
         let newSelf = new this();
-        newSelf.show(data);
+        newSelf.addToLayer();
+        newSelf.setData(data);
         SceneMgr.inst.curScene.setChildLayerClass(newSelf);
         return newSelf;
     }
@@ -35,8 +30,6 @@ export class UILayer extends UIComp {
     protected addToLayer() {
         let parent = SceneMgr.inst.curScene.layer;
         this.curParent = parent;
-        BaseUT.setFitSize(this);
-        BaseUT.setFitSize(this.view);
         parent.addChild(this);
     }
 }
