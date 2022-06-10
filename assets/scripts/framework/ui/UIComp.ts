@@ -9,6 +9,7 @@ import * as fgui from "fairygui-cc";
 import { TickMgr } from '../mgr/TickMgr';
 import { BaseUT } from '../base/BaseUtil';
 export class UIComp extends fgui.GComponent {
+    public curParent: fgui.GComponent;
     private _emmitMap: { [event: string]: Function };//已注册的监听事件列表
     private _objTapMap: { [objName: string]: Function };//已添加的显示对象点击事件的记录
     public chilidCompClassMap: { [className: string]: UIComp };//子组件的控制脚本类
@@ -317,6 +318,10 @@ export class UIComp extends fgui.GComponent {
         self.onCloseAnimation(() => {
             self.destory();
         });
+    }
+
+    public addView(){
+        this.curParent.addChild(this.view);
     }
 
     public removeView(){

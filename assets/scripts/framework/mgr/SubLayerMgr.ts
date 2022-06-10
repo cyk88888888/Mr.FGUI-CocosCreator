@@ -49,14 +49,14 @@ export class SubLayerMgr {
             if (toPush) this._popArr.push(this.curLayer);
             if (toPush || !needDestory) {
                 this.exitOnPush();
-                this.curLayer.removeFromParent();
+                this.curLayer.removeView();
             }
         }
 
         if (registerLayer && registerLayer.node) {
             this.curLayer = registerLayer;
             this.enterOnPop();
-            this.curLayer.curParent.addChild(this.curLayer);
+            this.curLayer.addView();
             return;
         }
 

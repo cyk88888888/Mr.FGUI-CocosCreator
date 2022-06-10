@@ -10,7 +10,6 @@ import { SceneMgr } from '../mgr/SceneMgr';
 import { BaseUT } from '../base/BaseUtil';
 
 export class UILayer extends UIComp {
-    public curParent: fgui.GComponent;
     /**
     * 显示界面
     * @param data 
