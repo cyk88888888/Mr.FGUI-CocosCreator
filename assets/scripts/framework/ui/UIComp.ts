@@ -33,29 +33,33 @@ export class UIComp extends fgui.GComponent {
     /**初始化，一定要在子类的构造函数中调用（这样设计是因为cocos采用babel编译ts，如果在父类构造函数里统一调用init，会导致子类里异步回调中无法获取子类自身定义的属性值） */
     protected init() {
         if (unNeedInitMap[this.id]) return;
-        this.on(fgui.Event.ADD_TO_SATGE, this.onAddToStage, this);
-        this.on(fgui.Event.REMOVE_FROM_SATGE, this.onRemoveFromStage, this);
+        this.on(fgui.Event.ADD_TO_SATGE, this.onThisAddToStage, this);
         let className = this.className;
         let scriptClass = js.getClassByName(className);//是否有对应脚本类
         if (!scriptClass) throw '未找到' + className + '类脚本';
         fgui.UIPackage.createObject(scriptClass['pkgName'], className, null, this.onCreateUIObject, this).asCom;
     }
 
-    private onAddToStage() {
+    private onThisAddToStage() {
         this.parent.addChild(this.view);
         this.removeFromParent();
         this.onViewAdd();
     }
 
-    private onRemoveFromStage() {
+    private onViewAddToStage() {
+        this.initView();
+    }
 
+    private onViewRemoveFromStage() {
+        this._dispose();
     }
 
     private onCreateUIObject(viewObj: fgui.GComponent) {
         this.view = viewObj;
+        this.view.on(fgui.Event.ADD_TO_SATGE, this.onViewAddToStage, this);
+        this.view.on(fgui.Event.REMOVE_FROM_SATGE, this.onViewRemoveFromStage, this);
         BaseUT.setFitSize(this.view);
         this.view.node.name = this.node.name = this.className;
-        this.initView();
     }
 
     protected onEnter_b() { }
@@ -341,8 +345,9 @@ export class UIComp extends fgui.GComponent {
         let self = this;
         if (self.hasDestory) return;
         self._dispose();
-        self.off(fgui.Event.ADD_TO_SATGE, this.onAddToStage, this);
-        self.off(fgui.Event.REMOVE_FROM_SATGE, this.onRemoveFromStage, this);
+        self.off(fgui.Event.ADD_TO_SATGE, this.onThisAddToStage, this);
+        this.view.off(fgui.Event.ADD_TO_SATGE, this.onViewAddToStage, this);
+        this.view.off(fgui.Event.REMOVE_FROM_SATGE, this.onViewRemoveFromStage, this);
         self.chilidCompClassMap = null;
         self._allList = null;
         self.view.dispose();

@@ -5,8 +5,6 @@
  */
 import { js } from "cc";
 import * as fgui from "fairygui-cc";
-import { BaseUT } from "../base/BaseUtil";
-import { UIComp } from "../ui/UIComp";
 import { UILayer } from "../ui/UILayer";
 import { SceneMgr } from "./SceneMgr";
 export class SubLayerMgr {
@@ -48,19 +46,17 @@ export class SubLayerMgr {
         if (this.curLayer) {
             if (toPush) this._popArr.push(this.curLayer);
             if (toPush || !needDestory) {
-                this.exitOnPush();
                 this.curLayer.removeView();
             }
         }
 
         if (registerLayer && registerLayer.node) {
             this.curLayer = registerLayer;
-            this.enterOnPop();
             this.curLayer.addView();
             return;
         }
 
-        this.curLayer = script.show();
+        this.curLayer = script.show(data);
         if (this._classMap[layerName]) {
             this._classMap[layerName] = this.curLayer;
         }
@@ -69,7 +65,7 @@ export class SubLayerMgr {
     /**判断销毁上个界面并释放资源 */
     private checkDestoryLastLayer(destory?: boolean) {
         if (this.curLayer && destory) {
-            BaseUT.destoryGComp(this.curLayer);
+            this.curLayer.close();
         }
     }
 
@@ -81,22 +77,8 @@ export class SubLayerMgr {
             return;
         }
         self.checkDestoryLastLayer(true);
-
         self.curLayer = self._popArr.pop();
-        self.enterOnPop();
         SceneMgr.inst.curScene.layer.addChild(self.curLayer);
-    }
-
-    private exitOnPush() {
-        let self = this;
-        let script = this.curLayer;
-        script.exitOnPush();
-    }
-
-    private enterOnPop() {
-        let self = this;
-        let script = this.curLayer;
-        script.enterOnPop();
     }
 
     /**清除所有layer */

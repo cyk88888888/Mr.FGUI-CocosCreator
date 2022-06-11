@@ -18,8 +18,4 @@ export namespace BaseUT{
         return new Size(scaleMode.designWidth, designHeight);
     }
 
-    /**销毁对应节点 */
-    export function destoryGComp(comp: any){
-        comp.destory();
-    }
 }
