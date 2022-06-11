@@ -7,7 +7,6 @@ import { _decorator, Component, Node } from 'cc';
 import { UIComp } from './UIComp';
 import * as fgui from "fairygui-cc";
 import { SceneMgr } from '../mgr/SceneMgr';
-import { BaseUT } from '../base/BaseUtil';
 
 export class UILayer extends UIComp {
     /**
