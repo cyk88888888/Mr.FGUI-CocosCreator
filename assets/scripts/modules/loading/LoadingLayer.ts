@@ -21,13 +21,12 @@ export class LoadingLayer extends UILayer {
 
     private onEnter() {
         let self = this;
-        this._preResList = ['ui/common', 'ui/home'];
+        self._preResList = ['ui/common', 'ui/home'];
         let curDownLoadNum: number = 0;//当前已下载个数
         let initPercent = self._toPercent = 40;//默认加载到40%
-        ResMgr.inst.loadWithItor(this._preResList, () => {
-            self;
+        ResMgr.inst.loadWithItor(self._preResList, () => {
             curDownLoadNum++;
-            this._toPercent = initPercent + (curDownLoadNum / this._preResList.length) * 60;
+            self._toPercent = initPercent + (curDownLoadNum / self._preResList.length) * 60;
         });
     }
 
