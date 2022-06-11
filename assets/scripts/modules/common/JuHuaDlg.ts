@@ -16,6 +16,11 @@ export class JuHuaDlg extends UIMsg {
     private graph_bg: fgui.GGraph;
     private mask_gray: fgui.GGraph;
     private mv_loading: fgui.GGraph;
+    constructor(){
+        super();
+        this.init();
+    }
+    
     private onEnter() {
         let self = this;
         let bg = this.graph_bg = new fgui.GGraph();

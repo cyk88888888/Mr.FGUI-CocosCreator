@@ -10,10 +10,6 @@ const { ccclass, property } = _decorator;
 export class ListItemRenderer extends fgui.GButton {
     public data: any;
 
-    protected ctor_b() { }
-
-    protected ctor_a() { }
-
     protected onEnter_b() { }
 
     protected onEnter_a() { }
@@ -22,13 +18,8 @@ export class ListItemRenderer extends fgui.GButton {
 
     protected onExit_a() { }
 
-
     public constructor() {
         super();
-        let self = this;
-        self.ctor_b();
-        if (self["ctor"]) self["ctor"]();
-        self.ctor_a();
     }
 
     public setData(data: any) {

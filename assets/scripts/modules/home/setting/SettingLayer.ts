@@ -12,6 +12,10 @@ import { UILayer } from '../../../framework/ui/UILayer';
 export class SettingLayer extends UILayer {
     /** 包名称 */
     public static pkgName: string = 'home';
+    constructor(){
+        super();
+        this.init();
+    }
     protected onEnter() {
         let self = this;
         SoundMrg.inst.playBg('sound/bg02');

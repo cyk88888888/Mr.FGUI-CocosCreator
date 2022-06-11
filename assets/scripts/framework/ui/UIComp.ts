@@ -11,8 +11,8 @@ import { BaseUT } from '../base/BaseUtil';
 export class UIComp extends fgui.GComponent {
     public curParent: fgui.GComponent;
     private _emmitMap: { [event: string]: Function };//已注册的监听事件列表
-    private _objTapMap: { [objName: string]: Function };//已添加的显示对象点击事件的记录
-    public chilidCompClassMap: { [className: string]: UIComp };//子组件的控制脚本类
+    private _objTapMap: { [objName: string]: any };//已添加的显示对象点击事件的记录
+    private chilidCompClassMap: { [className: string]: UIComp };//子组件的控制脚本类
     private _tweenTargetList: any[];//已添加缓动的对象列表
     protected view: fgui.GComponent;
     /** 包名称 */
@@ -21,24 +21,24 @@ export class UIComp extends fgui.GComponent {
     private isFirstEnter: boolean = true;
     /**打开弹窗时是否需要动画 */
     protected needAnimation: boolean = true;
-    protected dlgMaskName = '__mask: GGraph';//弹出底部灰色rect名称
+    protected dlgMaskName = '__mask: GGraph';//弹窗底部灰色rect名称
     protected hasDestory: boolean;//是否已被销毁
     private _allList: fgui.GList[];
     protected needRefreshListOnEnter: boolean = true;
-    public constructor(view?: fgui.GComponent) {
+    public constructor() {
         super();
-        if (!view) {
-            TickMgr.inst.nextTick(function () {
-                this.ctor_b();
-                if (this['ctor']) this['ctor']();
-                this.ctor_a();
-            }, this)
-            this.on(fgui.Event.ADD_TO_SATGE, this.onAddToStage, this);
-            let className = this.className;
-            let scriptClass = js.getClassByName(className);//是否有对应脚本类
-            if (!scriptClass) throw '未找到' + className + '类脚本';
-            fgui.UIPackage.createObject(scriptClass['pkgName'], className, null, this.onCreateUIObject, this).asCom;
-        }
+        // unNeedInitMap[this.id] = 1
+    }
+
+    /**初始化，一定要在子类的构造函数中调用（这样设计是因为cocos采用babel编译ts，如果在父类构造函数里统一调用init，会导致子类里异步回调中无法获取子类自身定义的属性值） */
+    protected init() {
+        if (unNeedInitMap[this.id]) return;
+        this.on(fgui.Event.ADD_TO_SATGE, this.onAddToStage, this);
+        this.on(fgui.Event.REMOVE_FROM_SATGE, this.onRemoveFromStage, this);
+        let className = this.className;
+        let scriptClass = js.getClassByName(className);//是否有对应脚本类
+        if (!scriptClass) throw '未找到' + className + '类脚本';
+        fgui.UIPackage.createObject(scriptClass['pkgName'], className, null, this.onCreateUIObject, this).asCom;
     }
 
     private onAddToStage() {
@@ -47,18 +47,16 @@ export class UIComp extends fgui.GComponent {
         this.onViewAdd();
     }
 
+    private onRemoveFromStage() {
+
+    }
+
     private onCreateUIObject(viewObj: fgui.GComponent) {
         this.view = viewObj;
         BaseUT.setFitSize(this.view);
         this.view.node.name = this.node.name = this.className;
-        TickMgr.inst.nextTick(() => {
-            this.initView();
-        }, this)
+        this.initView();
     }
-
-    protected ctor_b() { }
-
-    protected ctor_a() { }
 
     protected onEnter_b() { }
 
@@ -110,12 +108,10 @@ export class UIComp extends fgui.GComponent {
     /**
      * 初始化view
      */
-    protected initView() {
+    private initView(needReflectProperty: boolean = true) {
         let self = this;
-        if (self.hasDestory) {
-            return;
-        }
-        self.initViewProperty();
+        if (self.hasDestory) return;
+        this.initViewProperty(needReflectProperty);
         self.addListener();
         console.log('进入' + self.className);
         self.onEnter_b();
@@ -133,34 +129,33 @@ export class UIComp extends fgui.GComponent {
     }
 
     /** 初始化属性 */
-    private initViewProperty() {
+    private initViewProperty(needReflectProperty: boolean = true) {
         let self = this;
         if (!self.view) return;
         let children = self.view._children;
         if (!self.chilidCompClassMap) self.chilidCompClassMap = {};
-        self._allList = [];
+        if (!self._allList) self._allList = [];
         for (let key in children) {
             let obj = children[key];
-            self[obj.name] = obj;
-            if (obj.node.name.indexOf(obj.name) == -1) obj.node.name = obj.name + ':  ' + obj.node.name;
+            if (needReflectProperty) self[obj.name] = obj;
+            if (needReflectProperty && obj.node.name.indexOf(obj.name) == -1) obj.node.name = obj.name + ':  ' + obj.node.name;
             if (obj instanceof fgui.GComponent && obj.packageItem) {//如果是组件，添加对应脚本
                 let scriptName = obj.packageItem.name;
                 let scriptClass = js.getClassByName(scriptName);//是否有对应脚本类
                 if (scriptClass) {
                     let oldScript = self.chilidCompClassMap[obj.name];
-                    let script = oldScript ? oldScript : new scriptClass(obj);
-                    self.chilidCompClassMap[obj.name] = script as UIComp;
-                    if (!oldScript) {
-                        script['ctor_b']();
-                        if (script['ctor']) script['ctor']();
-                        script['ctor_a']();
+                    let script = oldScript ? oldScript : new scriptClass();
+                    if (oldScript) {
+                        script['initView'](false);
+                    } else {
+                        self.chilidCompClassMap[obj.name] = script as UIComp;
+                        script['view'] = obj;
+                        script['initView']();
                     }
-                    script['view'] = obj;
-                    script['initView']();
                 }
             }
 
-            if (obj instanceof fgui.GList) {
+            if (needReflectProperty && obj instanceof fgui.GList) {
                 var pi: fgui.PackageItem = fgui.UIPackage.getItemByURL(obj.defaultItem + '');
                 if (pi) {
                     let __class: any = js.getClassByName(pi.name);
@@ -176,9 +171,10 @@ export class UIComp extends fgui.GComponent {
         }
     }
 
+    /**刷新所有列表 */
     private refreshAllList() {
         let self = this;
-        if(!self.needRefreshListOnEnter) return;
+        if (!self.needRefreshListOnEnter) return;
         for (let i = 0; i < self._allList.length; i++) {
             self.refreshList(self._allList[i].name);
         }
@@ -198,15 +194,17 @@ export class UIComp extends fgui.GComponent {
     }
 
     /**添加事件监听**/
-    protected addListener() {
+    private addListener() {
         let self = this;
         if (!self.view) return;
         let children = self.view._children;
         self._objTapMap = {};
 
-        if (self['_size_change_' + self.view.name]) {
-            self.view.on(fgui.Event.SIZE_CHANGED, self['_size_change_' + self.view.name], self);
-            self._objTapMap[fgui.Event.SIZE_CHANGED] = self['_size_change_' + self.view.name];
+        let eventFuncName = '_size_change_' + self.view.name;
+        if (self[eventFuncName]) {
+            let eventName = fgui.Event.SIZE_CHANGED;
+            self.view.on(fgui.Event.SIZE_CHANGED, self[eventFuncName], self);
+            self._objTapMap[eventFuncName + '&' + eventName] = self.view;
         }
 
         for (let key in children) {
@@ -214,25 +212,27 @@ export class UIComp extends fgui.GComponent {
             let objName = obj.name;
             //监听元素点击事件
             if (obj instanceof fgui.GObject) {
-                if (self["_tap_" + objName]) {
-                    let tapFunc = self["_tap_" + objName];
+                let eventFuncName = "_tap_" + objName;
+                if (self[eventFuncName]) {
                     let eventName = fgui.Event.CLICK;
-                    self._objTapMap[objName + '&' + eventName] = tapFunc;
-                    obj.on(eventName, tapFunc, self);
+                    obj.on(eventName, self[eventFuncName], self);
+                    self._objTapMap[eventFuncName + '&' + eventName] = obj;
                 }
-                if (self['_size_change_' + objName]) {
-                    obj.on(fgui.Event.SIZE_CHANGED, self['_size_change_' + objName], self);
-                    self._objTapMap[fgui.Event.SIZE_CHANGED] = self['_size_change_' + objName];
+                eventFuncName = '_size_change_' + objName;
+                if (self[eventFuncName]) {
+                    let eventName = fgui.Event.SIZE_CHANGED;
+                    obj.on(fgui.Event.SIZE_CHANGED, self[eventFuncName], self);
+                    self._objTapMap[eventFuncName + '&' + eventName] = obj;
                 }
             }
 
             //监听列表子项点击事件
             if (obj instanceof fgui.GList) {
-                if (self['_click_' + obj.name]) {
-                    let tapFunc = self["_click_" + obj.name];
+                let eventFuncName = '_click_' + obj.name;
+                if (self[eventFuncName]) {
                     let eventName = fgui.Event.CLICK_ITEM;
-                    self._objTapMap[objName + '&' + eventName] = tapFunc;
-                    obj.on(eventName, tapFunc, this);
+                    obj.on(eventName, self[eventFuncName], self);
+                    self._objTapMap[eventFuncName + '&' + eventName] = obj;
                 }
             }
         }
@@ -341,7 +341,10 @@ export class UIComp extends fgui.GComponent {
         let self = this;
         if (self.hasDestory) return;
         self._dispose();
+        self.off(fgui.Event.ADD_TO_SATGE, this.onAddToStage, this);
+        self.off(fgui.Event.REMOVE_FROM_SATGE, this.onRemoveFromStage, this);
         self.chilidCompClassMap = null;
+        self._allList = null;
         self.view.dispose();
         self.dispose();
         self.hasDestory = true;
@@ -359,11 +362,11 @@ export class UIComp extends fgui.GComponent {
         if (self._objTapMap) {
             for (let key in self._objTapMap) {
                 let splitKey = key.split('&');
-                let objName = splitKey[0];
+                let eventFuncName = splitKey[0];
                 let eventName = splitKey[1];
-                let obj = self[objName];
+                let obj = self._objTapMap[key];
                 if (obj.node.isValid) {
-                    obj.off(eventName, self._objTapMap[key], self);
+                    obj.off(eventName, self[eventFuncName], self);
                 }
             }
             self._objTapMap = null;
@@ -379,10 +382,10 @@ export class UIComp extends fgui.GComponent {
         self.rmAllTweens();
 
         //子组件退出
-        // for (let key in self.chilidCompClassMap) {
-        //     let script = self.chilidCompClassMap[key];
-        //     script['exitOnPush']();
-        // }
+        for (let key in self.chilidCompClassMap) {
+            let script = self.chilidCompClassMap[key];
+            script['exitOnPush']();
+        }
 
         if (self['update']) {
             TickMgr.inst.rmTick(this.className);
@@ -394,4 +397,6 @@ export class UIComp extends fgui.GComponent {
         this.onExit_a();
     }
 }
+
+export let unNeedInitMap: { [key: string]: number } = {};
 

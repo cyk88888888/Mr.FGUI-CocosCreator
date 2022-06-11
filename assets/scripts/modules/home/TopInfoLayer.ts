@@ -15,7 +15,11 @@ const { ccclass, property } = _decorator;
 export class TopInfoLayer extends UIMenuLayer {
     /** 包名称 */
     public static pkgName: string = 'home';
-
+    constructor(){
+        super();
+        this.init();
+    }
+    
     private onEnter() {
     }
 

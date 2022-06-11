@@ -19,6 +19,11 @@ export class LoadingLayer extends UILayer {
     private _preResList: string[];
     private _toPercent: number;
 
+    constructor(){
+        super();
+        this.init();
+    }
+
     private onEnter() {
         let self = this;
         self._preResList = ['ui/common', 'ui/home'];

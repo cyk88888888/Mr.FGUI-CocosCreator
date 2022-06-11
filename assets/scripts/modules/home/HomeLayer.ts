@@ -15,6 +15,11 @@ export class HomeLayer extends UILayer {
     public static pkgName: string = 'home';
     private btn_close: fgui.GButton;
     private img_equip: fgui.GImage;
+    constructor(){
+        super();
+        this.init();
+    }
+    
     protected onEnter() {
         let self = this;
         SoundMrg.inst.playMainBg();

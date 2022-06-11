@@ -28,7 +28,9 @@ export class TestAstarComp extends UIComp {
     private _startFrame: boolean;
     private _speed: number;//人物移动速度、
 
-    private ctor() {
+    constructor(){
+        super();
+        // this.init();
         let self = this;
         self._cellSize = 40;
         self._speed = 1;

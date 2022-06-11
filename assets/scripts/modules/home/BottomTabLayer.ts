@@ -18,6 +18,11 @@ export class BottomTabLayer extends UIMenuLayer {
 
     private _curSelectIndex: number;
     private _layerInfos: any[];
+    constructor(){
+        super();
+        this.init();
+    }
+    
     private onEnter() {
         let self = this;
         self._layerInfos = [

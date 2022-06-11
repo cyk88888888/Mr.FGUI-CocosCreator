@@ -20,8 +20,11 @@ export class BagDlg extends UIDlg {
 
     private _bagDataList: any[];
     private _tempLen: number;
-
-    private ctor(){
+    constructor() {
+        super();
+        this.init();
+    }
+    private ctor() {
         let self = this;
         self.needRefreshListOnEnter = false;
     }

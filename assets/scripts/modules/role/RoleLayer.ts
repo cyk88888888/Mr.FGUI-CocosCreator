@@ -14,6 +14,11 @@ export class RoleLayer extends UILayer {
     public static pkgName: string = 'role';
     private list: fgui.GList = null!;
     private lbl_index: fgui.GTextField;
+    constructor(){
+        super();
+        this.init();
+    }
+    
     protected onEnter() {
         this.list.setVirtualAndLoop();
         this.list.itemRenderer = <fgui.ListItemRenderer>this.renderListItem.bind(this);
