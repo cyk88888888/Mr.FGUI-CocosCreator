@@ -64,7 +64,7 @@ export class SubLayerMgr {
 
     /**判断销毁上个界面并释放资源 */
     private checkDestoryLastLayer(destory?: boolean) {
-        if (this.curLayer && destory) {
+        if (destory && this.curLayer && !this.curLayer.hasDestory) {
             this.curLayer.close();
         }
     }
@@ -81,17 +81,29 @@ export class SubLayerMgr {
         SceneMgr.inst.curScene.layer.addChild(self.curLayer);
     }
 
-    /**清除所有layer */
+    /**清除所有注册的layer */
     public releaseAllLayer() {
         let self = this;
         this.checkDestoryLastLayer(true);
         for (let i = 0; i < self._popArr.length; i++) {
-            self._popArr[i].destory();
+            let layer = this._popArr[i];
+            if(!layer.hasDestory) layer.close();
         }
+
+        for (let key in this._classMap) {
+            let layer = this._classMap[key];
+            if (layer.node && !layer.hasDestory) {
+                layer.close();
+            }
+        }
+
         self._popArr = [];
     }
 
     public dispose() {
-        this.releaseAllLayer();
+        let self = this;
+        self.releaseAllLayer();
+        self._classMap = null;
+        self._popArr = null;
     }
 }

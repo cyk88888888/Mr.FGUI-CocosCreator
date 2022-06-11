@@ -122,6 +122,7 @@ export class UIScene {
             self._isFirstEnter = false;
             if (self["onFirstEnter"]) self["onFirstEnter"]();
         }
+        self.onEnter_a();
     }
 
     public setData(data: any) {

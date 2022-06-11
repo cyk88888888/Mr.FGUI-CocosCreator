@@ -22,7 +22,7 @@ export class UIComp extends fgui.GComponent {
     /**打开弹窗时是否需要动画 */
     protected needAnimation: boolean = true;
     protected dlgMaskName = '__mask: GGraph';//弹窗底部灰色rect名称
-    protected hasDestory: boolean;//是否已被销毁
+    public hasDestory: boolean;//是否已被销毁
     private _allList: fgui.GList[];
     protected needRefreshListOnEnter: boolean = true;
     public constructor() {

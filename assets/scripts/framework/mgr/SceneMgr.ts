@@ -5,7 +5,6 @@
  */
 import { js } from "cc";
 import * as fgui from "fairygui-cc";
-import { BaseUT } from "../base/BaseUtil";
 import { ModuleCfgInfo } from "../base/ModuleCfgInfo";
 import { UIComp } from "../ui/UIComp";
 import { UIScene } from "../ui/UIScene";
