@@ -21,7 +21,7 @@ export class LoadingLayer extends UILayer {
 
     private onEnter() {
         let self = this;
-        this._preResList = ['ui/common'];
+        this._preResList = ['ui/common', 'ui/home'];
         let curDownLoadNum: number = 0;//当前已下载个数
         ResMgr.inst.loadWithItor(this._preResList, () => {
             self;
