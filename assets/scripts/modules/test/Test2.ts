@@ -1,16 +1,17 @@
 import { Test1 } from "./Test1";
 
 export class Test2 extends Test1 {
-    private _aa: number;
-    private test() {
+    public aa: number;
+    private ctor() {
         let self = this;
-        self._aa = 55;
+        self.aa = 55;
         setTimeout(function () {
-            self._aa;
+            console.log(self.aa); 
         }, 300)
+    }
 
-        setTimeout(() => {
-            self._aa;
-        }, 300)
+    private ctor_a(){
+        let self = this;
+        self.aa;
     }
 }

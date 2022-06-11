@@ -1,6 +1,4 @@
-import { director } from "cc";
 import { Main } from "../../Main";
-
 /*
  * @Description: 帧管理器
  * @Author: CYK
@@ -45,9 +43,9 @@ export class TickMgr {
     }
 
     /**延迟一帧执行 */
-    public nextTick(callback: Function, ctx:any){
-        this.mainNode.scheduleOnce(function(){
-            if(callback) callback.call(ctx);
+    public nextTick(callback: Function, ctx: any) {
+        this.mainNode.scheduleOnce(function () {
+            if (callback) callback.call(ctx);
         })
     }
 }

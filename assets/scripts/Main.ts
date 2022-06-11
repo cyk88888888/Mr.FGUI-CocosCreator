@@ -17,13 +17,15 @@ export class Main extends Component {
     @property(Node)
     subSoundNode: Node;
     onLoad() {
-        let test2 = new Test2();
         fgui.GRoot.create();
         SoundMrg.inst.defaultBgMusic = "sound/bg00";//设置默认背景音乐
         SoundMrg.inst.subSoundNode = this.subSoundNode;//设置场景音效节点
         SceneMgr.inst.mainScene = 'HomeScene';//设置主场景
         fgui.UIConfig.buttonSound = "sound/click";//设置全局按钮点击音效
         TickMgr.inst.mainNode = this;
+        
+        let test2 = new Test2();
+        
         scaleMode.designWidth = 640;
         scaleMode.designHeight = 1280;
         scaleMode.designHeight_min = 1030;
