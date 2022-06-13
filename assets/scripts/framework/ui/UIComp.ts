@@ -27,12 +27,10 @@ export class UIComp extends fgui.GComponent {
     protected needRefreshListOnEnter: boolean = true;
     public constructor() {
         super();
-        // unNeedInitMap[this.id] = 1
     }
 
     /**初始化，一定要在子类的构造函数中调用（这样设计是因为cocos采用babel编译ts，如果在父类构造函数里统一调用init，会导致子类里异步回调中无法获取子类自身定义的属性值） */
     protected init() {
-        if (unNeedInitMap[this.id]) return;
         this.on(fgui.Event.ADD_TO_SATGE, this.onThisAddToStage, this);
         let className = this.className;
         let scriptClass = js.getClassByName(className);//是否有对应脚本类
@@ -403,5 +401,4 @@ export class UIComp extends fgui.GComponent {
     }
 }
 
-export let unNeedInitMap: { [key: string]: number } = {};
 
